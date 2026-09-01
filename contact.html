@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Daniel Wirth</title>
+<meta name="description" content="Get in touch with Daniel Wirth.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="index.html">Daniel Wirth</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="books.html">Books &amp; Poetry</a>
+      <a href="blog/index.html">Notebook</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Contact</h1>
+    <p class="lead">For readers, editors, agents, and event organisers.</p>
+
+    <p>Email is the best way to reach me:
+      <a href="mailto:YOUR-EMAIL@example.com">YOUR-EMAIL@example.com</a>.
+      Tell me which address you want shown here &mdash; your everyday inbox, or a
+      separate one just for writing enquiries.</p>
+
+    <p>For rights and representation, please contact my agent (details on request).</p>
+
+    <div class="signup">
+      <h2>Newsletter</h2>
+      <p class="subtle">Occasional notes on new work and what I'm reading. A few times a year, no more.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/USERNAME" method="post" target="_blank">
+        <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span id="year">2026</span> Daniel Wirth</span>
+    <span><a href="contact.html">Contact</a> &middot; <a href="https://buttondown.email/USERNAME" target="_blank" rel="noopener">Newsletter</a></span>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

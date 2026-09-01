@@ -1,0 +1,256 @@
+/* ---------------------------------------------------------------
+   Daniel Wirth — author site
+   Plain CSS, no build step. Edit colors in :root below.
+--------------------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --bg:        #faf8f4;
+  --text:      #221d17;
+  --muted:     #6b6257;
+  --accent:    #7c2d3a;
+  --rule:      #e3ddd1;
+  --bg-soft:   #f2eee5;
+  --measure:   40rem;
+  --serif:     'EB Garamond', Georgia, 'Times New Roman', serif;
+  --display:   'Fraunces', Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #17140f;
+    --text:    #e9e3d7;
+    --muted:   #9c9285;
+    --accent:  #d59aa2;
+    --rule:    #322c22;
+    --bg-soft: #201c15;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.65;
+  font-feature-settings: "liga" 1, "onum" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---- Header / nav ---- */
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+.site-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--text);
+  white-space: nowrap;
+}
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-family: var(--display);
+  font-size: 1rem;
+}
+.site-nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+/* ---- Main ---- */
+
+main { padding: 3.5rem 0 1rem; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text);
+}
+h1 { font-size: 2.6rem; margin: 0 0 1.2rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.7rem; margin: 2.75rem 0 0.9rem; }
+h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+
+p { margin: 0 0 1.2rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+.lead {
+  font-size: 1.45rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.subtle { color: var(--muted); }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+/* ---- Home hero ---- */
+
+.hero { padding: 1rem 0 0; }
+.hero h1 { font-size: 3.1rem; }
+
+/* ---- Work / books list ---- */
+
+.work-item {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--rule);
+}
+.work-item:last-child { border-bottom: 1px solid var(--rule); }
+.work-item .cover {
+  width: 96px;
+  aspect-ratio: 2 / 3;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 0.5rem;
+}
+.work-item h3 { margin-top: 0; }
+.work-item .meta { color: var(--muted); font-size: 1rem; margin-bottom: 0.6rem; }
+.work-item p { margin-bottom: 0.6rem; }
+
+@media (max-width: 34rem) {
+  .work-item { grid-template-columns: 1fr; }
+  .work-item .cover { width: 84px; }
+}
+
+/* ---- Blog list ---- */
+
+.post-list { list-style: none; padding: 0; margin: 0; }
+.post-list li {
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--rule);
+}
+.post-list li:last-child { border-bottom: 1px solid var(--rule); }
+.post-list a {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.post-list a:hover { color: var(--accent); }
+.post-list .date {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+/* ---- Article ---- */
+
+.article-meta {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: -0.6rem 0 2rem;
+}
+.article blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  color: var(--muted);
+}
+.poem {
+  white-space: pre-wrap;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+/* ---- Newsletter form ---- */
+
+.signup {
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.75rem;
+  margin: 2rem 0;
+}
+.signup h2 { margin-top: 0; }
+.signup form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.signup input[type="email"] {
+  flex: 1 1 14rem;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+}
+.signup button {
+  padding: 0.7rem 1.3rem;
+  font-family: var(--display);
+  font-size: 1rem;
+  color: #fff;
+  background: var(--accent);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.signup button:hover { opacity: 0.92; }
+
+/* ---- Footer ---- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 4rem;
+  padding: 2rem 0 3rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
