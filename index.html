@@ -3,65 +3,349 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Daniel Wirth — Writer</title>
-<meta name="description" content="Daniel Wirth writes fiction and poetry. Books, poems, and occasional notes.">
-<link rel="stylesheet" href="styles.css">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0b09">
+<title>Daniel Wirth</title>
+<meta name="description" content="Daniel Wirth writes fiction and poetry. Novels, poems, and the occasional note from the desk.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg:      #0a0b09;
+    --surface: #141611;
+    --line:    #2b2f22;
+    --text:    #eef3e6;
+    --muted:   #8a9575;
+    --lime:    #c6ff00;
+    --grad: repeating-linear-gradient(100deg,
+      #c6ff00 0px, #c2fa2c 380px, #b7f52e 720px, #bef23c 1080px, #cbee42 1440px,
+      #d9ea48 1800px, #e7e64d 2160px, #f3e24f 2460px, #ffe14a 2700px, #ffd44c 2940px,
+      #ffc44a 3140px, #f7a83c 3320px, #e98a24 3460px, #d95e00 3560px, #d95e00 3660px,
+      #e98a24 3760px, #f7a83c 3900px, #ffc44a 4080px, #ffd44c 4280px, #ffe14a 4520px,
+      #f3e24f 4760px, #e7e64d 5060px, #d9ea48 5420px, #cbee42 5780px, #bef23c 6140px,
+      #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
+    --grad-cycle: 7220px;
+    --flow-dur: 22s;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'EB Garamond', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--body); font-size: 1.2rem; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  a { color: var(--lime); }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 3px; }
+
+  .topbar {
+    position: relative; z-index: 2;
+    height: 3px; width: 100%;
+    background-image: var(--grad); background-attachment: fixed;
+    animation: flow var(--flow-dur) linear infinite;
+  }
+  @keyframes flow { from { background-position: 0 0; } to { background-position: var(--grad-cycle) 0; } }
+
+  .page { max-width: 60rem; margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
+
+  .wordmark {
+    font-family: var(--display); font-weight: 600; font-size: 1rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    text-align: center; margin: 0.25rem 0 0; transition: opacity .4s;
+  }
+
+  /* ---------- wheel ---------- */
+  .stage {
+    position: relative;
+    height: 66vh; min-height: 460px;
+    --radius: 200px;
+    touch-action: none;
+  }
+  .ring { position: absolute; inset: 0; }
+
+  .node {
+    position: absolute; left: 0; top: 0;
+    white-space: nowrap;
+    font-family: var(--display); font-weight: 600;
+    font-size: 1rem; letter-spacing: 0.01em;
+    color: var(--muted); text-decoration: none;
+    opacity: 0.42;
+    transition: color .3s, opacity .3s, font-size .3s, font-weight .3s;
+    will-change: transform;
+  }
+  .node:hover { color: var(--text); opacity: 0.85; }
+  .node.is-top { color: var(--lime); opacity: 1; font-weight: 700; font-size: 1.6rem; }
+  .node.railed { font-size: 1.15rem; opacity: 0.6; }
+  .node.railed.is-top { font-size: 1.3rem; opacity: 1; }
+
+  .hub {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+    color: var(--text); text-align: center; pointer-events: none;
+    letter-spacing: 0.02em; transition: opacity .45s;
+  }
+  .hub small { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 0.35rem; }
+
+  .ringline {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: calc(var(--radius) * 2); height: calc(var(--radius) * 2);
+    border: 1px solid var(--line); border-radius: 50%; pointer-events: none;
+    transition: border-color .3s, box-shadow .3s, opacity .45s;
+  }
+  .stage.is-parked .ringline { border-color: rgba(198,255,0,0.5); box-shadow: inset 0 0 40px rgba(198,255,0,0.08); }
+
+  .marker {
+    position: absolute; left: 50%; top: calc(50% - var(--radius) - 30px);
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 7px solid transparent; border-right: 7px solid transparent;
+    border-top: 10px solid var(--lime); pointer-events: none; transition: opacity .4s;
+  }
+
+  .stage.railing { position: relative; z-index: 60; }
+  .stage.railing .ringline,
+  .stage.railing .marker,
+  .stage.railing .hub { opacity: 0; }
+  .stage.railing .node { z-index: 61; }
+
+  .rail-scrim {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 208px; z-index: 40;
+    background: linear-gradient(90deg, var(--surface), rgba(20,22,17,0.72));
+    border-right: 1px solid var(--line);
+    transform: translateX(-100%); transition: transform .6s cubic-bezier(.55,.12,.2,1);
+    pointer-events: none;
+  }
+  body.railing .rail-scrim { transform: none; }
+
+  .tagline { text-align: center; margin: 1.5rem 0 0; transition: opacity .45s; }
+  body.railing .tagline { opacity: 0; }
+  .tagline h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 3rem);
+    margin: 0 0 0.4rem; letter-spacing: -0.02em;
+  }
+  .tagline p { color: var(--muted); font-style: italic; margin: 0; }
+
+  .hint {
+    text-align: center; margin: 1.4rem 0 0;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted);
+    transition: opacity .6s;
+  }
+  .hint.gone { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .topbar { animation: none; }
+    .node { opacity: 1; }
+  }
+</style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="site-title" href="index.html">Daniel Wirth</a>
-    <nav class="site-nav">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="about.html">About</a>
-      <a href="books.html">Books &amp; Poetry</a>
-      <a href="blog/index.html">Notebook</a>
-      <a href="contact.html">Contact</a>
+<div class="topbar"></div>
+<div class="rail-scrim" aria-hidden="true"></div>
+
+<div class="page">
+  <p class="wordmark">Daniel Wirth</p>
+
+  <div class="stage" id="stage">
+    <div class="ringline"></div>
+    <div class="marker"></div>
+    <nav class="ring" id="ring" aria-label="Sections">
+      <a class="node" href="index.html">Home</a>
+      <a class="node" href="about.html">About</a>
+      <a class="node" href="books.html">Books &amp; Poetry</a>
+      <a class="node" href="blog/index.html">Notebook</a>
+      <a class="node" href="contact.html">Contact</a>
     </nav>
+    <div class="hub">Daniel Wirth<small>EST. 2026</small></div>
   </div>
-</header>
 
-<main>
-  <div class="wrap">
-    <section class="hero">
-      <h1>Fiction &amp; poetry.</h1>
-      <p class="lead">A short line about the work — the kind of stories and poems you write, and what a reader will find here.</p>
-      <p>Replace this paragraph with a few sentences in your own voice. Who you are as a writer, what preoccupies you on the page, and what someone landing here should read first. Two or three sentences is plenty.</p>
-      <p><a href="books.html">See the books &amp; poetry &rarr;</a></p>
-    </section>
-
-    <hr>
-
-    <section>
-      <h2>Latest</h2>
-      <ul class="post-list">
-        <li>
-          <a href="blog/2026-08-31-welcome.html">A new home for the writing</a>
-          <span class="date">31 August 2026</span>
-        </li>
-      </ul>
-      <p class="subtle" style="margin-top:1rem;"><a href="blog/index.html">More in the notebook &rarr;</a></p>
-    </section>
-
-    <div class="signup">
-      <h2>Newsletter</h2>
-      <p class="subtle">Occasional notes on new work and what I'm reading. No more than a few times a year.</p>
-      <form action="https://buttondown.email/api/emails/embed-subscribe/USERNAME" method="post" target="_blank">
-        <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
+  <div class="tagline">
+    <h1>Fiction &amp; poetry.</h1>
+    <p>Novels and poems, and the occasional note from the desk.</p>
   </div>
-</main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <span>&copy; <span id="year">2026</span> Daniel Wirth</span>
-    <span><a href="contact.html">Contact</a> &middot; <a href="https://buttondown.email/USERNAME" target="_blank" rel="noopener">Newsletter</a></span>
-  </div>
-</footer>
+  <p class="hint" id="hint">Move to turn &nbsp;&middot;&nbsp; click to enter</p>
+</div>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.getElementById('stage');
+  var ring  = document.getElementById('ring');
+  var hint  = document.getElementById('hint');
+  var nodes = [].slice.call(ring.querySelectorAll('.node'));
+
+  var STEP = 72;
+  var OUTER = 0.82;
+  var MAX = 2.2;
+  var HIT = 40;
+
+  var rot = -72;               // About (index 1) starts at the top
+  var vel = 0, nx = 0, mx = -9999, my = -9999;
+  var radiusPx = 200;
+  var pointerInside = false;
+  var focusTarget = null;
+  var selecting = false;
+  var hintGone = false;
+
+  function layout() {
+    var s = Math.min(stage.clientWidth, stage.clientHeight);
+    radiusPx = Math.max(120, Math.min(210, s * 0.40));
+    stage.style.setProperty('--radius', radiusPx + 'px');
+  }
+  layout();
+  window.addEventListener('resize', layout);
+
+  window.addEventListener('mousemove', function (e) {
+    mx = e.clientX; my = e.clientY;
+    nx = (e.clientX / window.innerWidth - 0.5) * 2;
+    pointerInside = true;
+    focusTarget = null;
+  });
+  window.addEventListener('mouseleave', function () { pointerInside = false; });
+  window.addEventListener('blur', function () { pointerInside = false; });
+
+  function killHint() { if (!hintGone) { hintGone = true; hint.classList.add('gone'); } }
+  setTimeout(killHint, 7000);
+
+  function selectTop(i) {
+    var desired = -i * STEP;
+    focusTarget = desired + Math.round((rot - desired) / 360) * 360;
+  }
+
+  function enterRail(href, clicked) {
+    if (selecting) return;
+    selecting = true;
+    killHint();
+    document.body.classList.add('railing');
+    stage.classList.add('railing');
+    stage.classList.remove('is-parked');
+    var sr = stage.getBoundingClientRect();
+    var viewLeft = 44, viewTop = 128, gap = 52;
+    nodes.forEach(function (n, i) {
+      n.classList.add('railed');
+      n.classList.toggle('is-top', i === clicked);
+      n.style.transition = 'transform .7s cubic-bezier(.55,.12,.2,1), color .4s, font-size .4s, opacity .4s';
+      var xl = viewLeft - sr.left;
+      var yl = (viewTop - sr.top) + i * gap;
+      n.style.transform = 'translate(' + xl + 'px,' + yl + 'px) translate(0,-50%)';
+    });
+    if (reduce) { window.location.href = href; return; }
+    setTimeout(function () { window.location.href = href; }, 820);
+  }
+
+  nodes.forEach(function (node, i) {
+    node.addEventListener('focus', function () { if (!selecting) selectTop(i); });
+    node.addEventListener('click', function (e) {
+      e.preventDefault();
+      enterRail(node.getAttribute('href'), i);
+    });
+  });
+
+  function classify() {
+    if (!pointerInside || reduce) return 'rest';
+    var sr = stage.getBoundingClientRect();
+    var cx = sr.left + sr.width / 2, cy = sr.top + sr.height / 2;
+    var d = Math.hypot(mx - cx, my - cy);
+    if (d <= radiusPx + HIT) return 'inside';
+    if (my > cy + radiusPx) return 'below';
+    if (Math.abs(nx) > OUTER) return 'edge';
+    return 'spin';
+  }
+
+  function spinVel() {
+    var ax = Math.abs(nx);
+    var start = Math.min(0.45, radiusPx / (window.innerWidth / 2));
+    if (ax <= start || ax > OUTER) return 0;
+    var m = (ax - start) / (OUTER - start);
+    m = m * m * (3 - 2 * m);
+    return -Math.sign(nx) * m * MAX;
+  }
+
+  function positionWheel() {
+    var cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
+    for (var i = 0; i < nodes.length; i++) {
+      var a = (i * STEP + rot) * Math.PI / 180;
+      var x = cx + radiusPx * Math.sin(a);
+      var y = cy - radiusPx * Math.cos(a);
+      nodes[i].style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
+    }
+  }
+
+  function setTop(idx) {
+    for (var i = 0; i < nodes.length; i++) nodes[i].classList.toggle('is-top', i === idx);
+  }
+  function highlightUnderMarker() {
+    var best = 0, bestD = 1e9;
+    for (var i = 0; i < nodes.length; i++) {
+      var wa = ((i * STEP + rot) % 360 + 360) % 360;
+      var d = Math.min(wa, 360 - wa);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    setTop(best);
+  }
+  function highlightNearestToCursor() {
+    var sr = stage.getBoundingClientRect(), best = 0, bestD = 1e9;
+    var cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
+    for (var i = 0; i < nodes.length; i++) {
+      var a = (i * STEP + rot) * Math.PI / 180;
+      var x = sr.left + cx + radiusPx * Math.sin(a);
+      var y = sr.top + cy - radiusPx * Math.cos(a);
+      var d = Math.hypot(mx - x, my - y);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    setTop(best);
+  }
+
+  function frame() {
+    requestAnimationFrame(frame);
+    if (selecting) return;
+
+    if (focusTarget !== null) {
+      rot += (focusTarget - rot) * 0.18;
+      if (Math.abs(focusTarget - rot) < 0.15) { rot = focusTarget; focusTarget = null; }
+      vel = 0;
+      positionWheel(); highlightUnderMarker();
+      return;
+    }
+
+    var mode = classify();
+    if (mode === 'spin') {
+      var tv = spinVel();
+      vel += (tv - vel) * 0.09;
+      rot += vel;
+      if (Math.abs(tv) > 0.05) killHint();
+    } else if (mode === 'inside') {
+      vel += (0 - vel) * 0.25;
+      if (Math.abs(vel) < 0.02) vel = 0;
+      rot += vel;
+    } else {
+      vel += (0 - vel) * 0.12;
+      if (Math.abs(vel) < 0.05) {
+        var snap = Math.round(rot / STEP) * STEP;
+        rot += (snap - rot) * 0.14;
+        vel = 0;
+      } else {
+        rot += vel;
+      }
+    }
+
+    stage.classList.toggle('is-parked', mode === 'inside');
+    positionWheel();
+    if (mode === 'inside') highlightNearestToCursor();
+    else highlightUnderMarker();
+  }
+
+  positionWheel();
+  highlightUnderMarker();
+  frame();
+})();
+</script>
 </body>
 </html>
