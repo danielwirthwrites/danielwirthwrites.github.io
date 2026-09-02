@@ -64,12 +64,12 @@
     position: relative;
     height: 66vh; min-height: 460px;
     --radius: 200px;
-    touch-action: none;
   }
-  .ring { position: absolute; inset: 0; }
+  .ring { position: absolute; inset: 0; pointer-events: none; }
 
   .node {
     position: absolute; left: 0; top: 0;
+    pointer-events: auto; cursor: pointer;
     white-space: nowrap;
     font-family: var(--display); font-weight: 600;
     font-size: 1rem; letter-spacing: 0.01em;
@@ -187,6 +187,7 @@
   var HIT = 40;
 
   var rot = -72;               // About (index 1) starts at the top
+  var lastRot = null;
   var vel = 0, nx = 0, mx = -9999, my = -9999;
   var radiusPx = 200;
   var pointerInside = false;
@@ -219,7 +220,9 @@
     focusTarget = desired + Math.round((rot - desired) / 360) * 360;
   }
 
-  function enterRail(href, clicked) {
+  // Visual only. The <a href> handles the actual navigation natively, so a click
+  // always reaches the target page even if this animation is interrupted.
+  function startUnroll(clicked) {
     if (selecting) return;
     selecting = true;
     killHint();
@@ -231,21 +234,16 @@
     nodes.forEach(function (n, i) {
       n.classList.add('railed');
       n.classList.toggle('is-top', i === clicked);
-      n.style.transition = 'transform .7s cubic-bezier(.55,.12,.2,1), color .4s, font-size .4s, opacity .4s';
+      n.style.transition = 'transform .5s cubic-bezier(.55,.12,.2,1), color .3s, font-size .3s, opacity .3s';
       var xl = viewLeft - sr.left;
       var yl = (viewTop - sr.top) + i * gap;
       n.style.transform = 'translate(' + xl + 'px,' + yl + 'px) translate(0,-50%)';
     });
-    if (reduce) { window.location.href = href; return; }
-    setTimeout(function () { window.location.href = href; }, 820);
   }
 
   nodes.forEach(function (node, i) {
     node.addEventListener('focus', function () { if (!selecting) selectTop(i); });
-    node.addEventListener('click', function (e) {
-      e.preventDefault();
-      enterRail(node.getAttribute('href'), i);
-    });
+    node.addEventListener('click', function () { startUnroll(i); });
   });
 
   function classify() {
@@ -311,7 +309,7 @@
       rot += (focusTarget - rot) * 0.18;
       if (Math.abs(focusTarget - rot) < 0.15) { rot = focusTarget; focusTarget = null; }
       vel = 0;
-      positionWheel(); highlightUnderMarker();
+      positionWheel(); lastRot = rot; highlightUnderMarker();
       return;
     }
 
@@ -337,7 +335,7 @@
     }
 
     stage.classList.toggle('is-parked', mode === 'inside');
-    positionWheel();
+    if (rot !== lastRot) { positionWheel(); lastRot = rot; }
     if (mode === 'inside') highlightNearestToCursor();
     else highlightUnderMarker();
   }
