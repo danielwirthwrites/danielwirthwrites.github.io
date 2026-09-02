@@ -120,7 +120,7 @@
     position: fixed; left: 0; top: 0; bottom: 0; width: 208px; z-index: 40;
     background: linear-gradient(90deg, var(--surface), rgba(20,22,17,0.72));
     border-right: 1px solid var(--line);
-    transform: translateX(-100%); transition: transform .9s cubic-bezier(.5,.05,.2,1);
+    transform: translateX(-100%); transition: transform 1.5s cubic-bezier(.5,.05,.2,1);
     pointer-events: none;
   }
   body.railing .rail-scrim { transform: none; }
@@ -206,7 +206,7 @@
   var OUTER = 0.82;
   var MAX = 2.2;
   var HIT = 40;
-  var UNROLL_MS = 950;                       // wheel -> left rail collapse
+  var UNROLL_MS = 1500;                      // wheel -> left rail collapse
   var RAIL_LEFT = 44, RAIL_TOP = 128, RAIL_GAP = 52;
 
   var rot = -72;               // About (index 1) starts at the top
@@ -267,7 +267,34 @@
       n.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(0,-50%)';
     });
     if (href) setTimeout(function () { window.location.href = href; }, UNROLL_MS + 60);
+    // watchdog: if navigation never happened (blocked, or restored from bfcache), recover
+    setTimeout(function () { if (selecting) resetWheel(); }, UNROLL_MS + 4000);
   }
+
+  // Restore the wheel to a clean, interactive state. Needed after a bfcache
+  // restore (Back button), which freezes JS state exactly as it was left.
+  function resetWheel() {
+    selecting = false;
+    focusTarget = null;
+    vel = 0;
+    rot = -72;
+    lastRot = null;
+    document.body.classList.remove('railing', 'rolling');
+    stage.classList.remove('railing', 'intro', 'is-parked');
+    nodes.forEach(function (n) {
+      n.classList.remove('railed', 'is-top');
+      n.style.transition = '';
+      n.style.transform = '';
+    });
+    layout();
+    positionWheel();
+    lastRot = rot;
+    highlightUnderMarker();
+  }
+
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) resetWheel();
+  });
 
   nodes.forEach(function (node, i) {
     // rotate-to-top only for keyboard focus, not a mouse click

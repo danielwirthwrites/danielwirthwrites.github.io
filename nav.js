@@ -15,4 +15,9 @@
     document.body.classList.add('rolling');
     setTimeout(function () { window.location.href = href; }, 340);
   });
+
+  // undo the exit fade if this page comes back from the bfcache (Back button)
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) document.body.classList.remove('rolling');
+  });
 })();
