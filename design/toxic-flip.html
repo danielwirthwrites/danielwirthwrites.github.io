@@ -1,0 +1,226 @@
+<title>Toxic Flip Homepage</title>
+<meta name="description" content="Homepage preview for Daniel Wirth's author site: the Toxic palette with a continuously looping colour-shift gradient on the masthead, hazard stripe, divider and buttons.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:      #0a0b09;
+    --surface: #141611;
+    --line:    #2b2f22;
+    --text:    #eef3e6;
+    --muted:   #9aa585;
+    --lime:    #a3ff12;
+    --yellow:  #ffd21e;
+    --red:     #ff3b2f;
+    /* palindrome stops so the pattern tiles seamlessly -> one-direction endless loop.
+       wide spacing = long, soft blends between colours */
+    --grad: repeating-linear-gradient(100deg,
+      #c6ff00 0px, #c2fa2c 380px, #b7f52e 720px, #bef23c 1080px, #cbee42 1440px,
+      #d9ea48 1800px, #e7e64d 2160px, #f3e24f 2460px, #ffe14a 2700px, #ffd44c 2940px,
+      #ffc44a 3140px, #f7a83c 3320px, #e98a24 3460px, #d95e00 3560px, #d95e00 3660px,
+      #e98a24 3760px, #f7a83c 3900px, #ffc44a 4080px, #ffd44c 4280px, #ffe14a 4520px,
+      #f3e24f 4760px, #e7e64d 5060px, #d9ea48 5420px, #cbee42 5780px, #bef23c 6140px,
+      #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
+    --grad-cycle: 7220px;
+    --flow-dur: 22s;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--body); font-size: 1.25rem; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--lime); text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
+  /* continuous one-way colour flow.
+     background-attachment:fixed anchors ONE gradient to the viewport, so every
+     .flip element is just a window onto it -> identical speed, angle and phase
+     everywhere, top bar included. */
+  .flip-text, .flip-bg {
+    background-image: var(--grad);
+    background-attachment: fixed;
+    background-repeat: repeat;
+    background-position: 0 0;
+    animation: flow var(--flow-dur) linear infinite;
+  }
+  .flip-text {
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  @keyframes flow {
+    from { background-position: 0 0; }
+    to   { background-position: var(--grad-cycle) 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-text, .flip-bg { animation: none; background-position: 0 0; }
+  }
+
+  .heat-bar { height: 3px; width: 100%; }
+
+  .wrap { max-width: 42rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* header */
+  .site-header { border-bottom: 1px solid var(--line); }
+  .site-header .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 0.5rem 1.5rem; padding: 1.6rem 1.5rem;
+  }
+  .brand {
+    font-family: var(--display); font-weight: 600; font-size: 1.35rem;
+    letter-spacing: 0.01em; color: var(--text); text-decoration: none;
+  }
+  .nav { display: flex; flex-wrap: wrap; gap: 1.3rem; font-family: var(--display); font-size: 1rem; }
+  .nav a { position: relative; text-decoration: none; color: var(--muted); padding-bottom: 2px; }
+  .nav a[aria-current="page"] { color: var(--lime); }
+  .nav a::after {
+    content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%;
+    background-image: var(--grad); background-attachment: fixed;
+    transform: scaleX(0); transform-origin: left; transition: transform .28s ease;
+  }
+  .nav a:hover { color: var(--text); }
+  .nav a:hover::after { transform: scaleX(1); }
+
+  /* hero */
+  main { padding: 3.5rem 0 1rem; }
+  .hero { position: relative; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 1rem;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.8rem, 9vw, 4.2rem); line-height: 1.02; letter-spacing: -0.02em;
+    margin: 0 0 1.1rem; text-wrap: balance;
+    width: max-content; max-width: 100%;
+  }
+  .lead {
+    font-size: 1.4rem; font-style: italic; color: var(--muted);
+    max-width: 34ch; margin: 0 0 1.6rem;
+  }
+  .cta {
+    display: inline-block; font-family: var(--display); font-weight: 600; font-size: 1rem;
+    text-decoration: none; color: #0a0b09; padding: 0.6rem 1.25rem; border-radius: 4px;
+  }
+  .cta.ghost {
+    color: var(--text); background: transparent; border: 1px solid var(--line); margin-left: 0.6rem;
+  }
+  .cta.ghost:hover { border-color: var(--lime); color: var(--lime); }
+
+  .rule { height: 2px; margin: 3rem 0; border-radius: 2px; }
+
+  h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin: 0 0 1rem; color: var(--text); }
+
+  .label {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--lime); margin: 0 0 0.4rem;
+  }
+  .entry {
+    display: flex; justify-content: space-between; gap: 1.5rem;
+    padding: 1.1rem 0; border-top: 1px solid var(--line);
+  }
+  .entry:last-of-type { border-bottom: 1px solid var(--line); }
+  .entry a { font-family: var(--display); font-size: 1.2rem; color: var(--text); text-decoration: none; }
+  .entry a:hover { color: var(--lime); }
+  .entry .date { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+  .more { display: inline-block; margin-top: 1rem; font-family: var(--display); font-size: 0.95rem; }
+
+  .signup {
+    margin: 2.5rem 0 1rem; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 8px; padding: 1.75rem;
+  }
+  .signup h2 { margin-top: 0; }
+  .signup p { color: var(--muted); font-size: 1rem; margin: 0 0 1rem; }
+  .signup form { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .signup input {
+    flex: 1 1 14rem; padding: 0.7rem 0.85rem; font: inherit; font-size: 1rem;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 4px; color: var(--text);
+  }
+  .signup input::placeholder { color: #6f7a5e; }
+  .signup button {
+    padding: 0.7rem 1.4rem; font-family: var(--display); font-weight: 600; font-size: 1rem;
+    color: #0a0b09; border: 0; border-radius: 4px; cursor: pointer;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line); margin-top: 4rem; padding: 2rem 0 3rem;
+    font-size: 0.95rem; color: var(--muted);
+  }
+  .site-footer .wrap { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; }
+  .site-footer a { color: var(--muted); text-decoration: none; }
+  .site-footer a:hover { color: var(--lime); }
+
+  .note {
+    max-width: 42rem; margin: 1.5rem auto 3rem; padding: 0 1.5rem;
+    font-family: var(--mono); font-size: 0.78rem; line-height: 1.7; color: var(--muted);
+  }
+</style>
+
+<div class="heat-bar flip-bg"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#">Daniel Wirth</a>
+    <nav class="nav">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#">About</a>
+      <a href="#">Books &amp; Poetry</a>
+      <a href="#">Notebook</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Novels &middot; Poems &middot; Notes</p>
+      <h1 class="flip-text">Fiction&nbsp;&amp;<br>poetry.</h1>
+      <p class="lead">Novels and poems, and the occasional note from the desk.</p>
+      <a class="cta flip-bg" href="#">Read the work</a>
+      <a class="cta ghost" href="#">About Daniel</a>
+    </section>
+
+    <div class="rule flip-bg"></div>
+
+    <section>
+      <h2>Latest</h2>
+      <div class="entry"><a href="#">A new home for the writing</a><span class="date">31 Aug 2026</span></div>
+      <div class="entry"><a href="#">Three poems in <em>The Fen Review</em></a><span class="date">12 Aug 2026</span></div>
+      <a class="more" href="#">Everything in the notebook &rarr;</a>
+    </section>
+
+    <div class="signup">
+      <h2>Newsletter</h2>
+      <p>Occasional notes on new work and what I&rsquo;m reading. A few times a year, no more.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="you@example.com" aria-label="Email address" required>
+        <button type="submit" class="flip-bg">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2026 Daniel Wirth</span>
+    <span><a href="#">Contact</a> &middot; <a href="#">Newsletter</a></span>
+  </div>
+</footer>
+
+<p class="note">
+  Preview &mdash; palette 06 &ldquo;Toxic&rdquo;. The colour-shift flows continuously in one direction and loops
+  seamlessly. The cycle runs lime &rarr; yellow &rarr; a deep burnt orange (#d95e00) and back over ~28 stops, with the
+  green-to-yellow stretch broken into many close steps so it eases all the way through to orange with no visible step,
+  and the burnt orange sits on a soft plateau rather than a point. One
+  single gradient is pinned to the viewport, so the masthead, the top bar, the divider and the buttons are all windows
+  onto the same sheet &mdash; identical angle, speed and phase throughout. One full loop takes 22&nbsp;s. Links get a
+  gradient wipe on hover. All motion freezes for reduced-motion settings. Body text stays flat bone-white so prose and
+  poems read cleanly.
+</p>

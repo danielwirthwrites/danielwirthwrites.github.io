@@ -1,0 +1,348 @@
+<title>Ring Nav Prototype</title>
+<meta name="description" content="Layout prototype for Daniel Wirth's author site: the navigation as a wheel that turns with the mouse's horizontal position.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:      #0a0b09;
+    --surface: #141611;
+    --line:    #2b2f22;
+    --text:    #eef3e6;
+    --muted:   #8a9575;
+    --lime:    #c6ff00;
+    --grad: repeating-linear-gradient(100deg,
+      #c6ff00 0px, #c2fa2c 380px, #b7f52e 720px, #bef23c 1080px, #cbee42 1440px,
+      #d9ea48 1800px, #e7e64d 2160px, #f3e24f 2460px, #ffe14a 2700px, #ffd44c 2940px,
+      #ffc44a 3140px, #f7a83c 3320px, #e98a24 3460px, #d95e00 3560px, #d95e00 3660px,
+      #e98a24 3760px, #f7a83c 3900px, #ffc44a 4080px, #ffd44c 4280px, #ffe14a 4520px,
+      #f3e24f 4760px, #e7e64d 5060px, #d9ea48 5420px, #cbee42 5780px, #bef23c 6140px,
+      #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
+    --grad-cycle: 7220px;
+    --flow-dur: 22s;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'EB Garamond', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--body); font-size: 1.2rem; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 3px; }
+
+  .topbar {
+    height: 3px; width: 100%;
+    background-image: var(--grad); background-attachment: fixed;
+    animation: flow var(--flow-dur) linear infinite;
+  }
+  @keyframes flow { from { background-position: 0 0; } to { background-position: var(--grad-cycle) 0; } }
+
+  .page { max-width: 60rem; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+
+  .crumb {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--muted); text-align: center; margin: 0.5rem 0 0;
+  }
+
+  /* ---------- the wheel ---------- */
+  .stage {
+    position: relative;
+    height: 64vh; min-height: 440px;
+    display: grid; place-items: center;
+    --radius: 200px;
+    touch-action: none;
+  }
+  .ring {
+    position: absolute; left: 50%; top: 50%;
+    width: 0; height: 0;
+    --step: 72deg; --rot: -72deg;
+    transform: rotate(var(--rot));
+  }
+  .slot {
+    position: absolute; left: 0; top: 0; width: 0; height: 0;
+    transform: rotate(calc(var(--i) * var(--step))) translateY(calc(-1 * var(--radius)));
+  }
+  .node {
+    position: absolute; left: 0; top: 0;
+    transform: translate(-50%, -50%)
+               rotate(calc(-1 * var(--i) * var(--step)))
+               rotate(calc(-1 * var(--rot)));
+    white-space: nowrap;
+    font-family: var(--display); font-weight: 600;
+    font-size: 1rem; letter-spacing: 0.01em;
+    color: var(--muted); text-decoration: none;
+    opacity: 0.45;
+    transition: color .3s, opacity .3s, font-size .3s, font-weight .3s;
+    will-change: transform;
+  }
+  .node:hover { color: var(--text); opacity: 0.8; }
+  .node.is-top {
+    color: var(--lime); opacity: 1;
+    font-weight: 700; font-size: 1.6rem;
+  }
+
+  .hub {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+    color: var(--text); text-align: center; pointer-events: none;
+    letter-spacing: 0.02em;
+  }
+  .hub small { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 0.35rem; }
+
+  .ringline {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: calc(var(--radius) * 2); height: calc(var(--radius) * 2);
+    border: 1px solid var(--line); border-radius: 50%; pointer-events: none;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .stage.is-parked .ringline {
+    border-color: rgba(198, 255, 0, 0.5);
+    box-shadow: 0 0 40px rgba(198, 255, 0, 0.08) inset;
+  }
+  .marker {
+    position: absolute; left: 50%; top: calc(50% - var(--radius) - 30px);
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 7px solid transparent; border-right: 7px solid transparent;
+    border-top: 10px solid var(--lime);
+    pointer-events: none;
+  }
+
+  /* ---------- control strip ---------- */
+  .ctl { max-width: 32rem; margin: 0 auto; }
+  .ctl-track {
+    position: relative; height: 12px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--line); overflow: hidden;
+  }
+  .zone { position: absolute; top: 0; bottom: 0; }
+  .zone.stopL { left: 0; width: 9%; background: rgba(255,255,255,0.05); }
+  .zone.stopR { right: 0; width: 9%; background: rgba(255,255,255,0.05); }
+  .dot {
+    position: absolute; top: 50%; left: 50%;
+    width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
+    background: var(--lime); box-shadow: 0 0 10px rgba(198,255,0,0.6);
+    transition: left .05s linear;
+  }
+  .ctl-label {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 0.7rem;
+  }
+  .ctl-label b { color: var(--lime); font-weight: 500; }
+
+  .tagline { text-align: center; margin: 2.5rem 0 0; }
+  .tagline h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 3rem);
+    margin: 0 0 0.4rem; letter-spacing: -0.02em;
+  }
+  .tagline p { color: var(--muted); font-style: italic; margin: 0; }
+
+  .note {
+    max-width: 42rem; margin: 3rem auto 0; padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 0.78rem; line-height: 1.75; color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .topbar { animation: none; }
+    .node { opacity: 1; }
+  }
+</style>
+
+<div class="topbar"></div>
+
+<div class="page">
+  <p class="crumb">Daniel Wirth &nbsp;/&nbsp; layout study &nbsp;/&nbsp; ring navigation</p>
+
+  <div class="stage" id="stage">
+    <div class="ringline"></div>
+    <div class="marker"></div>
+    <nav class="ring" id="ring" aria-label="Sections">
+      <div class="slot" style="--i:0"><a class="node" href="#home">Home</a></div>
+      <div class="slot" style="--i:1"><a class="node" href="#about">About</a></div>
+      <div class="slot" style="--i:2"><a class="node" href="#books">Books &amp; Poetry</a></div>
+      <div class="slot" style="--i:3"><a class="node" href="#notebook">Notebook</a></div>
+      <div class="slot" style="--i:4"><a class="node" href="#contact">Contact</a></div>
+    </nav>
+    <div class="hub">Daniel Wirth<small>EST. 2026</small></div>
+  </div>
+
+  <div class="ctl">
+    <div class="ctl-track">
+      <span class="zone stopL"></span>
+      <span class="zone stopR"></span>
+      <span class="dot" id="dot"></span>
+    </div>
+    <p class="ctl-label" id="state">Move the cursor left or right to turn the wheel</p>
+  </div>
+
+  <div class="tagline">
+    <h1>Fiction &amp; poetry.</h1>
+    <p>Novels and poems, and the occasional note from the desk.</p>
+  </div>
+
+  <p class="note" id="hint">
+    The five sections sit on a wheel, &ldquo;About&rdquo; at the top to start. Move the mouse <b>right of centre</b> and
+    the wheel turns left; <b>left of centre</b> and it turns right &mdash; further out spins faster; near either edge it
+    stops. Move the cursor <b>onto or inside the ring</b> and it stops there and highlights the nearest section, ready to
+    click. Drop the cursor <b>below the ring</b> and it also stops (easing the nearest section under the marker). Click or
+    tab to a section to bring it to the top. Motion is disabled if your system is set to reduce motion.
+  </p>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.getElementById('stage');
+  var ring  = document.getElementById('ring');
+  var dot   = document.getElementById('dot');
+  var state = document.getElementById('state');
+  var slots = [].slice.call(ring.querySelectorAll('.slot'));
+  var nodes = slots.map(function (s) { return s.querySelector('.node'); });
+
+  var STEP = 72;
+  var OUTER = 0.82;    // |nx| beyond this -> stop
+  var MAX = 2.2;       // deg per frame at full tilt
+  var HIT = 40;        // px added to the radius so labels sitting on the ring count as "inside"
+
+  var rot = -72;       // About (i=1) at top:  1*STEP + rot = 0
+  var vel = 0;
+  var nx = 0;          // -1 .. 1 horizontal cursor position
+  var mx = -9999, my = -9999;   // client coords
+  var radiusPx = 200;
+  var pointerInside = false;
+  var focusTarget = null;
+
+  function layout() {
+    var s = Math.min(stage.clientWidth, stage.clientHeight);
+    radiusPx = Math.max(118, Math.min(210, s * 0.40));
+    stage.style.setProperty('--radius', radiusPx + 'px');
+  }
+  layout();
+  window.addEventListener('resize', layout);
+
+  window.addEventListener('mousemove', function (e) {
+    mx = e.clientX; my = e.clientY;
+    nx = (e.clientX / window.innerWidth - 0.5) * 2;
+    pointerInside = true;
+    if (focusTarget !== null) focusTarget = null;
+  });
+  window.addEventListener('mouseleave', function () { pointerInside = false; });
+  window.addEventListener('blur', function () { pointerInside = false; });
+
+  function selectTop(i) {
+    var desired = -i * STEP;
+    focusTarget = desired + Math.round((rot - desired) / 360) * 360;
+  }
+  nodes.forEach(function (node, i) {
+    node.addEventListener('click', function (e) { e.preventDefault(); selectTop(i); });
+    node.addEventListener('focus', function () { selectTop(i); });
+  });
+
+  // where is the cursor, relative to the wheel?
+  function classify() {
+    if (!pointerInside || reduce) return 'rest';
+    var sr = stage.getBoundingClientRect();
+    var cx = sr.left + sr.width / 2, cy = sr.top + sr.height / 2;
+    var d = Math.hypot(mx - cx, my - cy);
+    if (d <= radiusPx + HIT) return 'inside';   // on or within the ring
+    if (my > cy + radiusPx) return 'below';     // dropped below the ring
+    if (Math.abs(nx) > OUTER) return 'edge';    // too far to the side
+    return 'spin';
+  }
+
+  function spinVel() {
+    var ax = Math.abs(nx);
+    var start = Math.min(0.45, radiusPx / (window.innerWidth / 2));  // ramp begins at the ring's edge
+    if (ax <= start || ax > OUTER) return 0;
+    var m = (ax - start) / (OUTER - start);
+    m = m * m * (3 - 2 * m);                     // smoothstep
+    return -Math.sign(nx) * m * MAX;             // cursor right -> negative -> turns left
+  }
+
+  function highlightNearestToCursor() {
+    var best = 0, bestD = 1e9;
+    for (var i = 0; i < nodes.length; i++) {
+      var r = nodes[i].getBoundingClientRect();
+      var d = Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2));
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    setTop(best);
+  }
+  function highlightUnderMarker() {
+    var best = 0, bestD = 1e9;
+    for (var i = 0; i < nodes.length; i++) {
+      var wa = ((i * STEP + rot) % 360 + 360) % 360;
+      var d = Math.min(wa, 360 - wa);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    setTop(best);
+  }
+  function setTop(idx) {
+    nodes.forEach(function (n, i) { n.classList.toggle('is-top', i === idx); });
+  }
+
+  function setStrip(mode, tv) {
+    dot.style.left = Math.max(0, Math.min(100, (nx * 0.5 + 0.5) * 100)) + '%';
+    var label;
+    if (mode === 'inside')      label = '<b>On the wheel</b> &mdash; pick the nearest section';
+    else if (mode === 'below')  label = '<b>Below the wheel</b> &mdash; stopped';
+    else if (mode === 'edge')   label = '<b>Edge</b> &mdash; stopped';
+    else if (mode === 'rest')   label = 'Move the cursor left or right to turn the wheel';
+    else if (tv < -0.02)        label = 'Turning <b>left</b> &#9664;';
+    else if (tv > 0.02)         label = 'Turning <b>right</b> &#9654;';
+    else                        label = 'Move further from centre to turn';
+    state.innerHTML = label;
+  }
+
+  function frame() {
+    requestAnimationFrame(frame);
+
+    if (focusTarget !== null) {
+      rot += (focusTarget - rot) * 0.18;
+      if (Math.abs(focusTarget - rot) < 0.15) { rot = focusTarget; focusTarget = null; }
+      vel = 0;
+      ring.style.setProperty('--rot', rot.toFixed(2) + 'deg');
+      highlightUnderMarker();
+      setStrip('spin', 0);
+      return;
+    }
+
+    var mode = classify();
+    var tv = 0;
+
+    if (mode === 'spin') {
+      tv = spinVel();
+      vel += (tv - vel) * 0.09;
+      rot += vel;
+    } else if (mode === 'inside') {
+      vel += (0 - vel) * 0.25;                   // coast to a quick stop, in place
+      if (Math.abs(vel) < 0.02) vel = 0;
+      rot += vel;
+    } else {                                     // 'below' or 'edge' -> ease + snap to marker
+      vel += (0 - vel) * 0.12;
+      if (Math.abs(vel) < 0.05) {
+        var snap = Math.round(rot / STEP) * STEP;
+        rot += (snap - rot) * 0.14;
+        vel = 0;
+      } else {
+        rot += vel;
+      }
+    }
+
+    ring.style.setProperty('--rot', rot.toFixed(2) + 'deg');
+    stage.classList.toggle('is-parked', mode === 'inside');
+
+    if (mode === 'inside') highlightNearestToCursor();
+    else highlightUnderMarker();
+
+    setStrip(mode, tv);
+  }
+
+  highlightUnderMarker();
+  frame();
+})();
+</script>

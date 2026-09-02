@@ -1,0 +1,425 @@
+<title>Author Site Palettes</title>
+<meta name="description" content="Dark colour schemes for Daniel Wirth's author site, from restrained to race-kit loud, each on a live homepage mockup.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --board-bg:    #0b0c0d;
+    --board-panel: #131416;
+    --board-text:  #e9e7e2;
+    --board-mut:   #8f8d87;
+    --board-line:  #ffffff1f;
+    --board-accent:#c9a24b;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Newsreader', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--board-bg);
+    color: var(--board-text);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1120px; margin: 0 auto; padding: clamp(2rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem) 6rem; }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--board-mut);
+    margin: 0 0 1.25rem;
+  }
+  h1.board-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0 0 1rem;
+  }
+  .intro {
+    max-width: 62ch;
+    color: var(--board-mut);
+    font-size: 1.08rem;
+    margin: 0 0 2.5rem;
+  }
+  .intro em { color: var(--board-text); font-style: italic; }
+
+  .reco {
+    border: 1px solid var(--board-line);
+    border-left: 3px solid var(--board-accent);
+    background: var(--board-panel);
+    padding: 1.25rem 1.4rem;
+    margin: 0 0 3.5rem;
+    max-width: 70ch;
+  }
+  .reco h2 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--board-accent);
+    margin: 0 0 0.7rem;
+  }
+  .reco p { margin: 0.55rem 0 0; font-size: 1rem; color: var(--board-text); }
+  .reco p:first-of-type { margin-top: 0; }
+  .reco b { font-weight: 600; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--board-mut);
+  }
+  .divider::after { content: ""; flex: 1; height: 1px; background: var(--board-line); }
+
+  /* ---- specimen ---- */
+  .specimen { margin: 0 0 4rem; }
+  .specimen-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin: 0 0 1rem;
+  }
+  .specimen-index { font-family: var(--mono); font-size: 0.8rem; color: var(--board-mut); }
+  .specimen-name { font-family: var(--display); font-weight: 500; font-size: 1.5rem; margin: 0; }
+  .specimen-note { color: var(--board-mut); font-size: 0.98rem; max-width: 64ch; margin: 0 0 1.25rem; }
+
+  .frame { border: 1px solid var(--board-line); border-radius: 10px; overflow: hidden; }
+
+  .mock {
+    background: var(--m-bg);
+    color: var(--m-text);
+    font-family: var(--body);
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+  }
+  .mock-nav {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+    gap: 0.5rem 1.5rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--m-line);
+  }
+  .mock-brand { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--m-text); letter-spacing: 0.01em; }
+  .mock-links { display: flex; flex-wrap: wrap; gap: 1.1rem; font-family: var(--display); font-size: 0.9rem; }
+  .mock-links span { color: var(--m-mut); }
+  .mock-links span.here { color: var(--m-acc); }
+
+  .mock-hero { padding: 2.4rem 0 1.8rem; }
+  .mock-hero h3 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(2rem, 5.5vw, 3rem); line-height: 1.08; letter-spacing: -0.02em;
+    margin: 0 0 0.9rem; color: var(--m-text);
+  }
+  .mock-lead { font-style: italic; font-size: 1.15rem; color: var(--m-mut); margin: 0 0 1rem; max-width: 44ch; }
+  .mock-link { color: var(--m-acc); font-family: var(--display); font-size: 0.95rem; }
+  .mock-rule { height: 1px; background: var(--m-line); margin: 1.6rem 0; }
+  .mock-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--m-mut); margin: 0 0 0.6rem; }
+  .mock-entry { display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid var(--m-line); }
+  .mock-entry .t { font-family: var(--display); color: var(--m-text); font-size: 1.05rem; }
+  .mock-entry .d { color: var(--m-mut); font-size: 0.85rem; font-family: var(--mono); white-space: nowrap; }
+
+  .mock-signup { margin-top: 1.8rem; background: var(--m-surf); border: 1px solid var(--m-line); border-radius: 6px; padding: 1.3rem; }
+  .mock-signup p { margin: 0 0 0.9rem; color: var(--m-mut); font-size: 0.95rem; }
+  .mock-form { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .mock-form input {
+    flex: 1 1 12rem; padding: 0.6rem 0.75rem; font: inherit; font-size: 0.9rem;
+    background: var(--m-bg); border: 1px solid var(--m-line); border-radius: 4px; color: var(--m-text);
+  }
+  .mock-form button {
+    padding: 0.6rem 1.2rem; font-family: var(--display); font-size: 0.9rem; font-weight: 600;
+    border: 0; border-radius: 4px; background: var(--m-acc); color: var(--m-btn-ink); cursor: pointer;
+  }
+
+  /* ---- flip-paint modifier ---- */
+  .mock.flip .mock-hero h3 {
+    background: var(--m-grad);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: flow 9s ease-in-out infinite;
+  }
+  .mock.flip .mock-form button {
+    background: var(--m-grad);
+    background-size: 300% 100%;
+    color: #0a0a0c;
+    animation: flow 9s ease-in-out infinite;
+  }
+  .mock.flip .mock-rule {
+    height: 2px;
+    background: var(--m-grad);
+    background-size: 300% 100%;
+    animation: flow 9s ease-in-out infinite;
+  }
+  @keyframes flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mock.flip .mock-hero h3, .mock.flip .mock-form button, .mock.flip .mock-rule { animation: none; }
+  }
+
+  /* swatches */
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); background: var(--board-panel); }
+  .swatch { padding: 0.85rem 0.75rem 0.9rem; border-top: 1px solid var(--board-line); }
+  .swatch + .swatch { border-left: 1px solid var(--board-line); }
+  .chip { height: 34px; border-radius: 4px; border: 1px solid #ffffff1a; margin-bottom: 0.5rem; }
+  .swatch .role { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--board-mut); display: block; }
+  .swatch .hex { font-family: var(--mono); font-size: 0.72rem; color: var(--board-text); }
+  @media (max-width: 640px) {
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+    .swatch:nth-child(4) { border-left: 0; }
+  }
+
+  .fade { opacity: 0; transform: translateY(10px); animation: rise 0.7s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .fade { animation: none; opacity: 1; transform: none; } }
+
+  .closing { color: var(--board-mut); font-size: 0.98rem; max-width: 62ch; border-top: 1px solid var(--board-line); padding-top: 1.5rem; }
+</style>
+
+<div class="page">
+  <p class="kicker fade">Daniel Wirth &nbsp;/&nbsp; author site &nbsp;/&nbsp; colour direction</p>
+  <h1 class="board-title fade">Author site palettes</h1>
+  <p class="intro fade">Every scheme here is a <em>committed</em> dark identity &mdash; one fixed set of colours, no light-mode switch. The first three below turned out too safe, so <em>Round two</em> takes the brief literally: race-kit, custom-paint, hazard-sticker loud. In all of them the loud colour lives on headlines, links and buttons; body paragraphs stay near-white so pages of prose and poetry are still readable.</p>
+
+  <div class="reco fade">
+    <h2>Recommendation &mdash; Round two</h2>
+    <p><b>05 &mdash; Flip Paint</b> is the pick for &ldquo;out of this world&rdquo;: a chameleon magenta&rarr;violet&rarr;cyan&rarr;lime shift, the same trick as colour-flip motorcycle paint, run across the masthead and buttons only. The ground stays near-black and the reading text stays calm, so it's wild without being unusable.</p>
+    <p><b>04 &mdash; Two-Stroke</b> if you want it loud but simpler: gunmetal, fluoro orange, electric cyan. <b>06 &mdash; Toxic</b> for maximum aggression: matte black, radioactive lime, hazard yellow.</p>
+  </div>
+
+  <p class="divider fade">Round two &mdash; loud</p>
+
+  <!-- ================= 04 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#0c0d10; --m-surf:#16181d; --m-line:#2b2f38;
+      --m-text:#f2f4f8; --m-mut:#9aa3b2; --m-acc:#ff5a1f; --m-btn-ink:#160600;">
+    <div class="specimen-head"><span class="specimen-index">04</span><h2 class="specimen-name">Two-Stroke</h2></div>
+    <p class="specimen-note">Gunmetal-black with a fluoro-orange primary and an electric-cyan second accent, plus an acid-lime spark for small details. Straight off a race graphics kit.</p>
+    <div class="frame">
+      <div class="mock">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label" style="color:#17e0e0;">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#0c0d10"></div><span class="role">Ground</span><span class="hex">#0C0D10</span></div>
+        <div class="swatch"><div class="chip" style="background:#16181d"></div><span class="role">Surface</span><span class="hex">#16181D</span></div>
+        <div class="swatch"><div class="chip" style="background:#2b2f38"></div><span class="role">Line</span><span class="hex">#2B2F38</span></div>
+        <div class="swatch"><div class="chip" style="background:#f2f4f8"></div><span class="role">Text</span><span class="hex">#F2F4F8</span></div>
+        <div class="swatch"><div class="chip" style="background:#ff5a1f"></div><span class="role">Orange</span><span class="hex">#FF5A1F</span></div>
+        <div class="swatch"><div class="chip" style="background:#17e0e0"></div><span class="role">Cyan</span><span class="hex">#17E0E0</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#0a0a0c; --m-surf:#141418; --m-line:#2a2a33;
+      --m-text:#e9ecf2; --m-mut:#9b98ab; --m-acc:#ff4db8; --m-btn-ink:#0a0a0c;
+      --m-grad:linear-gradient(100deg,#ff2d95,#a45cff,#22d3ee,#b6ff3a);">
+    <div class="specimen-head"><span class="specimen-index">05</span><h2 class="specimen-name">Flip Paint</h2></div>
+    <p class="specimen-note">Near-black with a colour-shift &ldquo;chameleon&rdquo; gradient &mdash; magenta, violet, cyan, lime &mdash; that drifts across the masthead, the rule and the button. Links use a solid hot magenta. The gradient animates slowly; it holds still for anyone with reduced-motion set.</p>
+    <div class="frame">
+      <div class="mock flip">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#0a0a0c"></div><span class="role">Ground</span><span class="hex">#0A0A0C</span></div>
+        <div class="swatch"><div class="chip" style="background:#141418"></div><span class="role">Surface</span><span class="hex">#141418</span></div>
+        <div class="swatch"><div class="chip" style="background:#e9ecf2"></div><span class="role">Text</span><span class="hex">#E9ECF2</span></div>
+        <div class="swatch"><div class="chip" style="background:linear-gradient(100deg,#ff2d95,#a45cff,#22d3ee,#b6ff3a)"></div><span class="role">Flip</span><span class="hex">gradient</span></div>
+        <div class="swatch"><div class="chip" style="background:#ff4db8"></div><span class="role">Magenta</span><span class="hex">#FF4DB8</span></div>
+        <div class="swatch"><div class="chip" style="background:#22d3ee"></div><span class="role">Cyan</span><span class="hex">#22D3EE</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#0a0b09; --m-surf:#141611; --m-line:#262a1e;
+      --m-text:#eef3e6; --m-mut:#9aa585; --m-acc:#a3ff12; --m-btn-ink:#0c1500;">
+    <div class="specimen-head"><span class="specimen-index">06</span><h2 class="specimen-name">Toxic</h2></div>
+    <p class="specimen-note">Matte black with radioactive lime, a hazard-yellow second accent and a warning-red spark. Biohazard sticker on a flat-black tank. The most aggressive of the set.</p>
+    <div class="frame">
+      <div class="mock">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label" style="color:#ffd21e;">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#0a0b09"></div><span class="role">Ground</span><span class="hex">#0A0B09</span></div>
+        <div class="swatch"><div class="chip" style="background:#141611"></div><span class="role">Surface</span><span class="hex">#141611</span></div>
+        <div class="swatch"><div class="chip" style="background:#262a1e"></div><span class="role">Line</span><span class="hex">#262A1E</span></div>
+        <div class="swatch"><div class="chip" style="background:#eef3e6"></div><span class="role">Text</span><span class="hex">#EEF3E6</span></div>
+        <div class="swatch"><div class="chip" style="background:#a3ff12"></div><span class="role">Lime</span><span class="hex">#A3FF12</span></div>
+        <div class="swatch"><div class="chip" style="background:#ffd21e"></div><span class="role">Hazard</span><span class="hex">#FFD21E</span></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="divider fade">Round one &mdash; restrained (kept for reference)</p>
+
+  <!-- ================= 01 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#0e1c1d; --m-surf:#152a2c; --m-line:#294648;
+      --m-text:#e7efe9; --m-mut:#8ba7a2; --m-acc:#f0774c; --m-btn-ink:#1a0d07;">
+    <div class="specimen-head"><span class="specimen-index">01</span><h2 class="specimen-name">Petrol &amp; Ember</h2></div>
+    <p class="specimen-note">Deep petrol teal with an ember-orange accent and a brass detail. Cool ground, warm highlights.</p>
+    <div class="frame">
+      <div class="mock">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#0e1c1d"></div><span class="role">Ground</span><span class="hex">#0E1C1D</span></div>
+        <div class="swatch"><div class="chip" style="background:#152a2c"></div><span class="role">Surface</span><span class="hex">#152A2C</span></div>
+        <div class="swatch"><div class="chip" style="background:#294648"></div><span class="role">Line</span><span class="hex">#294648</span></div>
+        <div class="swatch"><div class="chip" style="background:#e7efe9"></div><span class="role">Text</span><span class="hex">#E7EFE9</span></div>
+        <div class="swatch"><div class="chip" style="background:#f0774c"></div><span class="role">Accent</span><span class="hex">#F0774C</span></div>
+        <div class="swatch"><div class="chip" style="background:#e2b96b"></div><span class="role">Brass</span><span class="hex">#E2B96B</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#180f1d; --m-surf:#241829; --m-line:#3a2b41;
+      --m-text:#ece3ef; --m-mut:#a493ad; --m-acc:#ec9ac2; --m-btn-ink:#1c0f18;">
+    <div class="specimen-head"><span class="specimen-index">02</span><h2 class="specimen-name">Aubergine Nocturne</h2></div>
+    <p class="specimen-note">Near-black plum, lavender-grey text, a dusty-rose accent and a soft gold detail.</p>
+    <div class="frame">
+      <div class="mock">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#180f1d"></div><span class="role">Ground</span><span class="hex">#180F1D</span></div>
+        <div class="swatch"><div class="chip" style="background:#241829"></div><span class="role">Surface</span><span class="hex">#241829</span></div>
+        <div class="swatch"><div class="chip" style="background:#3a2b41"></div><span class="role">Line</span><span class="hex">#3A2B41</span></div>
+        <div class="swatch"><div class="chip" style="background:#ece3ef"></div><span class="role">Text</span><span class="hex">#ECE3EF</span></div>
+        <div class="swatch"><div class="chip" style="background:#ec9ac2"></div><span class="role">Accent</span><span class="hex">#EC9AC2</span></div>
+        <div class="swatch"><div class="chip" style="background:#e6bd80"></div><span class="role">Gold</span><span class="hex">#E6BD80</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 ================= -->
+  <section class="specimen fade" style="
+      --m-bg:#161210; --m-surf:#211a15; --m-line:#3a2e25;
+      --m-text:#ede1cf; --m-mut:#a58f78; --m-acc:#d15268; --m-btn-ink:#1a0b0c;">
+    <div class="specimen-head"><span class="specimen-index">03</span><h2 class="specimen-name">Oxblood &amp; Parchment</h2></div>
+    <p class="specimen-note">Warm brown-black, parchment text, an oxblood accent and antique gold. Reads like a hardback.</p>
+    <div class="frame">
+      <div class="mock">
+        <div class="mock-nav">
+          <span class="mock-brand">Daniel Wirth</span>
+          <span class="mock-links"><span class="here">Home</span><span>About</span><span>Books &amp; Poetry</span><span>Notebook</span><span>Contact</span></span>
+        </div>
+        <div class="mock-hero">
+          <h3>Fiction &amp; poetry.</h3>
+          <p class="mock-lead">Novels and poems, and the occasional note from the desk.</p>
+          <span class="mock-link">See the books &amp; poetry &rarr;</span>
+        </div>
+        <div class="mock-rule"></div>
+        <p class="mock-label">Latest</p>
+        <div class="mock-entry"><span class="t">A new home for the writing</span><span class="d">31 Aug 2026</span></div>
+        <div class="mock-signup">
+          <p>Occasional notes on new work and what I&rsquo;m reading.</p>
+          <div class="mock-form"><input type="email" placeholder="you@example.com" aria-label="Email"><button type="button">Subscribe</button></div>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#161210"></div><span class="role">Ground</span><span class="hex">#161210</span></div>
+        <div class="swatch"><div class="chip" style="background:#211a15"></div><span class="role">Surface</span><span class="hex">#211A15</span></div>
+        <div class="swatch"><div class="chip" style="background:#3a2e25"></div><span class="role">Line</span><span class="hex">#3A2E25</span></div>
+        <div class="swatch"><div class="chip" style="background:#ede1cf"></div><span class="role">Text</span><span class="hex">#EDE1CF</span></div>
+        <div class="swatch"><div class="chip" style="background:#d15268"></div><span class="role">Accent</span><span class="hex">#D15268</span></div>
+        <div class="swatch"><div class="chip" style="background:#cf9f5c"></div><span class="role">Gold</span><span class="hex">#CF9F5C</span></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="closing">Tell me which number, or mix them &mdash; &ldquo;04's ground with 05's gradient,&rdquo; &ldquo;06 but swap red for cyan.&rdquo; Once the palette is locked I&rsquo;ll build it into the real site, then start on the interactive homepage.</p>
+</div>
