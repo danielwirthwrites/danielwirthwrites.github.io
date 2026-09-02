@@ -138,6 +138,16 @@
   }
   .hint.gone { opacity: 0; }
 
+  .plainnav {
+    margin: 2.25rem auto 0; display: flex; flex-wrap: wrap;
+    gap: 0.4rem 1.4rem; justify-content: center;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
+    text-transform: uppercase; transition: opacity .3s;
+  }
+  .plainnav a { color: var(--muted); text-decoration: none; }
+  .plainnav a:hover { color: var(--lime); }
+  body.railing .plainnav { opacity: 0; }
+
   @media (prefers-reduced-motion: reduce) {
     .topbar { animation: none; }
     .node { opacity: 1; }
@@ -171,6 +181,14 @@
   </div>
 
   <p class="hint" id="hint">Move to turn &nbsp;&middot;&nbsp; click to enter</p>
+
+  <nav class="plainnav" aria-label="Sections">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="books.html">Books &amp; Poetry</a>
+    <a href="blog/index.html">Notebook</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </div>
 
 <script>
@@ -320,9 +338,7 @@
       rot += vel;
       if (Math.abs(tv) > 0.05) killHint();
     } else if (mode === 'inside') {
-      vel += (0 - vel) * 0.25;
-      if (Math.abs(vel) < 0.02) vel = 0;
-      rot += vel;
+      vel = 0;            // cursor on the wheel -> freeze it hard so the labels are clickable
     } else {
       vel += (0 - vel) * 0.12;
       if (Math.abs(vel) < 0.05) {
