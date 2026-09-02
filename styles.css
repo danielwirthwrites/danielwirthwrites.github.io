@@ -129,6 +129,14 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .work .meta { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
 @media (max-width: 34rem) { .work { grid-template-columns: 1fr; } }
 
+.buy {
+  display: inline-block; font-family: var(--display); font-weight: 700; font-size: 0.95rem;
+  text-decoration: none; color: #0a0b09; padding: 0.5rem 1.1rem; border-radius: 4px;
+  background-image: var(--grad); background-attachment: fixed;
+  animation: flow var(--flow-dur) linear infinite;
+}
+.buy:hover { filter: brightness(1.06); }
+
 /* lists */
 .posts { list-style: none; padding: 0; margin: 0; }
 .posts li { padding: 1.3rem 0; border-top: 1px solid var(--line); }
@@ -200,5 +208,5 @@ body.rolling .main { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .topbar, .rail::after, .rail a.sec[aria-current="page"]::before,
-  .page-title, .signup button { animation: none; }
+  .page-title, .signup button, .buy { animation: none; }
 }
