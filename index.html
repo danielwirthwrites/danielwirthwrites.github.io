@@ -43,6 +43,12 @@
   a { color: var(--lime); }
   :focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 3px; }
 
+  /* cross-page crossfade so each page's accent colour fades into the next */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: .55s; animation-timing-function: ease; }
+  @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
   .topbar {
     position: relative; z-index: 2;
     height: 3px; width: 100%;
@@ -207,7 +213,7 @@
   var MAX = 2.2;
   var HIT = 40;
   var UNROLL_MS = 1500;                      // wheel -> left rail collapse
-  var RAIL_LEFT = 44, RAIL_TOP = 128, RAIL_GAP = 52;
+  var RAIL_X = 128, RAIL_TOP = 118, RAIL_GAP = 54;   // node CENTRES in the collapsed column
 
   var rot = -72;               // About (index 1) starts at the top
   var lastRot = null;
@@ -243,12 +249,17 @@
     focusTarget = desired + Math.round((rot - desired) / 360) * 360;
   }
 
+  // node centre in the collapsed column, expressed in the same local coords positionWheel() uses
   function railXY(i, sr) {
-    return { x: RAIL_LEFT - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
+    return { x: RAIL_X - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
+  }
+  function railTransform(i, sr) {
+    var p = railXY(i, sr);
+    return 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) translate(-50%,-50%)';
   }
 
-  // Collapse the wheel into the left rail, then navigate. A guaranteed timer does
-  // the navigation, so the click always reaches the target page.
+  // Collapse the wheel into the left column, then navigate. Same transform shape as
+  // positionWheel() so it interpolates cleanly — no snap at the start.
   function startUnroll(clicked, href) {
     if (selecting) return;
     selecting = true;
@@ -259,12 +270,9 @@
     stage.classList.remove('is-parked');
     var sr = stage.getBoundingClientRect();
     nodes.forEach(function (n, i) {
-      n.classList.add('railed');
       n.classList.toggle('is-top', i === clicked);
-      n.style.transition = 'transform ' + (UNROLL_MS / 1000) +
-        's cubic-bezier(.5,.05,.2,1), color .4s, font-size .4s, opacity .4s';
-      var p = railXY(i, sr);
-      n.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(0,-50%)';
+      n.style.transition = 'transform ' + (UNROLL_MS / 1000) + 's cubic-bezier(.5,.05,.2,1), opacity .5s ease';
+      n.style.transform = railTransform(i, sr);
     });
     if (href) setTimeout(function () { window.location.href = href; }, UNROLL_MS + 60);
     // watchdog: if navigation never happened (blocked, or restored from bfcache), recover
@@ -416,8 +424,7 @@
     stage.classList.add('intro');
     nodes.forEach(function (n, i) {
       n.style.transition = 'none';
-      var p = railXY(i, sr0);
-      n.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(0,-50%)';
+      n.style.transform = railTransform(i, sr0);
     });
     void stage.offsetWidth;                 // lock in the start position
     nodes.forEach(function (n) {

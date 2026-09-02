@@ -10,10 +10,12 @@
   home.addEventListener('click', function (e) {
     try { sessionStorage.setItem('fromRail', '1'); } catch (err) {}
     if (reduce) return;                       // navigate normally
+    // If the browser can crossfade the navigation itself, let it — just a short
+    // beat for the rail to slide out first.
     e.preventDefault();
     var href = home.href;
     document.body.classList.add('rolling');
-    setTimeout(function () { window.location.href = href; }, 340);
+    setTimeout(function () { window.location.href = href; }, 260);
   });
 
   // undo the exit fade if this page comes back from the bfcache (Back button)
