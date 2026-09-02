@@ -3,55 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0b09">
 <title>Contact — Daniel Wirth</title>
 <meta name="description" content="Get in touch with Daniel Wirth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="styles.css">
+<style>
+  :root {
+    --accent: #ff8a3a;
+    --grad: repeating-linear-gradient(100deg,
+      #ffd166 0px, #ffbb4a 520px, #ffa338 1120px, #ff8b28 1760px, #ff7418 2360px,
+      #ec5c06 2980px, #d24d00 3610px, #ec5c06 4240px, #ff7418 4860px, #ff8b28 5460px,
+      #ffa338 6100px, #ffbb4a 6700px, #ffd166 7220px);
+  }
+</style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="site-title" href="index.html">Daniel Wirth</a>
-    <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="books.html">Books &amp; Poetry</a>
-      <a href="blog/index.html">Notebook</a>
-      <a href="contact.html" aria-current="page">Contact</a>
-    </nav>
-  </div>
-</header>
+<div class="topbar"></div>
 
-<main>
+<aside class="rail">
+  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
+  <nav aria-label="Sections">
+    <a class="sec" href="index.html">Home</a>
+    <a class="sec" href="about.html">About</a>
+    <a class="sec" href="books.html">Books &amp; Poetry</a>
+    <a class="sec" href="blog/index.html">Notebook</a>
+    <a class="sec" href="contact.html" aria-current="page">Contact</a>
+  </nav>
+</aside>
+
+<main class="main">
   <div class="wrap">
-    <h1>Contact</h1>
+    <h1 class="page-title">Contact</h1>
     <p class="lead">For readers, editors, agents, and event organisers.</p>
 
     <p>Email is the best way to reach me:
       <a href="mailto:YOUR-EMAIL@example.com">YOUR-EMAIL@example.com</a>.
-      Tell me which address you want shown here &mdash; your everyday inbox, or a
-      separate one just for writing enquiries.</p>
+      Tell me which address you want shown here &mdash; your everyday inbox, or a separate one just for writing enquiries.</p>
 
     <p>For rights and representation, please contact my agent (details on request).</p>
 
     <div class="signup">
       <h2>Newsletter</h2>
-      <p class="subtle">Occasional notes on new work and what I'm reading. A few times a year, no more.</p>
+      <p>Occasional notes on new work and what I&rsquo;m reading. A few times a year, no more.</p>
       <form action="https://buttondown.email/api/emails/embed-subscribe/USERNAME" method="post" target="_blank">
         <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required>
         <button type="submit">Subscribe</button>
       </form>
     </div>
+
+    <div class="page-footer">
+      <span>&copy; 2026 Daniel Wirth</span>
+      <span><a href="mailto:YOUR-EMAIL@example.com">Email</a> &middot; <a href="https://buttondown.email/USERNAME" target="_blank" rel="noopener">Newsletter</a></span>
+    </div>
   </div>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <span>&copy; <span id="year">2026</span> Daniel Wirth</span>
-    <span><a href="contact.html">Contact</a> &middot; <a href="https://buttondown.email/USERNAME" target="_blank" rel="noopener">Newsletter</a></span>
-  </div>
-</footer>
-
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
