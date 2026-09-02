@@ -27,6 +27,7 @@
       #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
     --grad-cycle: 7220px;
     --flow-dur: 22s;
+    --rail-w: 208px;
     --display: 'Fraunces', Georgia, serif;
     --body: 'EB Garamond', Georgia, serif;
     --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
@@ -64,6 +65,7 @@
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
     text-align: center; margin: 0.25rem 0 0; transition: opacity .4s;
   }
+  body.railing .page > .wordmark { opacity: 0; }
 
   /* ---------- wheel ---------- */
   .stage {
@@ -122,14 +124,37 @@
   .stage.intro .hub { opacity: 0; }
   .stage.railing .node { z-index: 61; }
 
-  .rail-scrim {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 208px; z-index: 40;
-    background: linear-gradient(90deg, var(--surface), rgba(20,22,17,0.72));
+  /* the real left rail — identical to the inner pages, so the collapse lands
+     exactly where the next page's menu renders. Hidden until the wheel folds in. */
+  .rail {
+    position: fixed; top: 3px; left: 0; bottom: 0; width: var(--rail-w); z-index: 45;
+    background: linear-gradient(180deg, var(--surface), #101208);
     border-right: 1px solid var(--line);
-    transform: translateX(-100%); transition: transform 1.5s cubic-bezier(.5,.05,.2,1);
-    pointer-events: none;
+    display: flex; flex-direction: column; padding: 1.9rem 0 1.4rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 1s ease .35s;
   }
-  body.railing .rail-scrim { transform: none; }
+  body.railing .rail { opacity: 1; }
+  .rail::after {
+    content: ""; position: absolute; top: 0; right: -1px; width: 2px; height: 100%;
+    background-image: var(--grad); background-attachment: fixed;
+    animation: flow var(--flow-dur) linear infinite; opacity: .55;
+  }
+  .rail .wordmark {
+    font-family: var(--display); font-weight: 700; font-size: 1.05rem;
+    letter-spacing: 0.02em; color: var(--text); text-decoration: none;
+    text-align: left; text-transform: none;
+    padding: 0 1.6rem; margin: 0 0 2rem; display: block;
+  }
+  .rail .wordmark small {
+    display: block; font-family: var(--mono); font-size: 0.56rem;
+    letter-spacing: 0.22em; color: var(--muted); margin-top: 0.4rem;
+  }
+  .rail nav { display: flex; flex-direction: column; gap: 0.15rem; }
+  .rail a.sec {
+    position: relative; font-family: var(--display); font-weight: 600; font-size: 1.12rem;
+    color: var(--muted); text-decoration: none; padding: 0.6rem 1.6rem;
+  }
 
   .tagline { text-align: center; margin: 1.5rem 0 0; transition: opacity .45s; }
   body.railing .tagline { opacity: 0; }
@@ -157,6 +182,20 @@
   .plainnav a:hover { color: var(--lime); }
   body.railing .plainnav { opacity: 0; }
 
+  @media (max-width: 820px) {
+    /* keep the transition rail overlaid (never in flow) so it can't shift the page */
+    .rail {
+      flex-direction: row; align-items: center; width: auto; right: 0;
+      gap: 0.4rem; overflow-x: auto; padding: 0.8rem 1rem;
+      border-right: 0; border-bottom: 1px solid var(--line);
+    }
+    .rail::after { display: none; }
+    .rail .wordmark { margin: 0 1rem 0 0; padding: 0; white-space: nowrap; }
+    .rail .wordmark small { display: none; }
+    .rail nav { flex-direction: row; }
+    .rail a.sec { padding: 0.5rem 0.8rem; font-size: 1rem; white-space: nowrap; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .topbar { animation: none; }
     .node { opacity: 1; }
@@ -166,7 +205,17 @@
 <body>
 
 <div class="topbar"></div>
-<div class="rail-scrim" aria-hidden="true"></div>
+
+<aside class="rail" id="homerail" aria-hidden="true">
+  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
+  <nav>
+    <a class="sec" href="index.html">Home</a>
+    <a class="sec" href="about.html">About</a>
+    <a class="sec" href="books.html">Books &amp; Poetry</a>
+    <a class="sec" href="blog/index.html">Notebook</a>
+    <a class="sec" href="contact.html">Contact</a>
+  </nav>
+</aside>
 
 <div class="page">
   <p class="wordmark">Daniel Wirth</p>
@@ -206,14 +255,17 @@
   var stage = document.getElementById('stage');
   var ring  = document.getElementById('ring');
   var hint  = document.getElementById('hint');
+  var homerail = document.getElementById('homerail');
   var nodes = [].slice.call(ring.querySelectorAll('.node'));
+  var railLinks = homerail ? [].slice.call(homerail.querySelectorAll('nav a.sec')) : [];
 
   var STEP = 72;
   var OUTER = 0.82;
   var MAX = 2.2;
   var HIT = 40;
   var UNROLL_MS = 1500;                      // wheel -> left rail collapse
-  var RAIL_X = 128, RAIL_TOP = 118, RAIL_GAP = 54;   // node CENTRES in the collapsed column
+  var RAIL_X = 128, RAIL_TOP = 118, RAIL_GAP = 54;   // fallback if the rail can't be measured
+  var RAIL_PAD_L = railLinks[0] ? parseFloat(getComputedStyle(railLinks[0]).paddingLeft) || 26 : 26;
 
   var rot = -72;               // About (index 1) starts at the top
   var lastRot = null;
@@ -249,17 +301,30 @@
     focusTarget = desired + Math.round((rot - desired) / 360) * 360;
   }
 
-  // node centre in the collapsed column, expressed in the same local coords positionWheel() uses
-  function railXY(i, sr) {
-    return { x: RAIL_X - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
-  }
-  function railTransform(i, sr) {
-    var p = railXY(i, sr);
+  function xform(p) {
     return 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) translate(-50%,-50%)';
   }
 
-  // Collapse the wheel into the left column, then navigate. Same transform shape as
-  // positionWheel() so it interpolates cleanly — no snap at the start.
+  // For each wheel node, the point (in stage-local coords) that puts its left edge
+  // on the real rail link's text and its centre on the link's centre — measured
+  // live from the actual rail element, so the collapse lands exactly where the
+  // next page's menu renders.
+  function railTargets(sr) {
+    var widths = nodes.map(function (n) { return n.offsetWidth; });
+    var rects  = railLinks.map(function (a) { return a.getBoundingClientRect(); });
+    return nodes.map(function (n, i) {
+      var t = rects[i];
+      if (t && t.width) {
+        return { x: (t.left + RAIL_PAD_L + widths[i] / 2) - sr.left,
+                 y: (t.top + t.height / 2) - sr.top };
+      }
+      return { x: RAIL_X - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
+    });
+  }
+
+  // Collapse the wheel into the left rail, then navigate. Same transform shape as
+  // positionWheel() (no size change) so it interpolates with no snap, and the
+  // real rail — identical to the next page's — fades in underneath.
   function startUnroll(clicked, href) {
     if (selecting) return;
     selecting = true;
@@ -269,10 +334,12 @@
     stage.classList.add('railing');
     stage.classList.remove('is-parked');
     var sr = stage.getBoundingClientRect();
+    var tg = railTargets(sr);
+    var d = UNROLL_MS / 1000;
     nodes.forEach(function (n, i) {
-      n.classList.toggle('is-top', i === clicked);
-      n.style.transition = 'transform ' + (UNROLL_MS / 1000) + 's cubic-bezier(.5,.05,.2,1), opacity .5s ease';
-      n.style.transform = railTransform(i, sr);
+      n.style.transition = 'transform ' + d + 's cubic-bezier(.5,.05,.2,1), opacity .45s ease ' + (d - 0.45) + 's';
+      n.style.transform = xform(tg[i]);
+      n.style.opacity = '0';
     });
     if (href) setTimeout(function () { window.location.href = href; }, UNROLL_MS + 60);
     // watchdog: if navigation never happened (blocked, or restored from bfcache), recover
@@ -293,6 +360,7 @@
       n.classList.remove('railed', 'is-top');
       n.style.transition = '';
       n.style.transform = '';
+      n.style.opacity = '';
     });
     layout();
     positionWheel();
@@ -421,10 +489,11 @@
     selecting = true;                       // hold the physics loop off during the intro
     killHint();
     var sr0 = stage.getBoundingClientRect();
+    var tg = railTargets(sr0);
     stage.classList.add('intro');
     nodes.forEach(function (n, i) {
       n.style.transition = 'none';
-      n.style.transform = railTransform(i, sr0);
+      n.style.transform = xform(tg[i]);
     });
     void stage.offsetWidth;                 // lock in the start position
     nodes.forEach(function (n) {
