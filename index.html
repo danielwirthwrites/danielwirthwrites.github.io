@@ -110,14 +110,17 @@
   .stage.railing { position: relative; z-index: 60; }
   .stage.railing .ringline,
   .stage.railing .marker,
-  .stage.railing .hub { opacity: 0; }
+  .stage.railing .hub,
+  .stage.intro .ringline,
+  .stage.intro .marker,
+  .stage.intro .hub { opacity: 0; }
   .stage.railing .node { z-index: 61; }
 
   .rail-scrim {
     position: fixed; left: 0; top: 0; bottom: 0; width: 208px; z-index: 40;
     background: linear-gradient(90deg, var(--surface), rgba(20,22,17,0.72));
     border-right: 1px solid var(--line);
-    transform: translateX(-100%); transition: transform .6s cubic-bezier(.55,.12,.2,1);
+    transform: translateX(-100%); transition: transform .9s cubic-bezier(.5,.05,.2,1);
     pointer-events: none;
   }
   body.railing .rail-scrim { transform: none; }
@@ -203,6 +206,8 @@
   var OUTER = 0.82;
   var MAX = 2.2;
   var HIT = 40;
+  var UNROLL_MS = 950;                       // wheel -> left rail collapse
+  var RAIL_LEFT = 44, RAIL_TOP = 128, RAIL_GAP = 52;
 
   var rot = -72;               // About (index 1) starts at the top
   var lastRot = null;
@@ -238,30 +243,43 @@
     focusTarget = desired + Math.round((rot - desired) / 360) * 360;
   }
 
-  // Visual only. The <a href> handles the actual navigation natively, so a click
-  // always reaches the target page even if this animation is interrupted.
-  function startUnroll(clicked) {
+  function railXY(i, sr) {
+    return { x: RAIL_LEFT - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
+  }
+
+  // Collapse the wheel into the left rail, then navigate. A guaranteed timer does
+  // the navigation, so the click always reaches the target page.
+  function startUnroll(clicked, href) {
     if (selecting) return;
     selecting = true;
+    focusTarget = null;
     killHint();
     document.body.classList.add('railing');
     stage.classList.add('railing');
     stage.classList.remove('is-parked');
     var sr = stage.getBoundingClientRect();
-    var viewLeft = 44, viewTop = 128, gap = 52;
     nodes.forEach(function (n, i) {
       n.classList.add('railed');
       n.classList.toggle('is-top', i === clicked);
-      n.style.transition = 'transform .5s cubic-bezier(.55,.12,.2,1), color .3s, font-size .3s, opacity .3s';
-      var xl = viewLeft - sr.left;
-      var yl = (viewTop - sr.top) + i * gap;
-      n.style.transform = 'translate(' + xl + 'px,' + yl + 'px) translate(0,-50%)';
+      n.style.transition = 'transform ' + (UNROLL_MS / 1000) +
+        's cubic-bezier(.5,.05,.2,1), color .4s, font-size .4s, opacity .4s';
+      var p = railXY(i, sr);
+      n.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(0,-50%)';
     });
+    if (href) setTimeout(function () { window.location.href = href; }, UNROLL_MS + 60);
   }
 
   nodes.forEach(function (node, i) {
-    node.addEventListener('focus', function () { if (!selecting) selectTop(i); });
-    node.addEventListener('click', function () { startUnroll(i); });
+    // rotate-to-top only for keyboard focus, not a mouse click
+    node.addEventListener('focus', function () {
+      var kb = false;
+      try { kb = node.matches(':focus-visible'); } catch (e) {}
+      if (!selecting && kb) selectTop(i);
+    });
+    node.addEventListener('click', function (e) {
+      e.preventDefault();
+      startUnroll(i, node.href);
+    });
   });
 
   function classify() {
@@ -356,7 +374,40 @@
     else highlightUnderMarker();
   }
 
-  positionWheel();
+  // Arriving from an inner page via the rail's "Home" link: reverse the collapse,
+  // rolling the left rail back out into the wheel.
+  var entering = false;
+  try {
+    entering = sessionStorage.getItem('fromRail') === '1';
+    sessionStorage.removeItem('fromRail');
+  } catch (e) {}
+
+  if (entering && !reduce) {
+    selecting = true;                       // hold the physics loop off during the intro
+    killHint();
+    var sr0 = stage.getBoundingClientRect();
+    stage.classList.add('intro');
+    nodes.forEach(function (n, i) {
+      n.style.transition = 'none';
+      var p = railXY(i, sr0);
+      n.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(0,-50%)';
+    });
+    void stage.offsetWidth;                 // lock in the start position
+    nodes.forEach(function (n) {
+      n.style.transition = 'transform ' + (UNROLL_MS / 1000) + 's cubic-bezier(.2,.7,.2,1)';
+    });
+    requestAnimationFrame(function () {
+      void stage.offsetWidth;
+      stage.classList.remove('intro');      // fade the ring outline + hub in
+      positionWheel(); lastRot = rot;       // nodes glide from the rail into the circle
+    });
+    setTimeout(function () {
+      nodes.forEach(function (n) { n.style.transition = ''; });
+      selecting = false;
+    }, UNROLL_MS + 80);
+  } else {
+    positionWheel();
+  }
   highlightUnderMarker();
   frame();
 })();

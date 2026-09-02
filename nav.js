@@ -1,0 +1,18 @@
+/* Inner-page rail behaviour.
+   Clicking "Home" flags the session so the homepage plays its reverse
+   (rail -> wheel) animation, and does a short exit fade first. */
+(function () {
+  var home = document.getElementById('nav-home');
+  if (!home) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  home.addEventListener('click', function (e) {
+    try { sessionStorage.setItem('fromRail', '1'); } catch (err) {}
+    if (reduce) return;                       // navigate normally
+    e.preventDefault();
+    var href = home.href;
+    document.body.classList.add('rolling');
+    setTimeout(function () { window.location.href = href; }, 340);
+  });
+})();
