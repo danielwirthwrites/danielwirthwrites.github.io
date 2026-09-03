@@ -118,13 +118,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 
 /* books */
-.work { display: grid; grid-template-columns: 92px 1fr; gap: 1.5rem; padding: 1.75rem 0; border-top: 1px solid var(--line); }
+.work {
+  display: grid; grid-template-columns: 104px 1fr; gap: 1.5rem;
+  align-items: start;               /* nothing stretches to row height */
+  padding: 1.75rem 0; border-top: 1px solid var(--line);
+}
 .work:last-of-type { border-bottom: 1px solid var(--line); }
 .work .cover {
-  width: 92px; align-self: start;
+  width: 104px; align-self: start;
   border: 1px solid var(--line); border-radius: 2px;
 }
-img.cover { display: block; height: auto; }
+img.cover {
+  display: block; width: 104px; height: auto;   /* keep the file's own ratio */
+  object-fit: contain;                            /* never distort */
+}
 div.cover {
   aspect-ratio: 2 / 3; background: var(--raised);
   display: grid; place-items: center; text-align: center; padding: 0.5rem;
