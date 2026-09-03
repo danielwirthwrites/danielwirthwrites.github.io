@@ -24,8 +24,10 @@ Notebook = yellow, Contact = orange.
 | `index.html` | Home — self-contained (wheel nav + its own CSS/JS) |
 | `about.html` | About (green) |
 | `books.html` | Books & Poetry (turquoise) |
-| `blog/index.html` | Notebook — list of posts (yellow) |
-| `blog/YYYY-MM-DD-slug.html` | An individual post |
+| `blog/index.html` | Notebook — list of topics (yellow) |
+| `blog/<topic>/index.html` | A topic hub (e.g. `disposal-unit/`, `notes/`) |
+| `blog/<topic>/<slug>.html` | One entry — article / character / poem / update |
+| `blog/README.md` | How the Notebook is organised + how to add to it |
 | `contact.html` | Contact + newsletter (orange) |
 | `styles.css` | Shared styling for the inner pages; tokens at the top |
 | `404.html` | Shown for unknown URLs |
