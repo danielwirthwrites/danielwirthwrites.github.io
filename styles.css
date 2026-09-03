@@ -176,7 +176,7 @@ div.cover {
   font-family: var(--display); font-size: 1.05rem;
 }
 .social a:hover { color: var(--accent); }
-.social svg { width: 13px; height: 13px; flex: none; fill: currentColor; opacity: 0.75; }
+.social svg { width: 14px; height: 14px; flex: none; fill: var(--accent); }
 
 /* lists */
 .posts { list-style: none; padding: 0; margin: 0; }
