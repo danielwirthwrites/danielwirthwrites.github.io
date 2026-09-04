@@ -188,7 +188,17 @@
 </main>
 
 <script src="nav.js"></script>
+<script src="fx.js"></script>
 <script>
+  (function () {
+    var dot = document.querySelector('.status .dot'), taps = 0;
+    if (dot) {
+      dot.style.cursor = 'pointer';
+      dot.addEventListener('click', function () {
+        if (++taps >= 7) { window.FX && FX.unlock('transmission'); }
+      });
+    }
+  })();
   (function () {
     var el = document.getElementById('clock');
     if (!el) return;

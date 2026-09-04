@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0b09">
+<meta name="robots" content="noindex">
+<title>Achievements — Daniel Wirth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css?v=7">
+<style>
+  :root {
+    --accent: #c6ff00;
+    --grad: repeating-linear-gradient(100deg,
+      #c6ff00 0px, #c2fa2c 380px, #b7f52e 720px, #bef23c 1080px, #cbee42 1440px,
+      #d9ea48 1800px, #e7e64d 2160px, #f3e24f 2460px, #ffe14a 2700px, #ffd44c 2940px,
+      #ffc44a 3140px, #f7a83c 3320px, #e98a24 3460px, #d95e00 3560px, #d95e00 3660px,
+      #e98a24 3760px, #f7a83c 3900px, #ffc44a 4080px, #ffd44c 4280px, #ffe14a 4520px,
+      #f3e24f 4760px, #e7e64d 5060px, #d9ea48 5420px, #cbee42 5780px, #bef23c 6140px,
+      #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
+  }
+  .main { margin-left: 0; max-width: 44rem; margin-inline: auto; }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<main class="main">
+  <div class="wrap">
+    <p class="crumbs"><a href="index.html">&larr; Back to the site</a></p>
+    <h1 class="page-title">Achievements</h1>
+    <p class="lead">A pointless little scoreboard. It lives in your browser and nowhere else.</p>
+    <p class="ach-count" id="count">0 / 0 found</p>
+    <ul class="ach-list" id="list"></ul>
+  </div>
+</main>
+
+<script src="fx.js"></script>
+<script>
+  (function () {
+    var data = window.FX ? { ACH: FX.ACH, got: FX.read() } : { ACH: {}, got: {} };
+    var ids = Object.keys(data.ACH);
+    var done = ids.filter(function (id) { return data.got[id]; }).length;
+    document.getElementById('count').textContent = done + ' / ' + ids.length + ' found';
+    var ul = document.getElementById('list');
+    ids.forEach(function (id) {
+      var a = data.ACH[id], has = !!data.got[id];
+      var li = document.createElement('li');
+      if (has) li.className = 'done';
+      li.innerHTML =
+        '<span class="mark">' + (has ? '&#9672;' : '&#9723;') + '</span>' +
+        '<span><span class="name">' + (has ? a[0] : 'Locked') + '</span>' +
+        '<span class="desc">' + a[1] + '</span></span>';
+      ul.appendChild(li);
+    });
+  })();
+</script>
+</body>
+</html>
