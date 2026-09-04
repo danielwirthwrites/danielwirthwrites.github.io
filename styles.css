@@ -230,6 +230,28 @@ div.cover {
   font-family: var(--display); font-size: 1rem;
 }
 
+/* public-domain art plates (from artvee.com) */
+figure.plate { margin: 2.2rem 0; }
+figure.plate img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--line); border-radius: 3px;
+  filter: saturate(0.85) brightness(0.86) contrast(1.05);
+  transition: filter .45s ease;
+}
+figure.plate:hover img { filter: none; }
+figure.plate figcaption {
+  margin-top: 0.55rem;
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); line-height: 1.55;
+}
+figure.plate figcaption b { color: var(--accent); font-weight: 500; }
+figure.plate.tall { max-width: 22rem; margin-inline: auto; }
+figure.plate.right { float: right; width: 15rem; margin: 0.4rem 0 1.4rem 1.8rem; }
+@media (max-width: 40rem) {
+  figure.plate.right { float: none; width: 100%; margin: 2rem 0; }
+  figure.plate.tall { max-width: 100%; }
+}
+
 /* article */
 .article-meta { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin: -0.4rem 0 2rem; }
 .article blockquote { margin: 1.6rem 0; padding-left: 1.2rem; border-left: 2px solid var(--accent); font-style: italic; color: var(--muted); }
