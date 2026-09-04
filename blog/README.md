@@ -8,7 +8,10 @@ blog/<topic>/index.html             a topic hub — description + grouped list o
 blog/<topic>/<slug>.html            one entry (article / character / poem / update)
 ```
 
-Current topics: `disposal-unit/`, `notes/`.
+Current topics: `disposal-unit/` (military sci-fi horror), `pink-cactus/` (poetry
+collection), `worlds-beneath-roots/` (eco-fantasy), `poetry/` (stand-alone poems),
+`notes/` (general). Only `disposal-unit/` has entries so far — the four `*-sample.html`
+files there double as the copy-me templates.
 
 ## Adding an entry
 
