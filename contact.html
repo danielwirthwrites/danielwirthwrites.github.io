@@ -6,10 +6,10 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0b09">
 <title>Contact — Daniel Wirth</title>
-<meta name="description" content="Reach Daniel Wirth: readers, editors, agents, events, and the newsletter.">
+<meta name="description" content="Reach Daniel Wirth by email or a short message form. Also: Instagram, Substack, and the newsletter.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="styles.css?v=10">
 <style>
   :root {
@@ -20,73 +20,39 @@
       #ffa338 6100px, #ffbb4a 6700px, #ffd166 7220px);
   }
 
-  /* ---- Contact runs its own look: a dispatch console ---- */
-  .lead { font-style: normal; }
+  .email-line { font-family: var(--display); font-size: 1.55rem; margin: 0.4rem 0 1rem; }
+  .email-line a { text-decoration: none; }
+  .email-line a:hover { text-decoration: underline; }
+  .clock { font-variant-numeric: tabular-nums; color: var(--text); }
 
-  .status {
-    display: flex; flex-wrap: wrap; gap: 0.35rem 1.6rem;
-    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
+  .cform { display: flex; flex-direction: column; gap: 1rem; max-width: 30rem; margin: 1.1rem 0 0; }
+  .cform label {
+    display: flex; flex-direction: column; gap: 0.35rem;
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted);
-    padding: 0.85rem 0; margin: 0.5rem 0 2.5rem;
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  .status b { color: var(--accent); font-weight: 500; }
-  .status .dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent); margin-right: 0.5rem; vertical-align: 0.5px;
+  .cform input, .cform select, .cform textarea {
+    font: inherit; font-size: 1rem; color: var(--text);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 4px;
+    padding: 0.6rem 0.75rem; letter-spacing: normal; text-transform: none;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .status .dot { animation: pulse 2.4s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
-  }
-
-  .channels { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.9rem; }
-  .channel {
-    display: grid; grid-template-columns: 3.25rem 1fr; align-items: start;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
-    padding: 1.4rem 1.5rem;
-    transition: border-color .2s ease, transform .2s ease, background .2s ease;
-  }
-  .channel:hover { border-color: var(--accent); transform: translateX(3px); background: #191b14; }
-  .ch-no {
-    font-family: var(--mono); font-weight: 600; font-size: 1.05rem;
-    color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 0.15rem;
-  }
-  .channel:hover .ch-no { color: var(--accent); }
-  .ch-body h2 {
-    font-family: var(--mono); font-weight: 600; font-size: 0.74rem;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text);
-    margin: 0 0 0.5rem;
-  }
-  .ch-body p { margin: 0 0 0.7rem; color: var(--muted); font-size: 1.02rem; }
-  .ch-body p:last-child { margin-bottom: 0; }
-  .ch-go {
-    font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--accent); text-decoration: none;
-  }
-  .ch-go:hover { text-decoration: underline; }
-
-  .ch-form { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.2rem; }
-  .ch-form input {
-    flex: 1 1 13rem; padding: 0.6rem 0.8rem; font: inherit; font-size: 0.95rem;
-    background: var(--bg); border: 1px solid var(--line); border-radius: 4px; color: var(--text);
-  }
-  .ch-form input::placeholder { color: var(--dim); }
-  .ch-form button {
-    padding: 0.6rem 1.2rem; font-family: var(--mono); font-weight: 600;
-    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: #0a0b09; border: 0; border-radius: 4px; cursor: pointer;
+  .cform textarea { resize: vertical; min-height: 6rem; }
+  .cform button {
+    align-self: flex-start; padding: 0.65rem 1.6rem;
+    font-family: var(--display); font-weight: 700; font-size: 1rem; color: #0a0b09;
+    border: 0; border-radius: 4px; cursor: pointer;
     background-image: var(--grad); background-attachment: fixed;
     animation: flow var(--flow-dur) linear infinite;
   }
-  @media (prefers-reduced-motion: reduce) { .ch-form button { animation: none; } }
-
-  .channel .social { margin: 0.2rem 0 0; }
-
-  @media (max-width: 34rem) {
-    .channel { grid-template-columns: 1fr; gap: 0.6rem; padding: 1.25rem 1.15rem; }
-    .ch-no { padding-top: 0; }
+  .cform button[disabled] { opacity: 0.6; cursor: default; }
+  .form-status {
+    margin: 0; min-height: 1.3em; font-family: var(--body); font-size: 0.98rem; color: var(--muted);
   }
+  .form-status.ok { color: var(--accent); }
+  .form-status.err { color: #ff6a5a; }
+  .hp { position: absolute; left: -9999px; }
+
+  @media (prefers-reduced-motion: reduce) { .cform button { animation: none; } }
 </style>
 </head>
 <body data-bg="scan">
@@ -106,79 +72,69 @@
 
 <main class="main">
   <div class="wrap">
-    <h1 class="page-title">Open a Channel</h1>
-    <p class="lead">A question, a proposal, or a poem that wrecked you. Pick a line.</p>
+    <h1 class="page-title">Contact</h1>
+    <p class="lead">A real person reads every one of these. Replies come slowly, but they come.</p>
 
-    <div class="status">
-      <span><span class="dot"></span>Channel <b>Open</b></span>
-      <span>Replies <b>Slow &middot; Real</b></span>
-      <span>Origin <b>New Mexico</b></span>
-      <span>Mtn Time <b id="clock">--:--</b></span>
+    <h2>Email</h2>
+    <p>The surest way to reach me:</p>
+    <p class="email-line"><a href="mailto:YOUR-EMAIL@example.com">YOUR-EMAIL@example.com</a></p>
+    <p class="subtle">I answer most messages within a week. Rights and representation go
+      through my agent &mdash; ask and I&rsquo;ll connect you. It&rsquo;s
+      <span class="clock" id="clock">--:--</span> right now where I am (Mountain Time, New Mexico).</p>
+
+    <h2>Or send a message here</h2>
+    <p class="subtle">Three fields. No account, nothing shared with anyone, and it lands in the same inbox.</p>
+    <form id="cform" class="cform" action="https://formsubmit.co/ajax/YOUR-EMAIL@example.com" method="post">
+      <label>Your name
+        <input type="text" name="name" required autocomplete="name">
+      </label>
+      <label>Your email
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label>This is about
+        <select name="topic">
+          <option>A book or a poem</option>
+          <option>An event or reading invitation</option>
+          <option>Editorial, rights, or press</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label>Message
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+      <input type="hidden" name="_subject" value="danielwirthwrites.github.io — new message">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" id="csend">Send</button>
+      <p class="form-status" id="fstatus" role="status" aria-live="polite"></p>
+    </form>
+
+    <h2>Elsewhere</h2>
+    <ul class="social">
+      <li>
+        <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.7195 1.4573 1.3877 2.1228.6682.6655 1.3368 1.0743 2.1286 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.7194 2.1228-1.3877.665-.6683 1.0745-1.3372 1.3802-2.129.2954-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.7195-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.0044 11.977.0018 8.718.008 8.31.0223 7.0301.084m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2645.0739 1.6435.0796 4.848.0058 3.2044-.006 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+          <span>@danielwirthwrites</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          <span>@danielwirth on Substack</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="signup">
+      <h2>Newsletter</h2>
+      <p>Occasional notes on new work and what I&rsquo;m reading &mdash; a few times a year, no
+        more. It runs on Substack; enter an address and confirm on the next page.</p>
+      <form action="https://danielwirth.substack.com/subscribe" method="get" target="_blank">
+        <input type="email" name="email" placeholder="you@somewhere" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
     </div>
-
-    <ol class="channels">
-      <li class="channel">
-        <span class="ch-no">01</span>
-        <div class="ch-body">
-          <h2>Readers</h2>
-          <p>Say hello, ask a question, or tell me a book did something to you. All of it gets read.</p>
-          <a class="ch-go" href="mailto:YOUR-EMAIL@example.com?subject=From%20a%20reader">write &rarr;</a>
-        </div>
-      </li>
-
-      <li class="channel">
-        <span class="ch-no">02</span>
-        <div class="ch-body">
-          <h2>Editors, Agents &amp; Press</h2>
-          <p>Short and long bios, a headshot, and a press one-sheet on request. Rights and
-            representation are handled by my agent &mdash; details on ask.</p>
-          <a class="ch-go" href="mailto:YOUR-EMAIL@example.com?subject=Editorial%20%2F%20press">write &rarr;</a>
-        </div>
-      </li>
-
-      <li class="channel">
-        <span class="ch-no">03</span>
-        <div class="ch-body">
-          <h2>Events &amp; Readings</h2>
-          <p>Readings, panels, workshops, festivals. I&rsquo;ll travel for the right one.</p>
-          <a class="ch-go" href="mailto:YOUR-EMAIL@example.com?subject=Event%20%2F%20reading">write &rarr;</a>
-        </div>
-      </li>
-
-      <li class="channel">
-        <span class="ch-no">04</span>
-        <div class="ch-body">
-          <h2>The Newsletter</h2>
-          <p>A few times a year, no more. It runs on Substack &mdash; drop an address and
-            confirm on the next page.</p>
-          <form class="ch-form" action="https://danielwirth.substack.com/subscribe" method="get" target="_blank">
-            <input type="email" name="email" placeholder="you@somewhere" aria-label="Email address" required>
-            <button type="submit">Transmit</button>
-          </form>
-        </div>
-      </li>
-
-      <li class="channel">
-        <span class="ch-no">05</span>
-        <div class="ch-body">
-          <h2>Elsewhere</h2>
-          <ul class="social">
-            <li>
-              <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
-                <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.7195 1.4573 1.3877 2.1228.6682.6655 1.3368 1.0743 2.1286 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.7194 2.1228-1.3877.665-.6683 1.0745-1.3372 1.3802-2.129.2954-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.7195-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.0044 11.977.0018 8.718.008 8.31.0223 7.0301.084m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2645.0739 1.6435.0796 4.848.0058 3.2044-.006 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
-                <span>@danielwirthwrites</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">
-                <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-                <span>@danielwirth on Substack</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ol>
 
     <div class="page-footer">
       <span>&copy; 2026 Daniel Wirth</span>
@@ -190,15 +146,7 @@
 <script src="nav.js"></script>
 <script src="fx.js"></script>
 <script>
-  (function () {
-    var dot = document.querySelector('.status .dot'), taps = 0;
-    if (dot) {
-      dot.style.cursor = 'pointer';
-      dot.addEventListener('click', function () {
-        if (++taps >= 7) { window.FX && FX.unlock('transmission'); }
-      });
-    }
-  })();
+  /* local time where Daniel is */
   (function () {
     var el = document.getElementById('clock');
     if (!el) return;
@@ -211,6 +159,37 @@
     }
     tick();
     setInterval(tick, 20000);
+  })();
+
+  /* message form -> Formsubmit (no redirect; inline confirmation) */
+  (function () {
+    var f = document.getElementById('cform');
+    var s = document.getElementById('fstatus');
+    var btn = document.getElementById('csend');
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (f.action.indexOf('YOUR-EMAIL') > -1) {
+        s.className = 'form-status err';
+        s.textContent = 'The form isn’t wired up yet — use the email address above for now.';
+        return;
+      }
+      btn.disabled = true;
+      s.className = 'form-status';
+      s.textContent = 'Sending…';
+      fetch(f.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(f) })
+        .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function () {
+          f.reset();
+          s.className = 'form-status ok';
+          s.textContent = 'Thanks — your message is on its way. I’ll reply from the address above.';
+        })
+        .catch(function () {
+          s.className = 'form-status err';
+          s.textContent = 'Something went wrong. Email me directly instead — the address is right above.';
+        })
+        .then(function () { btn.disabled = false; });
+    });
   })();
 </script>
 </body>
