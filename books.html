@@ -20,6 +20,12 @@
       #1e3d54 2980px, #1a3a52 3610px, #1e3d54 4240px, #234863 4860px, #2c5a7d 5460px,
       #3a6f96 6100px, #4a84ab 6700px, #5f9bc4 7220px);
   }
+
+  /* centre the opening block; the book list below stays left-aligned */
+  .feature { max-width: 34rem; margin-inline: auto; text-align: center; }
+  .feature .lead { max-width: 44ch; margin-inline: auto; }
+  .feature .poem { text-align: center; }
+  .feature figure.plate.tall { margin-inline: auto; }
 </style>
 </head>
 <body data-bg="caustics">
@@ -39,11 +45,12 @@
 
 <main class="main">
   <div class="wrap">
-    <h1 class="page-title">Books &amp; Poetry</h1>
-    <p class="lead">Poetry written straight from life.</p>
+    <div class="feature">
+      <h1 class="page-title">Books &amp; Poetry</h1>
+      <p class="lead">Poetry written straight from life.</p>
 
-    <h2>This Month&rsquo;s Poem</h2>
-    <p class="subtle" style="margin-top:-0.4rem;">September 2026</p>
+      <h2>This Month&rsquo;s Poem</h2>
+      <p class="subtle" style="margin-top:-0.4rem;">September 2026</p>
 <p class="poem">The sting of the morning
 magnifies our waking
 We huddle to hide from the cold
@@ -59,11 +66,12 @@ making ourselves lighter
 and we restart our consumption
 of the World</p>
 
-    <figure class="plate tall">
-      <img src="assets/art/vangogh-bridge-in-the-rain.jpg" width="815" height="1100" loading="lazy"
-           alt="A rain-soaked wooden bridge over a blue-green river, painted in thick brushstrokes within a red and green bordered frame">
-      <figcaption><b>Bridge in the Rain</b>, after Hiroshige &middot; Vincent van Gogh, 1887 &middot; public domain, via Artvee</figcaption>
-    </figure>
+      <figure class="plate tall">
+        <img src="assets/art/vangogh-bridge-in-the-rain.jpg" width="815" height="1100" loading="lazy"
+             alt="A rain-soaked wooden bridge over a blue-green river, painted in thick brushstrokes within a red and green bordered frame">
+        <figcaption><b>Bridge in the Rain</b>, after Hiroshige &middot; Vincent van Gogh, 1887 &middot; public domain, via Artvee</figcaption>
+      </figure>
+    </div>
 
     <hr>
 
