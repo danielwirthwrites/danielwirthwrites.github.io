@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0b09">
-<title>Meet Daniel — Daniel Wirth</title>
-<meta name="description" content="Daniel Wirth: poet, research technologist, forest dweller. Born in Rheine, Germany; lives in the mountains of New Mexico.">
+<title>About — Daniel Wirth</title>
+<meta name="description" content="Daniel Wirth: research technologist by day, poet after dark. Two poetry collections, two novels in progress, a forest in New Mexico. Short bio, FAQ, and what he's doing now.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -19,6 +19,35 @@
       #2cb277 2980px, #1e8c63 3610px, #2cb277 4240px, #3ecd7e 4860px, #5fe06c 5460px,
       #90ec46 6100px, #b8f53c 6700px, #d6ff5c 7220px);
   }
+  html { scroll-behavior: smooth; }
+
+  .about-nav {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0 0 2.75rem;
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .about-nav a { color: var(--muted); text-decoration: none; }
+  .about-nav a:hover { color: var(--accent); }
+
+  .about h2 { scroll-margin-top: 2rem; }
+
+  .faq { margin: 1.25rem 0; }
+  .faq > div { padding: 1.4rem 0; border-top: 1px solid var(--line); }
+  .faq > div:last-child { border-bottom: 1px solid var(--line); }
+  .faq h3 { font-family: var(--display); font-weight: 600; font-size: 1.16rem; margin: 0 0 0.45rem; color: var(--text); }
+  .faq p { margin: 0; }
+  .faq p + p { margin-top: 0.6rem; }
+
+  .now {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.5rem 1.65rem; margin: 1.25rem 0;
+  }
+  .now h2 { margin-top: 0; }
+  .now .stamp {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.6rem;
+  }
+  .now ul { margin: 0; padding-left: 1.1rem; }
+  .now li { margin: 0.4rem 0; }
 </style>
 </head>
 <body data-bg="contours">
@@ -37,19 +66,16 @@
 </aside>
 
 <main class="main">
-  <div class="wrap">
-    <h1 class="page-title">Meet Daniel</h1>
-    <p class="lead">Daniel Wirth writes poetry for people who were told to walk it off.</p>
+  <div class="wrap about">
+    <h1 class="page-title">Research technologist by daylight.<br>Poet after dark.</h1>
+    <p class="lead">The night shift is the one I mean. The dogs supervise both.</p>
 
-    <p class="label">By the numbers</p>
-    <div class="stats">
-      <div class="stat"><b>2</b><span>Books published</span></div>
-      <div class="stat"><b>400</b><span>Poems drafted for book two</span></div>
-      <div class="stat"><b>75</b><span>Poems that made the cut</span></div>
-      <div class="stat"><b>2</b><span>Broken spines</span></div>
-      <div class="stat"><b>0</b><span>Wheelchairs required</span></div>
-      <div class="stat"><b>4:47</b><span>Alarm, every day</span></div>
-    </div>
+    <nav class="about-nav" aria-label="On this page">
+      <a href="#bio">Short bio</a>
+      <a href="#faq">FAQ</a>
+      <a href="#now">Now</a>
+      <a href="#elsewhere">Elsewhere</a>
+    </nav>
 
     <figure class="plate right">
       <img src="assets/art/friedrich-forest-moonlight.jpg" width="765" height="1100" loading="lazy"
@@ -57,36 +83,81 @@
       <figcaption><b>Inside the Forest by Moonlight</b><br>after Caspar David Friedrich &middot; public domain, via Artvee</figcaption>
     </figure>
 
-    <p>Daniel Wirth grew up in Rheine, a small town in Germany, in the 1990s. He now lives
-      in the mountains of New Mexico, in a stretch of forest that doesn&rsquo;t ask questions.
-      By day he works as a research technologist; by night he is a forest dweller and a
-      writer, in that order, according to the dogs.</p>
+    <h2 id="bio">Short bio</h2>
+    <p>I grew up in Rheine, a small town in Germany, in the 1990s, and now live in the
+      mountains of New Mexico, in a stretch of forest that doesn&rsquo;t ask questions. I&rsquo;ve
+      published two poetry collections, and I&rsquo;m drafting two novels &mdash; one military
+      sci-fi horror, one eco-fantasy.</p>
+    <p>Poetry is the thing that did the repair work when I needed it &mdash; the kind you
+      have to do yourself. I&rsquo;ve been broken in half twice, both times literally: two broken
+      spines, no wheelchair either round. I write sitting on the ground, wake at 4:47 out of a
+      habit the army set and never came back for, and cook elaborate meals like each one is a
+      dare. I&rsquo;m bad at most of it and do it anyway. That&rsquo;s the whole method.</p>
 
-    <p>He did not set out to be a poet. Poetry turned out to be the repair work &mdash; the
-      kind he had to do himself. He has been broken in half twice, both times literally: two
-      broken spines, no wheelchair either round, and each recovery happened partly on the
-      page.</p>
+    <h2 id="faq">FAQ</h2>
+    <div class="faq">
+      <div>
+        <h3>How do you say &ldquo;Wirth&rdquo;?</h3>
+        <p>Like &ldquo;worth,&rdquo; with the vowel swapped and the <em>h</em> barely there. Land
+          anywhere near &ldquo;worth&rdquo; and I&rsquo;ll answer.</p>
+      </div>
+      <div>
+        <h3>What do you write?</h3>
+        <p>Poetry, mostly &mdash; two collections so far. And two novels in progress:
+          <em>Disposal Unit</em>, military sci-fi horror, and <em>Worlds Beneath Roots</em>,
+          eco-fantasy. The <a href="blog/index.html">Notebook</a> holds the characters,
+          fragments, and worldbuilding for both.</p>
+      </div>
+      <div>
+        <h3>Are the poems about you?</h3>
+        <p>Mostly. <a href="books.html"><em>Unfiltered Thoughts of a Broken Soul</em></a> keeps
+          every poem exactly as it was first written &mdash; no revisions, no second takes.
+          <a href="books.html"><em>Tough Men Don&rsquo;t Cry</em></a> is the seventy-five that
+          survived out of four hundred.</p>
+      </div>
+      <div>
+        <h3>What&rsquo;s the day job?</h3>
+        <p>Research technologist. It buys the dog food and the good knives.</p>
+      </div>
+      <div>
+        <h3>Why 4:47?</h3>
+        <p>The army set that alarm a long time ago and never came back for it.</p>
+      </div>
+      <div>
+        <h3>You wrote a novel before these. What happened to it?</h3>
+        <p>I read <em>The Library at Mount Char</em> halfway through the draft, decided I
+          couldn&rsquo;t stand my own prose, and rewrote the whole book to be &ldquo;more
+          mysterious.&rdquo; Then I put it where mysterious things go. The poems, I kept.</p>
+      </div>
+      <div>
+        <h3>Best writing advice you&rsquo;ve got?</h3>
+        <p>Be bad at it and keep going. I have a lot of practice with the first part.</p>
+      </div>
+      <div>
+        <h3>What&rsquo;s with the plush keychains?</h3>
+        <p>No explanation has held up under questioning.</p>
+      </div>
+      <div>
+        <h3>How do I reach you &mdash; reader mail, an event, a rights query?</h3>
+        <p>The <a href="contact.html">Contact</a> page. A real person reads all of it, slowly.</p>
+      </div>
+    </div>
 
-    <p>He writes sitting on the ground, anywhere, because a chair has yet to improve a line.
-      He wakes at 4:47, out of a habit the military set and never came back for. He reads
-      poetry, science fiction, eco-fantasy, and nonfiction; walks the woods with two dogs
-      looking for oddities; keeps a growing collection of plush keychains for reasons that
-      have not held up under questioning; and cooks elaborate meals as though each one were
-      a dare. By his own account he is bad at most things and does them anyway. That is the
-      entire method.</p>
+    <h2 id="now">Now</h2>
+    <div class="now">
+      <span class="stamp">Updated September 2026</span>
+      <ul>
+        <li>Drafting the second act of <em>Disposal Unit</em>. It&rsquo;s going badly, which is
+          where it usually goes before it goes well.</li>
+        <li>Reading a stack of eco-fiction and one book about soil.</li>
+        <li>Walking the same three miles of forest most mornings, looking for things that
+          don&rsquo;t belong.</li>
+        <li>A new poem goes up in the <a href="blog/poetry/index.html">Notebook</a> at the start
+          of each month.</li>
+      </ul>
+    </div>
 
-    <p>He once read <em>The Library at Mount Char</em> halfway through writing a novel,
-      decided he could no longer stand his own prose, and rewrote the whole book to be more
-      mysterious. That manuscript now lives in the toilet, where he left it. The poems, he
-      keeps.</p>
-
-    <p><a href="books.html"><em>Unfiltered Thoughts of a Broken Soul</em></a> (2025) holds
-      its poems exactly as they were first written &mdash; no revisions, no second takes.
-      <a href="books.html"><em>Tough Men Don&rsquo;t Cry</em></a> (2026) is the seventy-five
-      that survived out of four hundred. Both are for the same reader: the one who kept
-      moving while everyone assumed they were fine.</p>
-
-    <h2>Elsewhere</h2>
+    <h2 id="elsewhere">Elsewhere</h2>
     <ul class="social">
       <li>
         <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
@@ -101,10 +172,10 @@
         </a>
       </li>
     </ul>
-
-    <h2>For editors &amp; agents</h2>
-    <p>Short and long bios, a headshot, and a press one-sheet on request.
-      <a href="contact.html">Get in touch</a>. An author photo will land on this page shortly.</p>
+    <p class="subtle">Newsletter&rsquo;s on Substack &mdash; a few times a year. Everything else
+      &mdash; press, events, rights, a short or long bio for reprinting &mdash; is on the
+      <a href="contact.html">Contact</a> page. A proper author photo is coming; in the meantime,
+      the forest above.</p>
 
     <div class="page-footer">
       <span>&copy; 2026 Daniel Wirth</span>
@@ -116,11 +187,11 @@
 <script src="nav.js"></script>
 <script src="fx.js"></script>
 <script>
-  /* the 4:47 stat is a quiet button */
-  [].forEach.call(document.querySelectorAll('.stat b'), function (b) {
-    if (b.textContent.trim() === '4:47') {
-      b.style.cursor = 'help';
-      b.addEventListener('click', function () { window.FX && FX.unlock('reveille'); });
+  /* the 4:47 line is a quiet button (kept from before) */
+  [].forEach.call(document.querySelectorAll('.faq h3'), function (h) {
+    if (/4:47/.test(h.textContent)) {
+      h.style.cursor = 'help';
+      h.addEventListener('click', function () { window.FX && FX.unlock('reveille'); });
     }
   });
 </script>
