@@ -11,3 +11,4 @@ recompressed for the web.
 | `thornton-night-blowing-cereus.jpg` | *Anatomy of the Night-blowing Cereus*, 1801 | Robert John Thornton (1768–1837) | Notebook › Pink Cactus |
 | `haeckel-muscinae-mosses.jpg` | *Muscinae (Mosses)*, Kunstformen der Natur, 1904 | Ernst Haeckel (1834–1919) | Notebook › Worlds Beneath Roots |
 | `haeckel-nepenthaceae.jpg` | *Nepenthaceae (Pitcher Plants)*, Kunstformen der Natur, 1904 | Ernst Haeckel (1834–1919) | Notebook › Poetry |
+| `vangogh-bridge-in-the-rain.jpg` | *Bridge in the Rain (after Hiroshige)*, 1887 | Vincent van Gogh (1853–1890) | Books & Poetry |
