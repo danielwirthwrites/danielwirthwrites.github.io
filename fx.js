@@ -9,7 +9,6 @@
   var ACH = {
     wander:       ['Wanderer', 'Three rooms in one visit.'],
     completion:   ['Completionist', 'You walked the whole wheel.'],
-    dizzy:        ['Dizzy', 'Three full turns of the wheel, no destination.'],
     reveille:     ['Reveille', 'You asked about 4:47.'],
     endoftext:    ['Read to the End', 'You actually finished one.'],
     overclock:    ['Overclocked', 'The old code still works.'],

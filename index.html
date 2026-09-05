@@ -288,7 +288,7 @@
 
   <p class="epigraph" id="epigraph"></p>
 
-  <p class="hint" id="hint">Move to turn &nbsp;&middot;&nbsp; click to enter</p>
+  <p class="hint" id="hint">Hover to hold &nbsp;&middot;&nbsp; click to enter</p>
 
   <nav class="plainnav" aria-label="Sections">
     <a href="index.html">Home</a>
@@ -312,22 +312,20 @@
   var railLinks = homerail ? [].slice.call(homerail.querySelectorAll('nav a.sec')) : [];
 
   var STEP = 72;
-  var OUTER = 0.82;
-  var MAX = 2.2;
   var HIT = 40;
+  var SPIN = -0.24;                          // idle drift: slow, counter-clockwise
   var UNROLL_MS = 1500;                      // wheel -> left rail collapse
   var RAIL_X = 128, RAIL_TOP = 118, RAIL_GAP = 54;   // fallback if the rail can't be measured
   var RAIL_PAD_L = railLinks[0] ? parseFloat(getComputedStyle(railLinks[0]).paddingLeft) || 26 : 26;
 
   var rot = -72;               // About (index 1) starts at the top
   var lastRot = null;
-  var vel = 0, nx = 0, mx = -9999, my = -9999;
+  var vel = 0, mx = -9999, my = -9999;
   var radiusPx = 200;
   var pointerInside = false;
   var focusTarget = null;
   var selecting = false;
   var hintGone = false;
-  var spun = 0;
 
   function layout() {
     var s = Math.min(stage.clientWidth, stage.clientHeight);
@@ -339,7 +337,6 @@
 
   window.addEventListener('mousemove', function (e) {
     mx = e.clientX; my = e.clientY;
-    nx = (e.clientX / window.innerWidth - 0.5) * 2;
     pointerInside = true;
     focusTarget = null;
   });
@@ -438,24 +435,15 @@
     });
   });
 
+  // The wheel drifts slowly counter-clockwise on its own, and freezes whenever
+  // the cursor is on a word or anywhere inside the ring.
   function classify() {
-    if (!pointerInside || reduce) return 'rest';
+    if (reduce) return 'rest';
+    if (!pointerInside) return 'spin';
     var sr = stage.getBoundingClientRect();
     var cx = sr.left + sr.width / 2, cy = sr.top + sr.height / 2;
     var d = Math.hypot(mx - cx, my - cy);
-    if (d <= radiusPx + HIT) return 'inside';
-    if (my > cy + radiusPx) return 'below';
-    if (Math.abs(nx) > OUTER) return 'edge';
-    return 'spin';
-  }
-
-  function spinVel() {
-    var ax = Math.abs(nx);
-    var start = Math.min(0.45, radiusPx / (window.innerWidth / 2));
-    if (ax <= start || ax > OUTER) return 0;
-    var m = (ax - start) / (OUTER - start);
-    m = m * m * (3 - 2 * m);
-    return -Math.sign(nx) * m * MAX;
+    return (d <= radiusPx + HIT) ? 'stopped' : 'spin';
   }
 
   function positionWheel() {
@@ -507,28 +495,16 @@
 
     var mode = classify();
     if (mode === 'spin') {
-      var tv = spinVel();
-      vel += (tv - vel) * 0.09;
+      vel += (SPIN - vel) * 0.04;   // ease up to the slow drift
       rot += vel;
-      if (Math.abs(tv) > 0.05) killHint();
-      spun += Math.abs(vel);
-      if (spun > 1080 && window.FX) FX.unlock('dizzy');
-    } else if (mode === 'inside') {
-      vel = 0;            // cursor on the wheel -> freeze it hard so the labels are clickable
-    } else {
-      vel += (0 - vel) * 0.12;
-      if (Math.abs(vel) < 0.05) {
-        var snap = Math.round(rot / STEP) * STEP;
-        rot += (snap - rot) * 0.14;
-        vel = 0;
-      } else {
-        rot += vel;
-      }
+    } else {                        // 'stopped' or 'rest'
+      vel = 0;                      // freeze hard so the labels stay clickable
+      if (mode === 'stopped') killHint();
     }
 
-    stage.classList.toggle('is-parked', mode === 'inside');
+    stage.classList.toggle('is-parked', mode === 'stopped');
     if (rot !== lastRot) { positionWheel(); lastRot = rot; }
-    if (mode === 'inside') highlightNearestToCursor();
+    if (mode === 'stopped') highlightNearestToCursor();
     else highlightUnderMarker();
   }
 
