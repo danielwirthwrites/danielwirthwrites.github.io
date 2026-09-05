@@ -152,7 +152,7 @@
       c.style.height = innerHeight + 'px';
       g.clearRect(0, 0, c.width, c.height);
       g.strokeStyle = accent();
-      g.globalAlpha = 0.085;
+      g.globalAlpha = 0.05;
       g.lineCap = 'round';
       var W = c.width, H = c.height;
       var trunks = Math.max(3, Math.round(innerWidth / 260));
@@ -192,7 +192,7 @@
         r: (0.5 + Math.random() * 1.5) * dpr,
         v: 0.00015 + Math.random() * 0.0004,
         drift: (Math.random() - 0.5) * 0.00012,
-        a: 0.03 + Math.random() * 0.05
+        a: 0.018 + Math.random() * 0.03
       });
     }
     function colour() {
