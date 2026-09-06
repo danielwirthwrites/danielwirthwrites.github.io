@@ -100,6 +100,16 @@
     setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, 1500);
   }
 
+  /* ---------- drift-in-on-scroll (.reveal / .reveal-fade) ---------- */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var revIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); revIO.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    [].forEach.call(document.querySelectorAll('.reveal, .reveal-fade'), function (el) { revIO.observe(el); });
+  }
+
   /* ---------- click sparks ---------- */
   if (!reduce) {
     window.addEventListener('pointerdown', function (e) {

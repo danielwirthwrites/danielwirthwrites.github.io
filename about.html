@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=12">
 <style>
   :root {
     --accent: #67e07a;
@@ -62,19 +62,9 @@
   .now { margin-left: clamp(0.4rem, 3vw, 1.4rem); }
   .about > .subtle { margin-left: clamp(1rem, 5vw, 2.5rem); }
 
-  .reveal {
-    opacity: 0; transform: translateX(-1.7rem);
-    transition: opacity .75s cubic-bezier(.2, .7, .2, 1), transform .75s cubic-bezier(.2, .7, .2, 1);
-  }
-  .reveal.in { opacity: 1; transform: none; }
-  .reveal-fade { opacity: 0; transition: opacity .9s ease; }
-  .reveal-fade.in { opacity: 1; }
+  /* base .reveal / .reveal-fade now live in styles.css; these are page-specific staggers */
   .faq > .reveal:nth-child(even) { transition-delay: .06s; }
   .social li.reveal:nth-child(2) { transition-delay: .12s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal, .reveal-fade { opacity: 1 !important; transform: none !important; transition: none !important; }
-  }
 
   .about-nav {
     display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0 0 2.75rem;
@@ -253,17 +243,7 @@
       h.addEventListener('click', function () { window.FX && FX.unlock('reveille'); });
     }
   });
-
-  /* everything drifts in from the left as it scrolls into view */
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    [].forEach.call(document.querySelectorAll('.reveal, .reveal-fade'), function (el) { io.observe(el); });
-  })();
+  /* .reveal drift-in is handled globally by fx.js */
 </script>
 </body>
 </html>

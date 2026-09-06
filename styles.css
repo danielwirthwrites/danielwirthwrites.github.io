@@ -211,6 +211,27 @@ div.cover {
 .group { margin: 2.5rem 0; }
 .group > h2 { margin-bottom: 0.5rem; }
 
+/* ---------- drift-in-on-scroll (opt-in; observed by fx.js) ---------- */
+.reveal {
+  opacity: 0; transform: translateX(-1.7rem);
+  transition: opacity .75s cubic-bezier(.2, .7, .2, 1), transform .75s cubic-bezier(.2, .7, .2, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-fade { opacity: 0; transition: opacity .9s ease; }
+.reveal-fade.in { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-fade { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Notebook pages step to the right, echoing the About page's diagonal */
+.notebook > h2,
+.notebook .group > h2 { margin-left: clamp(1rem, 5vw, 2.5rem); }
+.notebook > .group { margin-left: clamp(0.4rem, 3vw, 1.4rem); }
+.notebook .group .posts,
+.notebook .group .empty,
+.notebook > .posts { margin-left: 1.4rem; }
+.notebook .group .more { margin-left: 1.4rem; }
+
 /* character profile (labelled rows) */
 .profile { list-style: none; padding: 0; margin: 1.5rem 0; }
 .profile li {
