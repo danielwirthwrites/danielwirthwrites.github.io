@@ -54,6 +54,28 @@
   @keyframes mh-fade { to { opacity: 1; } }
   @keyframes mh-in { to { opacity: 1; transform: none; } }
 
+  /* the rest of the page keeps the diagonal: each block steps a little right,
+     and drifts in from the left as it scrolls into view */
+  .about > h2 { margin-left: clamp(1rem, 5vw, 2.5rem); }
+  .faq { margin-left: clamp(1rem, 5vw, 2.5rem); }
+  .faq p { margin-left: 1.4rem; }
+  .now { margin-left: clamp(0.4rem, 3vw, 1.4rem); }
+  .about > .subtle { margin-left: clamp(1rem, 5vw, 2.5rem); }
+
+  .reveal {
+    opacity: 0; transform: translateX(-1.7rem);
+    transition: opacity .75s cubic-bezier(.2, .7, .2, 1), transform .75s cubic-bezier(.2, .7, .2, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-fade { opacity: 0; transition: opacity .9s ease; }
+  .reveal-fade.in { opacity: 1; }
+  .faq > .reveal:nth-child(even) { transition-delay: .06s; }
+  .social li.reveal:nth-child(2) { transition-delay: .12s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-fade { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
   .about-nav {
     display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0 0 2.75rem;
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -107,81 +129,81 @@
     </h1>
     <p class="lead">The night shift is the one I mean. The dogs supervise both.</p>
 
-    <nav class="about-nav" aria-label="On this page">
+    <nav class="about-nav reveal" aria-label="On this page">
       <a href="#bio">Short bio</a>
       <a href="#faq">FAQ</a>
       <a href="#now">Now</a>
       <a href="#elsewhere">Elsewhere</a>
     </nav>
 
-    <figure class="plate right">
+    <figure class="plate right reveal-fade">
       <img src="assets/art/friedrich-forest-moonlight.jpg" width="765" height="1100" loading="lazy"
            alt="A moonlit pine forest with two small figures at a campfire in a gully">
       <figcaption><b>Inside the Forest by Moonlight</b><br>after Caspar David Friedrich &middot; public domain, via Artvee</figcaption>
     </figure>
 
-    <h2 id="bio">Short bio</h2>
-    <p>I grew up in Rheine, a small town in Germany, in the 1990s, and now live in the
+    <h2 id="bio" class="reveal">Short bio</h2>
+    <p class="reveal">I grew up in Rheine, a small town in Germany, in the 1990s, and now live in the
       mountains of New Mexico, in a stretch of forest that doesn&rsquo;t ask questions. I&rsquo;ve
       published two poetry collections, and I&rsquo;m drafting two novels &mdash; one military
       sci-fi horror, one eco-fantasy.</p>
-    <p>Poetry is the thing that did the repair work when I needed it &mdash; the kind you
+    <p class="reveal" style="transition-delay:.06s">Poetry is the thing that did the repair work when I needed it &mdash; the kind you
       have to do yourself. I&rsquo;ve been broken in half twice, both times literally: two broken
       spines, no wheelchair either round. I write sitting on the ground, wake at 4:47 out of a
       habit the army set and never came back for, and cook elaborate meals like each one is a
       dare. I&rsquo;m bad at most of it and do it anyway. That&rsquo;s the whole method.</p>
 
-    <h2 id="faq">FAQ</h2>
+    <h2 id="faq" class="reveal">FAQ</h2>
     <div class="faq">
-      <div>
+      <div class="reveal">
         <h3>How do you say &ldquo;Wirth&rdquo;?</h3>
         <p>Like &ldquo;worth,&rdquo; with the vowel swapped and the <em>h</em> barely there. Land
           anywhere near &ldquo;worth&rdquo; and I&rsquo;ll answer.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>What do you write?</h3>
         <p>Poetry, mostly &mdash; two collections so far. And two novels in progress:
           <em>Disposal Unit</em>, military sci-fi horror, and <em>Worlds Beneath Roots</em>,
           eco-fantasy. The <a href="blog/index.html">Notebook</a> holds the characters,
           fragments, and worldbuilding for both.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>Are the poems about you?</h3>
         <p>Mostly. <a href="books.html"><em>Unfiltered Thoughts of a Broken Soul</em></a> keeps
           every poem exactly as it was first written &mdash; no revisions, no second takes.
           <a href="books.html"><em>Tough Men Don&rsquo;t Cry</em></a> is the seventy-five that
           survived out of four hundred.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>What&rsquo;s the day job?</h3>
         <p>Research technologist. It buys the dog food and the good knives.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>Why 4:47?</h3>
         <p>The army set that alarm a long time ago and never came back for it.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>You wrote a novel before these. What happened to it?</h3>
         <p>I read <em>The Library at Mount Char</em> halfway through the draft, decided I
           couldn&rsquo;t stand my own prose, and rewrote the whole book to be &ldquo;more
           mysterious.&rdquo; Then I put it where mysterious things go. The poems, I kept.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>Best writing advice you&rsquo;ve got?</h3>
         <p>Be bad at it and keep going. I have a lot of practice with the first part.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>What&rsquo;s with the plush keychains?</h3>
         <p>No explanation has held up under questioning.</p>
       </div>
-      <div>
+      <div class="reveal">
         <h3>How do I reach you &mdash; reader mail, an event, a rights query?</h3>
         <p>The <a href="contact.html">Contact</a> page. A real person reads all of it, slowly.</p>
       </div>
     </div>
 
-    <h2 id="now">Now</h2>
-    <div class="now">
+    <h2 id="now" class="reveal">Now</h2>
+    <div class="now reveal">
       <span class="stamp">Updated September 2026</span>
       <ul>
         <li>Drafting the second act of <em>Disposal Unit</em>. It&rsquo;s going badly, which is
@@ -194,22 +216,22 @@
       </ul>
     </div>
 
-    <h2 id="elsewhere">Elsewhere</h2>
+    <h2 id="elsewhere" class="reveal">Elsewhere</h2>
     <ul class="social">
-      <li>
+      <li class="reveal">
         <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.7195 1.4573 1.3877 2.1228.6682.6655 1.3368 1.0743 2.1286 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.7194 2.1228-1.3877.665-.6683 1.0745-1.3372 1.3802-2.129.2954-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.7195-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.0044 11.977.0018 8.718.008 8.31.0223 7.0301.084m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2645.0739 1.6435.0796 4.848.0058 3.2044-.006 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
           <span>@danielwirthwrites</span>
         </a>
       </li>
-      <li>
+      <li class="reveal">
         <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
           <span>@danielwirth on Substack</span>
         </a>
       </li>
     </ul>
-    <p class="subtle">Newsletter&rsquo;s on Substack &mdash; a few times a year. Everything else
+    <p class="subtle reveal">Newsletter&rsquo;s on Substack &mdash; a few times a year. Everything else
       &mdash; press, events, rights, a short or long bio for reprinting &mdash; is on the
       <a href="contact.html">Contact</a> page. A proper author photo is coming; in the meantime,
       the forest above.</p>
@@ -231,6 +253,17 @@
       h.addEventListener('click', function () { window.FX && FX.unlock('reveille'); });
     }
   });
+
+  /* everything drifts in from the left as it scrolls into view */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    [].forEach.call(document.querySelectorAll('.reveal, .reveal-fade'), function (el) { io.observe(el); });
+  })();
 </script>
 </body>
 </html>
