@@ -4,190 +4,160 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0b09">
-<title>Contact — Daniel Wirth</title>
-<meta name="description" content="Reach Daniel Wirth by email or a short message form. Also: Instagram, Substack, and the newsletter.">
+<meta name="theme-color" content="#05060f">
+<title>Talk — Daniel Wirth</title>
+<meta name="description" content="Contact Daniel Wirth, presented as a dialogue box.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --accent: #ff8a3a;
-    --grad: repeating-linear-gradient(100deg,
-      #ffd166 0px, #ffbb4a 520px, #ffa338 1120px, #ff8b28 1760px, #ff7418 2360px,
-      #ec5c06 2980px, #d24d00 3610px, #ec5c06 4240px, #ff7418 4860px, #ff8b28 5460px,
-      #ffa338 6100px, #ffbb4a 6700px, #ffd166 7220px);
+  .npc { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .npc-face {
+    width: 3.4rem; height: 3.4rem; flex: none; background: var(--panel-2);
+    border: 3px solid var(--edge-2); box-shadow: 0 0 0 3px var(--edge);
+    display: grid; place-items: center; font-family: var(--display); font-size: 1.1rem; color: var(--gold);
   }
-
-  .email-line { font-family: var(--display); font-size: 1.55rem; margin: 0.4rem 0 1rem; }
-  .email-line a { text-decoration: none; }
-  .email-line a:hover { text-decoration: underline; }
-  .clock { font-variant-numeric: tabular-nums; color: var(--text); }
-
-  .cform { display: flex; flex-direction: column; gap: 1rem; max-width: 30rem; margin: 1.1rem 0 0; }
-  .cform label {
-    display: flex; flex-direction: column; gap: 0.35rem;
-    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--muted);
-  }
+  .npc-name { font-family: var(--display); font-size: 0.85rem; color: var(--gold); }
+  .say { font-size: 1.5rem; }
+  .choice { display: none; }
+  .choice:target { display: block; }
+  .cform { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0 0; }
+  .cform label { font-family: var(--display); font-size: 0.6rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.4rem; }
   .cform input, .cform select, .cform textarea {
-    font: inherit; font-size: 1rem; color: var(--text);
-    background: var(--bg); border: 1px solid var(--line); border-radius: 4px;
-    padding: 0.6rem 0.75rem; letter-spacing: normal; text-transform: none;
+    font: 1.3rem var(--body); color: var(--text); background: var(--bg);
+    border: 2px solid var(--edge-2); box-shadow: 0 0 0 2px var(--edge); padding: 0.6rem 0.7rem;
   }
-  .cform textarea { resize: vertical; min-height: 6rem; }
-  .cform button {
-    align-self: flex-start; padding: 0.65rem 1.6rem;
-    font-family: var(--display); font-weight: 700; font-size: 1rem; color: #0a0b09;
-    border: 0; border-radius: 4px; cursor: pointer;
-    background-image: var(--grad); background-attachment: fixed;
-    animation: flow var(--flow-dur) linear infinite;
-  }
-  .cform button[disabled] { opacity: 0.6; cursor: default; }
-  .form-status {
-    margin: 0; min-height: 1.3em; font-family: var(--body); font-size: 0.98rem; color: var(--muted);
-  }
-  .form-status.ok { color: var(--accent); }
-  .form-status.err { color: #ff6a5a; }
+  .cform textarea { min-height: 6rem; resize: vertical; }
+  .form-status { font-family: var(--body); font-size: 1.2rem; color: var(--muted); min-height: 1.4em; margin: 0; }
+  .form-status.ok { color: var(--ok); }
+  .form-status.err { color: var(--danger); }
   .hp { position: absolute; left: -9999px; }
-
-  @media (prefers-reduced-motion: reduce) { .cform button { animation: none; } }
+  .clock { color: var(--gold); }
 </style>
 </head>
-<body data-bg="scan">
+<body data-bg="sheet">
 
-<div class="topbar"></div>
+<nav class="topline" aria-label="Sections">
+  <a href="index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="about.html">STATUS</a> &middot;
+    <a href="books.html">INVENTORY</a> &middot;
+    <a href="notebook.html">QUESTS</a> &middot;
+    <a href="contact.html" aria-current="page">TALK</a>
+  </span>
+</nav>
 
-<aside class="rail">
-  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
-  <nav aria-label="Sections">
-    <a class="sec" id="nav-home" href="index.html">Home</a>
-    <a class="sec" href="about.html">About</a>
-    <a class="sec" href="books.html">Books &amp; Poetry</a>
-    <a class="sec" href="blog/index.html">Notebook</a>
-    <a class="sec" href="contact.html" aria-current="page">Contact</a>
-  </nav>
-</aside>
+<main class="screen">
+  <h1>TALK TO DANIEL</h1>
 
-<main class="main">
-  <div class="wrap">
-    <h1 class="page-title">Contact</h1>
-    <p class="lead">A real person reads every one of these. Replies come slowly, but they come.</p>
+  <div class="box">
+    <div class="npc"><span class="npc-face">D</span><span class="npc-name">DANIEL WIRTH</span></div>
+    <p class="say">&ldquo;Oh &mdash; hey. Didn&rsquo;t see you walk up. What&rsquo;s on your
+      mind?&rdquo;</p>
+    <p class="say" style="color:var(--muted); margin-bottom:0;">It&rsquo;s <span class="clock" id="clock">--:--</span> where he is (Mountain Time). Replies land within a week, in character or otherwise.</p>
+  </div>
 
-    <h2>Email</h2>
-    <p>The surest way to reach me:</p>
-    <p class="email-line"><a href="mailto:YOUR-EMAIL@example.com">YOUR-EMAIL@example.com</a></p>
-    <p class="subtle">I answer most messages within a week. Rights and representation go
-      through my agent &mdash; ask and I&rsquo;ll connect you. It&rsquo;s
-      <span class="clock" id="clock">--:--</span> right now where I am (Mountain Time, New Mexico).</p>
+  <div class="box">
+    <span class="label">CHOOSE A RESPONSE</span>
+    <ul class="menu">
+      <li><a href="#say-nice">[1] I&rsquo;d like to say something nice.</a></li>
+      <li><a href="#say-business">[2] I have a business inquiry.</a></li>
+      <li><a href="#say-event">[3] I want to book you for an event.</a></li>
+      <li><a href="#say-nothing">[4] &hellip;nothing. Just checking the menu.</a></li>
+    </ul>
+  </div>
 
-    <h2>Or send a message here</h2>
-    <p class="subtle">Three fields. No account, nothing shared with anyone, and it lands in the same inbox.</p>
+  <div id="say-nice" class="choice box">
+    <p class="say">&ldquo;Oh. Wow. Okay &mdash; thank you, genuinely. Say it in the box below
+      and it&rsquo;s yours forever, on a screen he definitely checks too often.&rdquo;</p>
+  </div>
+  <div id="say-business" class="choice box">
+    <p class="say">&ldquo;Rights, press, editorial, the boring-but-important stuff &mdash;
+      drop it below and pick &lsquo;Business&rsquo; from the list.&rdquo;</p>
+  </div>
+  <div id="say-event" class="choice box">
+    <p class="say">&ldquo;A reading, a panel, a festival slot &mdash; he travels for the right
+      one. Give the details below and pick &lsquo;Event&rsquo;.&rdquo;</p>
+  </div>
+  <div id="say-nothing" class="choice box">
+    <p class="say">&ldquo;Fair enough. The menu&rsquo;s always here. No XP lost for
+      looking.&rdquo;</p>
+  </div>
+
+  <div class="box">
+    <span class="label">SEND A MESSAGE</span>
     <form id="cform" class="cform" action="https://formsubmit.co/ajax/YOUR-EMAIL@example.com" method="post">
-      <label>Your name
-        <input type="text" name="name" required autocomplete="name">
-      </label>
-      <label>Your email
-        <input type="email" name="email" required autocomplete="email">
-      </label>
+      <label>Your name<input type="text" name="name" required autocomplete="name"></label>
+      <label>Your email<input type="email" name="email" required autocomplete="email"></label>
       <label>This is about
         <select name="topic">
-          <option>A book or a poem</option>
-          <option>An event or reading invitation</option>
-          <option>Editorial, rights, or press</option>
+          <option>Just saying hi</option>
+          <option>Business / rights / press</option>
+          <option>Event or reading</option>
           <option>Something else</option>
         </select>
       </label>
-      <label>Message
-        <textarea name="message" rows="5" required></textarea>
-      </label>
+      <label>Message<textarea name="message" rows="5" required></textarea></label>
       <input type="hidden" name="_subject" value="danielwirthwrites.github.io — new message">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button type="submit" id="csend">Send</button>
+      <button type="submit" id="csend" class="btn">SEND</button>
       <p class="form-status" id="fstatus" role="status" aria-live="polite"></p>
     </form>
+  </div>
 
-    <h2>Elsewhere</h2>
-    <ul class="social">
-      <li>
-        <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.7195 1.4573 1.3877 2.1228.6682.6655 1.3368 1.0743 2.1286 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.7194 2.1228-1.3877.665-.6683 1.0745-1.3372 1.3802-2.129.2954-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.7195-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.0044 11.977.0018 8.718.008 8.31.0223 7.0301.084m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2645.0739 1.6435.0796 4.848.0058 3.2044-.006 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
-          <span>@danielwirthwrites</span>
-        </a>
-      </li>
-      <li>
-        <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-          <span>@danielwirth on Substack</span>
-        </a>
-      </li>
+  <div class="box">
+    <span class="label">JOIN THE PARTY (NEWSLETTER)</span>
+    <p>A new poem lands once a month, on Substack. No spam, no side quests you didn&rsquo;t ask for.</p>
+    <form action="https://danielwirth.substack.com/subscribe" method="get" target="_blank" class="cform" style="flex-direction:row; flex-wrap:wrap; align-items:flex-end;">
+      <label style="flex:1 1 12rem;">Email<input type="email" name="email" placeholder="you@somewhere" required></label>
+      <button type="submit" class="btn magenta">SUBSCRIBE</button>
+    </form>
+  </div>
+
+  <div class="box">
+    <span class="label">ELSEWHERE</span>
+    <ul class="menu">
+      <li><a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">INSTAGRAM <span class="sub">@danielwirthwrites</span></a></li>
+      <li><a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">SUBSTACK <span class="sub">@danielwirth</span></a></li>
     </ul>
-
-    <div class="signup">
-      <h2>Newsletter</h2>
-      <p>Occasional notes on new work and what I&rsquo;m reading &mdash; a few times a year, no
-        more. It runs on Substack; enter an address and confirm on the next page.</p>
-      <form action="https://danielwirth.substack.com/subscribe" method="get" target="_blank">
-        <input type="email" name="email" placeholder="you@somewhere" aria-label="Email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
-
-    <div class="page-footer">
-      <span>&copy; 2026 Daniel Wirth</span>
-      <span><a href="mailto:YOUR-EMAIL@example.com">Email</a> &middot; <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">Substack</a></span>
-    </div>
   </div>
 </main>
 
-<script src="nav.js"></script>
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="index.html">TITLE SCREEN</a></span>
+</footer>
+
 <script src="fx.js"></script>
 <script>
-  /* local time where Daniel is */
+  window.FX && FX.unlock('talker');
+
   (function () {
     var el = document.getElementById('clock');
-    if (!el) return;
     function tick() {
       try {
-        el.textContent = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'America/Denver', hour: '2-digit', minute: '2-digit', hour12: false
-        }).format(new Date());
+        el.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
       } catch (e) { el.textContent = '--:--'; }
     }
-    tick();
-    setInterval(tick, 20000);
+    tick(); setInterval(tick, 20000);
   })();
 
-  /* message form -> Formsubmit (no redirect; inline confirmation) */
   (function () {
-    var f = document.getElementById('cform');
-    var s = document.getElementById('fstatus');
-    var btn = document.getElementById('csend');
-    if (!f) return;
+    var f = document.getElementById('cform'), s = document.getElementById('fstatus'), btn = document.getElementById('csend');
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (f.action.indexOf('YOUR-EMAIL') > -1) {
         s.className = 'form-status err';
-        s.textContent = 'The form isn’t wired up yet — use the email address above for now.';
+        s.textContent = 'Quest not yet available — this form needs a real email wired in.';
         return;
       }
-      btn.disabled = true;
-      s.className = 'form-status';
-      s.textContent = 'Sending…';
-      fetch(f.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(f) })
+      btn.disabled = true; s.className = 'form-status'; s.textContent = 'Sending...';
+      fetch(f.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) })
         .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-        .then(function () {
-          f.reset();
-          s.className = 'form-status ok';
-          s.textContent = 'Thanks — your message is on its way. I’ll reply from the address above.';
-        })
-        .catch(function () {
-          s.className = 'form-status err';
-          s.textContent = 'Something went wrong. Email me directly instead — the address is right above.';
-        })
+        .then(function () { f.reset(); s.className = 'form-status ok'; s.textContent = 'MESSAGE SENT. +10 XP.'; })
+        .catch(function () { s.className = 'form-status err'; s.textContent = 'Something broke. Try the elsewhere links instead.'; })
         .then(function () { btn.disabled = false; });
     });
   })();

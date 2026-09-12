@@ -4,121 +4,84 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0b09">
-<title>Books &amp; Poetry — Daniel Wirth</title>
-<meta name="description" content="Books, chapbooks, and published poems by Daniel Wirth.">
+<meta name="theme-color" content="#05060f">
+<title>Inventory — Daniel Wirth</title>
+<meta name="description" content="Daniel Wirth's books, presented as an RPG inventory / item shop.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    /* Prussian blue — dark and ink-heavy, not a pastel */
-    --accent: #4a84ab;
-    --grad: repeating-linear-gradient(100deg,
-      #5f9bc4 0px, #4a84ab 520px, #3a6f96 1120px, #2c5a7d 1760px, #234863 2360px,
-      #1e3d54 2980px, #1a3a52 3610px, #1e3d54 4240px, #234863 4860px, #2c5a7d 5460px,
-      #3a6f96 6100px, #4a84ab 6700px, #5f9bc4 7220px);
+  .item { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1.3rem; align-items: start; }
+  .item-icon {
+    width: 6.5rem; aspect-ratio: 2/3; object-fit: contain; background: #05060f;
+    border: 3px solid var(--edge-2); box-shadow: 0 0 0 3px var(--edge);
   }
-
-  /* the opening block centres in the wider main area (further right than the
-     left-anchored book list, which is unchanged) */
-  .feature {
-    max-width: 34rem; text-align: center;
-    margin: 0 auto 0 16rem;
-  }
-  .feature .lead { max-width: 44ch; margin-inline: auto; }
-  .feature .poem { text-align: center; }
-  .feature figure.plate.tall { margin-inline: auto; }
-  @media (max-width: 78rem) { .feature { margin-inline: auto; } }
+  .rarity { font-family: var(--display); font-size: 0.6rem; letter-spacing: .05em; display: inline-block; padding: 0.25rem 0.5rem; margin-bottom: 0.5rem; }
+  .rarity.legendary { background: var(--gold); color: var(--bg); }
+  .rarity.rare { background: var(--magenta); color: var(--bg); }
+  .item h2 { margin: 0 0 0.3rem; color: var(--text); }
+  .effect { font-family: var(--body); font-size: 1.3rem; color: var(--cyan); margin: 0.5rem 0 0.8rem; }
+  .price { font-family: var(--display); font-size: 0.7rem; color: var(--gold); margin: 0 0 0.8rem; }
+  @media (max-width: 30rem) { .item { grid-template-columns: 1fr; } .item-icon { width: 8rem; } }
 </style>
 </head>
-<body data-bg="caustics">
+<body data-bg="sheet">
 
-<div class="topbar"></div>
+<nav class="topline" aria-label="Sections">
+  <a href="index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="about.html">STATUS</a> &middot;
+    <a href="books.html" aria-current="page">INVENTORY</a> &middot;
+    <a href="notebook.html">QUESTS</a> &middot;
+    <a href="contact.html">TALK</a>
+  </span>
+</nav>
 
-<aside class="rail">
-  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
-  <nav aria-label="Sections">
-    <a class="sec" id="nav-home" href="index.html">Home</a>
-    <a class="sec" href="about.html">About</a>
-    <a class="sec" href="books.html" aria-current="page">Books &amp; Poetry</a>
-    <a class="sec" href="blog/index.html">Notebook</a>
-    <a class="sec" href="contact.html">Contact</a>
-  </nav>
-</aside>
+<main class="screen">
+  <h1>INVENTORY</h1>
+  <p class="lede">2 items. Both equipped, always.</p>
 
-<main class="main">
-    <div class="feature">
-      <h1 class="page-title">Books &amp; Poetry</h1>
-      <p class="lead">Poetry written straight from life.</p>
-
-      <h2>This Month&rsquo;s Poem</h2>
-      <p class="subtle" style="margin-top:-0.4rem;">September 2026</p>
-<p class="poem">The sting of the morning
-magnifies our waking
-We huddle to hide from the cold
-yet need it to feel alive
-
-Rays of warmth
-filter through branches
-dancing around us
-and our mind dances with them
-
-We carry heavy bodies into the World
-making ourselves lighter
-and we restart our consumption
-of the World</p>
-
-      <figure class="plate tall">
-        <img src="assets/art/vangogh-bridge-in-the-rain.jpg" width="815" height="1100" loading="lazy"
-             alt="A rain-soaked wooden bridge over a blue-green river, painted in thick brushstrokes within a red and green bordered frame">
-        <figcaption><b>Bridge in the Rain</b>, after Hiroshige &middot; Vincent van Gogh, 1887 &middot; public domain, via Artvee</figcaption>
-      </figure>
+  <div class="box item">
+    <img class="item-icon" src="assets/cover-unfiltered-thoughts.jpg" width="334" height="500" loading="lazy" alt="Cover of Unfiltered Thoughts of a Broken Soul">
+    <div>
+      <span class="rarity legendary">LEGENDARY &middot; UNIQUE</span>
+      <h2>Unfiltered Thoughts of a Broken Soul</h2>
+      <p>A journey through fire, ash, and renewal. Free verse that bleeds with loss,
+        despair, and rage, and still blooms with love and self-discovery. Seven sections,
+        no patch notes &mdash; every poem is exactly as it dropped the first time.</p>
+      <p class="effect">Effect: No revisions applied. Base stats only. Hits harder for it.</p>
+      <p class="price">POETRY &middot; 2025 &middot; 96 PAGES</p>
+      <a class="btn" href="https://www.amazon.com/dp/B0FR5G793Y" target="_blank" rel="noopener">PURCHASE &rarr;</a>
     </div>
+  </div>
 
-  <div class="wrap">
-    <hr>
-
-    <h2>Books</h2>
-
-    <div class="work">
-      <img class="cover" src="assets/cover-unfiltered-thoughts.jpg" width="334" height="500" loading="lazy" alt="Cover of Unfiltered Thoughts of a Broken Soul">
-      <div>
-        <h3>Unfiltered Thoughts of a Broken Soul</h3>
-        <p class="meta">Poetry &middot; 2025 &middot; 96 pages</p>
-        <p>A journey through fire, ash, and renewal. Jagged, existential free verse that
-          bleeds with loss, despair, and rage &mdash; and still blooms with love, resilience,
-          and self-discovery. Seven sections that move from darkness and ruin toward
-          becoming. Not polished. Written straight from life, for anyone who has been broken
-          and kept moving.</p>
-        <p><a class="buy" href="https://www.amazon.com/dp/B0FR5G793Y" target="_blank" rel="noopener">Read here</a>
-          <span class="subtle">&nbsp;&middot;&nbsp; paperback &amp; Kindle on Amazon</span></p>
-      </div>
+  <div class="box item">
+    <img class="item-icon" src="assets/cover-tough-men.jpg" width="313" height="500" loading="lazy" alt="Cover of Tough Men Don't Cry">
+    <div>
+      <span class="rarity rare">RARE &middot; SURVIVOR</span>
+      <h2>Tough Men Don&rsquo;t Cry</h2>
+      <p>Poems that push into the space between strength, grief, and failure. A plain
+        reckoning with carrying too much, for anyone who felt like they were drowning
+        while everyone assumed they were fine.</p>
+      <p class="effect">Effect: Drop rate was brutal &mdash; 75 survived a pool of 400 written.</p>
+      <p class="price">POETRY &middot; 2026 &middot; 120 PAGES &middot; PAPERBACK</p>
+      <a class="btn cyan" href="https://www.amazon.com/dp/B0H51RF23G" target="_blank" rel="noopener">PURCHASE &rarr;</a>
     </div>
+  </div>
 
-    <div class="work">
-      <img class="cover" src="assets/cover-tough-men.jpg" width="313" height="500" loading="lazy" alt="Cover of Tough Men Don&rsquo;t Cry">
-      <div>
-        <h3>Tough Men Don&rsquo;t Cry</h3>
-        <p class="meta">Poetry &middot; 2026 &middot; 120 pages</p>
-        <p>Poems that push into the space between strength, grief, and failure &mdash; a
-          plain reckoning with human inadequacy and the weight of carrying too much. For
-          anyone who has felt like they were drowning while everyone around them assumed
-          they were &ldquo;fine.&rdquo;</p>
-        <p><a class="buy" href="https://www.amazon.com/dp/B0H51RF23G" target="_blank" rel="noopener">Read here</a>
-          <span class="subtle">&nbsp;&middot;&nbsp; paperback on Amazon</span></p>
-      </div>
-    </div>
-
-    <div class="page-footer">
-      <span>&copy; 2026 Daniel Wirth</span>
-      <span><a href="contact.html">Contact</a> &middot; <a href="contact.html">Newsletter</a></span>
-    </div>
+  <div class="box">
+    <span class="label">CRAFTING QUEUE</span>
+    <p style="margin-bottom:0;">Two more items are being forged &mdash; check the
+      <a href="notebook.html">Quest Log</a> for drafting progress.</p>
   </div>
 </main>
 
-<script src="nav.js"></script>
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="contact.html">TALK</a></span>
+</footer>
+
 <script src="fx.js"></script>
+<script>window.FX && FX.unlock('shopper');</script>
 </body>
 </html>

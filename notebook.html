@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05060f">
+<title>Quest Log — Daniel Wirth</title>
+<meta name="description" content="Daniel Wirth's work in progress, presented as an RPG quest log.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .quest h3 { margin-top: 0; }
+  .quest .tag { font-family: var(--display); font-size: 0.58rem; color: var(--muted); display: block; margin-bottom: 0.5rem; }
+  .quest .tag.active { color: var(--ok); }
+</style>
+</head>
+<body data-bg="sheet">
+
+<nav class="topline" aria-label="Sections">
+  <a href="index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="about.html">STATUS</a> &middot;
+    <a href="books.html">INVENTORY</a> &middot;
+    <a href="notebook.html" aria-current="page">QUESTS</a> &middot;
+    <a href="contact.html">TALK</a>
+  </span>
+</nav>
+
+<main class="screen">
+  <h1>QUEST LOG</h1>
+  <p class="lede">Under construction &mdash; check back soon.</p>
+
+  <div class="box quest">
+    <span class="tag active">ACTIVE QUEST</span>
+    <h3>Rebuild the Quest Log itself</h3>
+    <p style="margin-bottom:0;">This screen is being rebuilt from scratch along with the rest
+      of the site. Soon it&rsquo;ll hold characters, worldbuilding, and cut fragments for
+      whatever Daniel is drafting &mdash; readable like a save file, one entry at a time.</p>
+  </div>
+
+  <p style="text-align:center;"><a class="btn" href="contact.html">SUGGEST A QUEST &rarr;</a></p>
+</main>
+
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="contact.html">TALK</a></span>
+</footer>
+
+<script src="fx.js"></script>
+</body>
+</html>

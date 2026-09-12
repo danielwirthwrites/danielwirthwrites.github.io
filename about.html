@@ -4,246 +4,89 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0b09">
-<title>About — Daniel Wirth</title>
-<meta name="description" content="Daniel Wirth: research technologist by day, poet after dark. Two poetry collections, two novels in progress, a forest in New Mexico. Short bio, FAQ, and what he's doing now.">
+<meta name="theme-color" content="#05060f">
+<title>Character Sheet — Daniel Wirth</title>
+<meta name="description" content="Daniel Wirth's author bio, presented as a video game character sheet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --accent: #67e07a;
-    --grad: repeating-linear-gradient(100deg,
-      #d6ff5c 0px, #b8f53c 520px, #90ec46 1120px, #5fe06c 1760px, #3ecd7e 2360px,
-      #2cb277 2980px, #1e8c63 3610px, #2cb277 4240px, #3ecd7e 4860px, #5fe06c 5460px,
-      #90ec46 6100px, #b8f53c 6700px, #d6ff5c 7220px);
+  .portrait {
+    width: 100%; aspect-ratio: 3/2; background: repeating-linear-gradient(45deg, #1b2350, #1b2350 10px, #141a3d 10px, #141a3d 20px);
+    border: 3px solid var(--edge-2); box-shadow: 0 0 0 3px var(--edge);
+    display: grid; place-items: center; margin: 0 0 1.5rem;
+    font-family: var(--display); font-size: 0.65rem; color: var(--muted); text-align: center; padding: 1rem;
   }
-  html { scroll-behavior: smooth; }
-
-  /* staggered, diagonal masthead — the eye travels day -> night, left -> right */
-  h1.masthead { margin: 0 0 1.3rem; font-weight: 700; }
-  .masthead .mh-name {
-    display: block; font-family: var(--display);
-    font-size: clamp(2.4rem, 7vw, 3.9rem); line-height: 1.03; letter-spacing: -0.02em;
-    background-image: var(--grad); background-attachment: fixed;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .masthead .mh-line {
-    display: block; font-family: var(--display); font-weight: 600;
-    font-size: clamp(1.1rem, 3.4vw, 1.75rem); line-height: 1.3; color: var(--text);
-  }
-  .masthead .mh-line em { font-style: italic; font-weight: 400; color: var(--muted); }
-  .masthead .mh-day   { margin: 0.8rem 0 0 clamp(1rem, 6vw, 3rem); }
-  .masthead .mh-night { margin: 0.2rem 0 0 clamp(2rem, 12vw, 7rem); }
-  .about > .lead { margin-left: clamp(2rem, 14vw, 9rem); }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .masthead .mh-name {
-      opacity: 0;
-      animation: mh-fade .8s ease .05s forwards, flow var(--flow-dur) linear infinite;
-    }
-    .masthead .mh-day, .masthead .mh-night, .about > .lead {
-      opacity: 0; transform: translateX(-1.5rem);
-      animation: mh-in .75s cubic-bezier(.2, .7, .2, 1) forwards;
-    }
-    .masthead .mh-day  { animation-delay: .40s; }
-    .masthead .mh-night { animation-delay: .65s; }
-    .about > .lead      { animation-delay: .90s; }
-  }
-  @keyframes mh-fade { to { opacity: 1; } }
-  @keyframes mh-in { to { opacity: 1; transform: none; } }
-
-  /* the rest of the page keeps the diagonal: each block steps a little right,
-     and drifts in from the left as it scrolls into view */
-  .about > h2 { margin-left: clamp(1rem, 5vw, 2.5rem); }
-  .faq { margin-left: clamp(1rem, 5vw, 2.5rem); }
-  .faq p { margin-left: 1.4rem; }
-  .now { margin-left: clamp(0.4rem, 3vw, 1.4rem); }
-  .about > .subtle { margin-left: clamp(1rem, 5vw, 2.5rem); }
-
-  /* base .reveal / .reveal-fade now live in styles.css; these are page-specific staggers */
-  .faq > .reveal:nth-child(even) { transition-delay: .06s; }
-  .social li.reveal:nth-child(2) { transition-delay: .12s; }
-
-  .about-nav {
-    display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0 0 2.75rem;
-    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
-  }
-  .about-nav a { color: var(--muted); text-decoration: none; }
-  .about-nav a:hover { color: var(--accent); }
-
-  .about h2 { scroll-margin-top: 2rem; }
-
-  .faq { margin: 1.25rem 0; }
-  .faq > div { padding: 1.4rem 0; border-top: 1px solid var(--line); }
-  .faq > div:last-child { border-bottom: 1px solid var(--line); }
-  .faq h3 { font-family: var(--display); font-weight: 600; font-size: 1.16rem; margin: 0 0 0.45rem; color: var(--text); }
-  .faq p { margin: 0; }
-  .faq p + p { margin-top: 0.6rem; }
-
-  .now {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
-    padding: 1.5rem 1.65rem; margin: 1.25rem 0;
-  }
-  .now h2 { margin-top: 0; }
-  .now .stamp {
-    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.6rem;
-  }
-  .now ul { margin: 0; padding-left: 1.1rem; }
-  .now li { margin: 0.4rem 0; }
+  .skills { list-style: none; margin: 0; padding: 0; }
+  .skills li { padding: 0.7rem 0; border-top: 1px dashed var(--edge-2); }
+  .skills li:last-child { border-bottom: 1px dashed var(--edge-2); }
+  .skills b { font-family: var(--display); font-size: 0.72rem; color: var(--gold); display: block; margin-bottom: 0.3rem; }
 </style>
 </head>
-<body data-bg="contours">
+<body data-bg="sheet">
 
-<div class="topbar"></div>
+<nav class="topline" aria-label="Sections">
+  <a href="index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="about.html" aria-current="page">STATUS</a> &middot;
+    <a href="books.html">INVENTORY</a> &middot;
+    <a href="notebook.html">QUESTS</a> &middot;
+    <a href="contact.html">TALK</a>
+  </span>
+</nav>
 
-<aside class="rail">
-  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
-  <nav aria-label="Sections">
-    <a class="sec" id="nav-home" href="index.html">Home</a>
-    <a class="sec" href="about.html" aria-current="page">About</a>
-    <a class="sec" href="books.html">Books &amp; Poetry</a>
-    <a class="sec" href="blog/index.html">Notebook</a>
-    <a class="sec" href="contact.html">Contact</a>
-  </nav>
-</aside>
+<main class="screen">
+  <h1>CHARACTER SHEET</h1>
 
-<main class="main">
-  <div class="wrap about">
-    <h1 class="masthead">
-      <span class="mh-name">Daniel Wirth</span>
-      <span class="mh-line mh-day">Research Technologist <em>by day.</em></span>
-      <span class="mh-line mh-night">Poet and Novelist <em>by night.</em></span>
-    </h1>
-    <p class="lead">The night shift is the one I mean. The dogs supervise both.</p>
+  <div class="portrait">[ PORTRAIT NOT YET RENDERED ]<br>(a real photo loads here eventually)</div>
 
-    <nav class="about-nav reveal" aria-label="On this page">
-      <a href="#bio">Short bio</a>
-      <a href="#faq">FAQ</a>
-      <a href="#now">Now</a>
-      <a href="#elsewhere">Elsewhere</a>
-    </nav>
-
-    <figure class="plate right reveal-fade">
-      <img src="assets/art/friedrich-forest-moonlight.jpg" width="765" height="1100" loading="lazy"
-           alt="A moonlit pine forest with two small figures at a campfire in a gully">
-      <figcaption><b>Inside the Forest by Moonlight</b><br>after Caspar David Friedrich &middot; public domain, via Artvee</figcaption>
-    </figure>
-
-    <h2 id="bio" class="reveal">Short bio</h2>
-    <p class="reveal">I grew up in Rheine, a small town in Germany, in the 1990s, and now live in the
-      mountains of New Mexico, in a stretch of forest that doesn&rsquo;t ask questions. I&rsquo;ve
-      published two poetry collections, and I&rsquo;m drafting two novels &mdash; one military
-      sci-fi horror, one eco-fantasy.</p>
-    <p class="reveal" style="transition-delay:.06s">Poetry is the thing that did the repair work when I needed it &mdash; the kind you
-      have to do yourself. I&rsquo;ve been broken in half twice, both times literally: two broken
-      spines, no wheelchair either round. I write sitting on the ground, wake at 4:47 out of a
-      habit the army set and never came back for, and cook elaborate meals like each one is a
-      dare. I&rsquo;m bad at most of it and do it anyway. That&rsquo;s the whole method.</p>
-
-    <h2 id="faq" class="reveal">FAQ</h2>
-    <div class="faq">
-      <div class="reveal">
-        <h3>How do you say &ldquo;Wirth&rdquo;?</h3>
-        <p>Like &ldquo;worth,&rdquo; with the vowel swapped and the <em>h</em> barely there. Land
-          anywhere near &ldquo;worth&rdquo; and I&rsquo;ll answer.</p>
-      </div>
-      <div class="reveal">
-        <h3>What do you write?</h3>
-        <p>Poetry, mostly &mdash; two collections so far. And two novels in progress:
-          <em>Disposal Unit</em>, military sci-fi horror, and <em>Worlds Beneath Roots</em>,
-          eco-fantasy. The <a href="blog/index.html">Notebook</a> holds the characters,
-          fragments, and worldbuilding for both.</p>
-      </div>
-      <div class="reveal">
-        <h3>Are the poems about you?</h3>
-        <p>Mostly. <a href="books.html"><em>Unfiltered Thoughts of a Broken Soul</em></a> keeps
-          every poem exactly as it was first written &mdash; no revisions, no second takes.
-          <a href="books.html"><em>Tough Men Don&rsquo;t Cry</em></a> is the seventy-five that
-          survived out of four hundred.</p>
-      </div>
-      <div class="reveal">
-        <h3>What&rsquo;s the day job?</h3>
-        <p>Research technologist. It buys the dog food and the good knives.</p>
-      </div>
-      <div class="reveal">
-        <h3>Why 4:47?</h3>
-        <p>The army set that alarm a long time ago and never came back for it.</p>
-      </div>
-      <div class="reveal">
-        <h3>You wrote a novel before these. What happened to it?</h3>
-        <p>I read <em>The Library at Mount Char</em> halfway through the draft, decided I
-          couldn&rsquo;t stand my own prose, and rewrote the whole book to be &ldquo;more
-          mysterious.&rdquo; Then I put it where mysterious things go. The poems, I kept.</p>
-      </div>
-      <div class="reveal">
-        <h3>Best writing advice you&rsquo;ve got?</h3>
-        <p>Be bad at it and keep going. I have a lot of practice with the first part.</p>
-      </div>
-      <div class="reveal">
-        <h3>What&rsquo;s with the plush keychains?</h3>
-        <p>No explanation has held up under questioning.</p>
-      </div>
-      <div class="reveal">
-        <h3>How do I reach you &mdash; reader mail, an event, a rights query?</h3>
-        <p>The <a href="contact.html">Contact</a> page. A real person reads all of it, slowly.</p>
-      </div>
-    </div>
-
-    <h2 id="now" class="reveal">Now</h2>
-    <div class="now reveal">
-      <span class="stamp">Updated September 2026</span>
-      <ul>
-        <li>Drafting the second act of <em>Disposal Unit</em>. It&rsquo;s going badly, which is
-          where it usually goes before it goes well.</li>
-        <li>Reading a stack of eco-fiction and one book about soil.</li>
-        <li>Walking the same three miles of forest most mornings, looking for things that
-          don&rsquo;t belong.</li>
-        <li>A new poem goes up in the <a href="blog/poetry/index.html">Notebook</a> at the start
-          of each month.</li>
-      </ul>
-    </div>
-
-    <h2 id="elsewhere" class="reveal">Elsewhere</h2>
-    <ul class="social">
-      <li class="reveal">
-        <a href="https://www.instagram.com/danielwirthwrites/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.7195 1.4573 1.3877 2.1228.6682.6655 1.3368 1.0743 2.1286 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.7194 2.1228-1.3877.665-.6683 1.0745-1.3372 1.3802-2.129.2954-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.7195-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.0044 11.977.0018 8.718.008 8.31.0223 7.0301.084m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2645.0739 1.6435.0796 4.848.0058 3.2044-.006 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
-          <span>@danielwirthwrites</span>
-        </a>
-      </li>
-      <li class="reveal">
-        <a href="https://danielwirth.substack.com/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-          <span>@danielwirth on Substack</span>
-        </a>
-      </li>
-    </ul>
-    <p class="subtle reveal">Newsletter&rsquo;s on Substack &mdash; a few times a year. Everything else
-      &mdash; press, events, rights, a short or long bio for reprinting &mdash; is on the
-      <a href="contact.html">Contact</a> page. A proper author photo is coming; in the meantime,
-      the forest above.</p>
-
-    <div class="page-footer">
-      <span>&copy; 2026 Daniel Wirth</span>
-      <span><a href="contact.html">Contact</a> &middot; <a href="contact.html">Newsletter</a></span>
-    </div>
+  <div class="box">
+    <span class="label">NAME</span>
+    <p class="lede" style="margin-bottom:1.2rem;">Daniel Wirth</p>
+    <span class="label">CLASS</span>
+    <p style="margin-bottom:1.2rem;">Poet / Novelist &mdash; Dual Class</p>
+    <span class="label">LEVEL</span>
+    <p style="margin-bottom:0;">Unconfirmed. He stopped counting after the second broken bone.</p>
   </div>
+
+  <div class="box">
+    <span class="label">STATS</span>
+    <div class="stat-row"><span class="stat-label">HP (HOPE)</span><span class="stat-bar hp"><span style="width:70%"></span></span><span class="stat-num">70/100</span></div>
+    <div class="stat-row"><span class="stat-label">MP (METAPHOR)</span><span class="stat-bar mp"><span style="width:95%"></span></span><span class="stat-num">95/100</span></div>
+    <div class="stat-row"><span class="stat-label">DEADLINE EVASION</span><span class="stat-bar xp"><span style="width:88%"></span></span><span class="stat-num">88</span></div>
+    <div class="stat-row"><span class="stat-label">CAFFEINE RESIST</span><span class="stat-bar xp"><span style="width:12%"></span></span><span class="stat-num">12</span></div>
+    <div class="stat-row"><span class="stat-label">WHIMSY</span><span class="stat-bar xp"><span style="width:99%"></span></span><span class="stat-num">99</span></div>
+  </div>
+
+  <div class="box">
+    <span class="label">BACKSTORY</span>
+    <p>Nobody actually knows where Daniel Wirth spawned. The load screen ran long, the
+      lore dump got skipped, and by the time anyone thought to ask, he already had two
+      published poetry collections and a stat sheet nobody remembers assigning.</p>
+    <p>What&rsquo;s confirmed: he writes. He has, at various points, been declared broken,
+      re-speccing halfway through a run without asking permission, and last seen reading
+      three different genres simultaneously as though that were a normal play style.</p>
+  </div>
+
+  <div class="box">
+    <span class="label">SKILLS</span>
+    <ul class="skills">
+      <li><b>Simile Strike</b> Deals surprise emotional damage by comparing one thing to a completely different thing.</li>
+      <li><b>Line Break (Passive)</b> Randomly increases the weight of a sentence by ending it early.</li>
+      <li><b>Backstory Info-Dump</b> Once per book. Explains everything at the worst possible time.</li>
+      <li><b>Second Draft</b> Rarely triggers. When it does, it&rsquo;s devastating.</li>
+    </ul>
+  </div>
+
+  <p style="text-align:center;"><a class="btn" href="achievements.html">VIEW ACHIEVEMENTS</a></p>
 </main>
 
-<script src="nav.js"></script>
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="contact.html">TALK</a></span>
+</footer>
+
 <script src="fx.js"></script>
-<script>
-  /* the 4:47 line is a quiet button (kept from before) */
-  [].forEach.call(document.querySelectorAll('.faq h3'), function (h) {
-    if (/4:47/.test(h.textContent)) {
-      h.style.cursor = 'help';
-      h.addEventListener('click', function () { window.FX && FX.unlock('reveille'); });
-    }
-  });
-  /* .reveal drift-in is handled globally by fx.js */
-</script>
+<script>window.FX && FX.unlock('lore');</script>
 </body>
 </html>

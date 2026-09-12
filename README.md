@@ -1,49 +1,48 @@
-# danielwirthwrites.github.io
+# danielwirthwrites.github.io — v2
 
-The source for Daniel Wirth's author website.
+The author site for Daniel Wirth, rebuilt from scratch as **"A Writer-Type
+Adventure"** — the whole thing presented as a retro video-game menu system.
+Title screen, character sheet, item inventory, quest log, dialogue box. No
+build step; plain HTML/CSS/JS served directly by GitHub Pages.
 
 **Live site:** https://danielwirthwrites.github.io
 
-## How it works
+## Where the old site went
 
-Plain HTML and one CSS file. No build step. GitHub Pages serves the files in
-this repo directly; pushing to the `main` branch updates the live site within
-a minute or two.
+The previous version (dark literary theme, ring-wheel navigation, public
+domain art, per-page accent colours) is **not deleted** — it's preserved:
 
-Dark theme throughout ("Toxic" palette: matte black, bone text, a flowing
-lime-to-orange accent gradient). The homepage navigation is a rotating wheel;
-choosing a section unrolls it into the fixed left-hand rail the inner pages use.
-Each inner page tints the accent to its own hue by overriding `--accent` and
-`--grad` in a small `<style>` block: About = green, Books & Poetry = turquoise,
-Notebook = yellow, Contact = orange.
+- Branch: [`v1-toxic-flip`](../../tree/v1-toxic-flip)
+- Tag: `v1-toxic-flip-final`
+
+To bring any of it back: `git checkout v1-toxic-flip -- <path>`.
 
 ## Files
 
-| File | Page |
-|------|------|
-| `index.html` | Home — self-contained (wheel nav + its own CSS/JS) |
-| `about.html` | About (green) |
-| `books.html` | Books & Poetry (turquoise) |
-| `blog/index.html` | Notebook — list of topics (yellow) |
-| `blog/<topic>/index.html` | A topic hub (e.g. `disposal-unit/`, `notes/`) |
-| `blog/<topic>/<slug>.html` | One entry — article / character / poem / update |
-| `blog/README.md` | How the Notebook is organised + how to add to it |
-| `contact.html` | Contact + newsletter (orange) |
-| `styles.css` | Shared styling for the inner pages; tokens at the top |
-| `404.html` | Shown for unknown URLs |
-| `design/` | Standalone prototypes / design direction notes |
+| File | Screen |
+|------|--------|
+| `index.html` | Title screen (main menu + starfield) |
+| `about.html` | Character sheet (bio, stats, skills) |
+| `books.html` | Inventory (the two real books, as items) |
+| `notebook.html` | Quest log (work in progress) — stub for now |
+| `contact.html` | Talk to NPC (dialogue + real contact form + newsletter) |
+| `achievements.html` | Hidden achievements room |
+| `styles.css` | Shared pixel/JRPG-box design system |
+| `fx.js` | Achievement toasts, click sparks, title-screen starfield |
+| `assets/` | Real book cover images |
 
-## Making changes
+## Content policy for this version
 
-Send the new text (bio, book details, a blog post, the email address to show,
-your Buttondown newsletter username) and it gets edited in, committed, and
-pushed.
+Per the rebuild brief: **identity and commerce stay real** (Daniel Wirth's
+name, the two published books and their real Amazon links, the real
+Instagram/Substack handles) — everything else (bio flavour, stats, skills,
+lore) is new invented game-flavoured copy, not a factual biography.
 
-### To do
+## To do
 
-- Replace placeholder copy on every page with real text.
-- Set the contact email address in `contact.html` (currently `YOUR-EMAIL@example.com`).
-- Replace `USERNAME` in the newsletter form with a real Buttondown username, or
-  swap in a different newsletter provider's embed code.
-- Add an author photo to the About page.
-- Optional: point a custom domain at the site.
+- Real portrait for the character sheet.
+- Real email in `contact.html`'s form `action` and the Formsubmit one-time
+  activation.
+- Build out the Quest Log properly (characters / worldbuilding / fragments
+  per project, like v1's Notebook, but styled as quests).
+- More achievements, maybe a "New Game+" easter egg.

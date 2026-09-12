@@ -4,575 +4,61 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0b09">
+<meta name="theme-color" content="#05060f">
 <title>Daniel Wirth</title>
-<meta name="description" content="Daniel Wirth writes fiction and poetry. Novels, poems, and the occasional note from the desk.">
+<meta name="description" content="Daniel Wirth's author site, presented as a video game title screen. A writer-type adventure.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --bg:      #0a0b09;
-    --surface: #141611;
-    --line:    #2b2f22;
-    --text:    #eef3e6;
-    --muted:   #8a9575;
-    --lime:    #c6ff00;
-    --grad: repeating-linear-gradient(100deg,
-      #c6ff00 0px, #c2fa2c 380px, #b7f52e 720px, #bef23c 1080px, #cbee42 1440px,
-      #d9ea48 1800px, #e7e64d 2160px, #f3e24f 2460px, #ffe14a 2700px, #ffd44c 2940px,
-      #ffc44a 3140px, #f7a83c 3320px, #e98a24 3460px, #d95e00 3560px, #d95e00 3660px,
-      #e98a24 3760px, #f7a83c 3900px, #ffc44a 4080px, #ffd44c 4280px, #ffe14a 4520px,
-      #f3e24f 4760px, #e7e64d 5060px, #d9ea48 5420px, #cbee42 5780px, #bef23c 6140px,
-      #b7f52e 6500px, #c2fa2c 6840px, #c6ff00 7220px);
-    --grad-cycle: 7220px;
-    --flow-dur: 22s;
-    --rail-w: 208px;
-    --display: 'Fraunces', Georgia, serif;
-    --body: 'EB Garamond', Georgia, serif;
-    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  body { overflow-x: hidden; }
+  .title-wrap {
+    position: relative; z-index: 1; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 3rem 1.5rem;
   }
+  #fx-stars { position: fixed; inset: 0; z-index: 0; }
+  .logo {
+    font-family: var(--display); font-size: clamp(1.8rem, 8vw, 3.4rem); line-height: 1.5;
+    color: var(--gold); text-shadow: 4px 4px 0 var(--edge-2), 4px 4px 0 3px #05060f;
+    margin: 0 0 0.6rem;
+  }
+  .tagline { font-family: var(--body); font-size: 1.6rem; color: var(--muted); margin: 0 0 3rem; }
+  .press-start {
+    font-family: var(--display); font-size: 0.85rem; color: var(--text);
+    margin: 2.5rem 0 0; animation: blink 1.1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) { .press-start { animation: none; } }
+  @keyframes blink { 50% { opacity: 0; } }
 
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  body {
-    background: var(--bg); color: var(--text);
-    font-family: var(--body); font-size: 1.2rem; line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh; overflow-x: hidden;
-  }
-  a { color: var(--lime); }
-  :focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 3px; }
+  .title-menu { text-align: left; display: inline-block; }
+  .title-menu .box { min-width: 18rem; }
 
-  /* cross-page crossfade so each page's accent colour fades into the next */
-  @view-transition { navigation: auto; }
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: .55s; animation-timing-function: ease; }
-  @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
-
-  .topbar {
-    position: relative; z-index: 2;
-    height: 3px; width: 100%;
-    background-image: var(--grad); background-attachment: fixed;
-    animation: flow var(--flow-dur) linear infinite;
-  }
-  @keyframes flow { from { background-position: 0 0; } to { background-position: var(--grad-cycle) 0; } }
-
-  .page { max-width: 60rem; margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
-
-  .wordmark {
-    font-family: var(--display); font-weight: 600; font-size: 1rem;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
-    text-align: center; margin: 0.25rem 0 0; transition: opacity .4s;
-  }
-  body.railing .page > .wordmark { opacity: 0; }
-
-  /* ---------- wheel ---------- */
-  .stage {
-    position: relative;
-    height: 66vh; min-height: 460px;
-    --radius: 200px;
-  }
-  .ring { position: absolute; inset: 0; pointer-events: none; }
-
-  .node {
-    position: absolute; left: 0; top: 0;
-    pointer-events: auto; cursor: pointer;
-    white-space: nowrap;
-    font-family: var(--display); font-weight: 600;
-    font-size: 1rem; letter-spacing: 0.01em;
-    color: var(--muted); text-decoration: none;
-    opacity: 0.42;
-    transition: color .3s, opacity .3s, font-size .3s, font-weight .3s;
-    will-change: transform;
-  }
-  .node:hover { color: var(--text); opacity: 0.85; }
-  .node.is-top { color: var(--lime); opacity: 1; font-weight: 700; font-size: 1.6rem; }
-  .node.railed { font-size: 1.15rem; opacity: 0.6; }
-  .node.railed.is-top { font-size: 1.3rem; opacity: 1; }
-
-  .hub {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    font-family: var(--display); font-weight: 600; font-size: 1.15rem;
-    color: var(--text); text-align: center; pointer-events: none;
-    letter-spacing: 0.02em; transition: opacity .45s;
-  }
-  .hub small { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 0.35rem; }
-
-  .ringline {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: calc(var(--radius) * 2); height: calc(var(--radius) * 2);
-    border: 1px solid var(--line); border-radius: 50%; pointer-events: none;
-    transition: border-color .3s, box-shadow .3s, opacity .45s;
-  }
-  .stage.is-parked .ringline { border-color: rgba(198,255,0,0.5); box-shadow: inset 0 0 40px rgba(198,255,0,0.08); }
-
-  .marker {
-    position: absolute; left: 50%; top: calc(50% - var(--radius) - 30px);
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 7px solid transparent; border-right: 7px solid transparent;
-    border-top: 10px solid var(--lime); pointer-events: none; transition: opacity .4s;
-  }
-
-  .stage.railing { position: relative; z-index: 60; }
-  .stage.railing .ringline,
-  .stage.railing .marker,
-  .stage.railing .hub,
-  .stage.intro .ringline,
-  .stage.intro .marker,
-  .stage.intro .hub { opacity: 0; }
-  .stage.railing .node { z-index: 61; }
-
-  /* the real left rail — identical to the inner pages, so the collapse lands
-     exactly where the next page's menu renders. Hidden until the wheel folds in. */
-  .rail {
-    position: fixed; top: 3px; left: 0; bottom: 0; width: var(--rail-w); z-index: 45;
-    background: linear-gradient(180deg, var(--surface), #101208);
-    border-right: 1px solid var(--line);
-    display: flex; flex-direction: column; padding: 1.9rem 0 1.4rem;
-    opacity: 0; pointer-events: none;
-    transition: opacity 1s ease .35s;
-  }
-  body.railing .rail { opacity: 1; }
-  .rail::after {
-    content: ""; position: absolute; top: 0; right: -1px; width: 2px; height: 100%;
-    background-image: var(--grad); background-attachment: fixed;
-    animation: flow var(--flow-dur) linear infinite; opacity: .55;
-  }
-  .rail .wordmark {
-    font-family: var(--display); font-weight: 700; font-size: 1.05rem;
-    letter-spacing: 0.02em; color: var(--text); text-decoration: none;
-    text-align: left; text-transform: none;
-    padding: 0 1.6rem; margin: 0 0 2rem; display: block;
-  }
-  .rail .wordmark small {
-    display: block; font-family: var(--mono); font-size: 0.56rem;
-    letter-spacing: 0.22em; color: var(--muted); margin-top: 0.4rem;
-  }
-  .rail nav { display: flex; flex-direction: column; gap: 0.15rem; }
-  .rail a.sec {
-    position: relative; font-family: var(--display); font-weight: 600; font-size: 1.12rem;
-    color: var(--muted); text-decoration: none; padding: 0.6rem 1.6rem;
-  }
-
-  .tagline { text-align: center; margin: 1.5rem 0 0; transition: opacity .45s; }
-  body.railing .tagline { opacity: 0; }
-  .tagline h1 {
-    font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 6vw, 3rem);
-    margin: 0 0 0.4rem; letter-spacing: -0.02em;
-  }
-  .tagline p { color: var(--muted); font-style: italic; margin: 0; }
-
-  .hint {
-    text-align: center; margin: 1.4rem 0 0;
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--muted);
-    transition: opacity .6s;
-  }
-  .hint.gone { opacity: 0; }
-
-  .plainnav {
-    margin: 2.25rem auto 0; display: flex; flex-wrap: wrap;
-    gap: 0.4rem 1.4rem; justify-content: center;
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
-    text-transform: uppercase; transition: opacity .3s;
-  }
-  .plainnav a { color: var(--muted); text-decoration: none; }
-  .plainnav a:hover { color: var(--lime); }
-  body.railing .plainnav { opacity: 0; }
-
-  .epigraph {
-    margin: 1.15rem auto 0; max-width: 32ch; min-height: 3.1em;
-    font-family: var(--body); font-style: italic; font-size: 1.05rem;
-    line-height: 1.5; color: var(--muted); text-align: center;
-    transition: opacity .55s ease;
-  }
-  .epigraph.swap { opacity: 0; }
-  body.railing .epigraph { opacity: 0; }
-
-  .secret {
-    display: block; text-align: center; margin: 2.75rem 0 0;
-    color: #333a26; font-size: 1rem; text-decoration: none;
-    transition: color .3s;
-  }
-  .secret:hover { color: var(--lime); }
-
-  /* fx.js layers */
-  .fx-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-  .page { position: relative; z-index: 1; }
-  .fx-spark {
-    position: fixed; width: 4px; height: 4px; border-radius: 50%;
-    background: var(--lime); pointer-events: none; z-index: 90;
-    transform: translate(-50%, -50%); animation: fx-spark .66s ease-out forwards;
-  }
-  @keyframes fx-spark {
-    to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
-  }
-  .fx-toast {
-    position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 120;
-    display: block; max-width: 17rem; text-decoration: none;
-    background: var(--surface); color: var(--text);
-    border: 1px solid var(--line); border-left: 3px solid var(--lime);
-    border-radius: 6px; padding: 0.8rem 0.95rem;
-    box-shadow: 0 12px 34px rgba(0,0,0,0.45);
-    transform: translateY(150%); opacity: 0;
-    transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s;
-  }
-  .fx-toast.in { transform: none; opacity: 1; }
-  .fx-toast-tag { display: block; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--lime); margin-bottom: 0.3rem; }
-  .fx-toast strong { font-family: var(--display); font-weight: 700; font-size: 1.05rem; }
-  .fx-toast-blurb { display: block; font-size: 0.9rem; color: var(--muted); margin-top: 0.15rem; }
-  .fx-shimmer {
-    position: fixed; inset: 0; z-index: 110; pointer-events: none;
-    background-image: var(--grad); background-attachment: fixed; mix-blend-mode: overlay;
-    animation: fx-shimmer 1.5s ease-out forwards;
-  }
-  @keyframes fx-shimmer { from { opacity: 0.55; } to { opacity: 0; } }
-
-  @media (max-width: 820px) {
-    /* keep the transition rail overlaid (never in flow) so it can't shift the page */
-    .rail {
-      flex-direction: row; align-items: center; width: auto; right: 0;
-      gap: 0.4rem; overflow-x: auto; padding: 0.8rem 1rem;
-      border-right: 0; border-bottom: 1px solid var(--line);
-    }
-    .rail::after { display: none; }
-    .rail .wordmark { margin: 0 1rem 0 0; padding: 0; white-space: nowrap; }
-    .rail .wordmark small { display: none; }
-    .rail nav { flex-direction: row; }
-    .rail a.sec { padding: 0.5rem 0.8rem; font-size: 1rem; white-space: nowrap; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .topbar { animation: none; }
-    .node { opacity: 1; }
-  }
+  .copyright { font-family: var(--display); font-size: 0.55rem; color: var(--dim); margin-top: 2.5rem; }
 </style>
 </head>
-<body>
+<body data-bg="stars">
 
-<div class="topbar"></div>
+<canvas id="fx-stars" aria-hidden="true"></canvas>
 
-<aside class="rail" id="homerail" aria-hidden="true">
-  <a class="wordmark" href="index.html">Daniel Wirth<small>EST. 2026</small></a>
-  <nav>
-    <a class="sec" href="index.html">Home</a>
-    <a class="sec" href="about.html">About</a>
-    <a class="sec" href="books.html">Books &amp; Poetry</a>
-    <a class="sec" href="blog/index.html">Notebook</a>
-    <a class="sec" href="contact.html">Contact</a>
-  </nav>
-</aside>
+<div class="title-wrap">
+  <h1 class="logo">DANIEL<br>WIRTH</h1>
+  <p class="tagline">A Writer-Type Adventure</p>
 
-<div class="page">
-  <p class="wordmark">Daniel Wirth</p>
-
-  <div class="stage" id="stage">
-    <div class="ringline"></div>
-    <div class="marker"></div>
-    <nav class="ring" id="ring" aria-label="Sections">
-      <a class="node" href="index.html">Home</a>
-      <a class="node" href="about.html">About</a>
-      <a class="node" href="books.html">Books &amp; Poetry</a>
-      <a class="node" href="blog/index.html">Notebook</a>
-      <a class="node" href="contact.html">Contact</a>
-    </nav>
-    <div class="hub">Daniel Wirth<small>EST. 2026</small></div>
-  </div>
-
-  <div class="tagline">
-    <h1>Fiction &amp; poetry.</h1>
-    <p>Novels and poems, and the occasional note from the desk.</p>
-  </div>
-
-  <p class="epigraph" id="epigraph"></p>
-
-  <p class="hint" id="hint">Hover to hold &nbsp;&middot;&nbsp; click to enter</p>
-
-  <nav class="plainnav" aria-label="Sections">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="books.html">Books &amp; Poetry</a>
-    <a href="blog/index.html">Notebook</a>
-    <a href="contact.html">Contact</a>
+  <nav class="title-menu" aria-label="Main menu">
+    <div class="box">
+      <ul class="menu">
+        <li><a href="about.html">NEW GAME<span class="sub">— read the character sheet</span></a></li>
+        <li><a href="books.html">CONTINUE<span class="sub">— load a save (the books)</span></a></li>
+        <li><a href="notebook.html">QUEST LOG<span class="sub">— work in progress</span></a></li>
+        <li><a href="contact.html">OPTIONS<span class="sub">— talk to Daniel</span></a></li>
+      </ul>
+    </div>
   </nav>
 
-  <a class="secret" href="achievements.html" title="?">&#9672;</a>
+  <p class="press-start">PRESS START</p>
+  <p class="copyright">&copy; 2026 DANIEL WIRTH &middot; <a href="achievements.html">ACHIEVEMENTS</a></p>
 </div>
-
-<script>
-(function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var stage = document.getElementById('stage');
-  var ring  = document.getElementById('ring');
-  var hint  = document.getElementById('hint');
-  var homerail = document.getElementById('homerail');
-  var nodes = [].slice.call(ring.querySelectorAll('.node'));
-  var railLinks = homerail ? [].slice.call(homerail.querySelectorAll('nav a.sec')) : [];
-
-  var STEP = 72;
-  var HIT = 40;
-  var SPIN = -0.24;                          // idle drift: slow, counter-clockwise
-  var UNROLL_MS = 1500;                      // wheel -> left rail collapse
-  var RAIL_X = 128, RAIL_TOP = 118, RAIL_GAP = 54;   // fallback if the rail can't be measured
-  var RAIL_PAD_L = railLinks[0] ? parseFloat(getComputedStyle(railLinks[0]).paddingLeft) || 26 : 26;
-
-  var rot = -72;               // About (index 1) starts at the top
-  var lastRot = null;
-  var vel = 0, mx = -9999, my = -9999;
-  var radiusPx = 200;
-  var pointerInside = false;
-  var focusTarget = null;
-  var selecting = false;
-  var hintGone = false;
-
-  function layout() {
-    var s = Math.min(stage.clientWidth, stage.clientHeight);
-    radiusPx = Math.max(120, Math.min(210, s * 0.40));
-    stage.style.setProperty('--radius', radiusPx + 'px');
-  }
-  layout();
-  window.addEventListener('resize', layout);
-
-  window.addEventListener('mousemove', function (e) {
-    mx = e.clientX; my = e.clientY;
-    pointerInside = true;
-    focusTarget = null;
-  });
-  window.addEventListener('mouseleave', function () { pointerInside = false; });
-  window.addEventListener('blur', function () { pointerInside = false; });
-
-  function killHint() { if (!hintGone) { hintGone = true; hint.classList.add('gone'); } }
-  setTimeout(killHint, 7000);
-
-  function selectTop(i) {
-    var desired = -i * STEP;
-    focusTarget = desired + Math.round((rot - desired) / 360) * 360;
-  }
-
-  function xform(p) {
-    return 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) translate(-50%,-50%)';
-  }
-
-  // For each wheel node, the point (in stage-local coords) that puts its left edge
-  // on the real rail link's text and its centre on the link's centre — measured
-  // live from the actual rail element, so the collapse lands exactly where the
-  // next page's menu renders.
-  function railTargets(sr) {
-    var widths = nodes.map(function (n) { return n.offsetWidth; });
-    var rects  = railLinks.map(function (a) { return a.getBoundingClientRect(); });
-    return nodes.map(function (n, i) {
-      var t = rects[i];
-      if (t && t.width) {
-        return { x: (t.left + RAIL_PAD_L + widths[i] / 2) - sr.left,
-                 y: (t.top + t.height / 2) - sr.top };
-      }
-      return { x: RAIL_X - sr.left, y: (RAIL_TOP - sr.top) + i * RAIL_GAP };
-    });
-  }
-
-  // Collapse the wheel into the left rail, then navigate. Same transform shape as
-  // positionWheel() (no size change) so it interpolates with no snap, and the
-  // real rail — identical to the next page's — fades in underneath.
-  function startUnroll(clicked, href) {
-    if (selecting) return;
-    selecting = true;
-    focusTarget = null;
-    killHint();
-    document.body.classList.add('railing');
-    stage.classList.add('railing');
-    stage.classList.remove('is-parked');
-    var sr = stage.getBoundingClientRect();
-    var tg = railTargets(sr);
-    var d = UNROLL_MS / 1000;
-    nodes.forEach(function (n, i) {
-      n.style.transition = 'transform ' + d + 's cubic-bezier(.5,.05,.2,1), opacity .45s ease ' + (d - 0.45) + 's';
-      n.style.transform = xform(tg[i]);
-      n.style.opacity = '0';
-    });
-    if (href) setTimeout(function () { window.location.href = href; }, UNROLL_MS + 60);
-    // watchdog: if navigation never happened (blocked, or restored from bfcache), recover
-    setTimeout(function () { if (selecting) resetWheel(); }, UNROLL_MS + 4000);
-  }
-
-  // Restore the wheel to a clean, interactive state. Needed after a bfcache
-  // restore (Back button), which freezes JS state exactly as it was left.
-  function resetWheel() {
-    selecting = false;
-    focusTarget = null;
-    vel = 0;
-    rot = -72;
-    lastRot = null;
-    document.body.classList.remove('railing', 'rolling');
-    stage.classList.remove('railing', 'intro', 'is-parked');
-    nodes.forEach(function (n) {
-      n.classList.remove('railed', 'is-top');
-      n.style.transition = '';
-      n.style.transform = '';
-      n.style.opacity = '';
-    });
-    layout();
-    positionWheel();
-    lastRot = rot;
-    highlightUnderMarker();
-  }
-
-  window.addEventListener('pageshow', function (e) {
-    if (e.persisted) resetWheel();
-  });
-
-  nodes.forEach(function (node, i) {
-    // rotate-to-top only for keyboard focus, not a mouse click
-    node.addEventListener('focus', function () {
-      var kb = false;
-      try { kb = node.matches(':focus-visible'); } catch (e) {}
-      if (!selecting && kb) selectTop(i);
-    });
-    node.addEventListener('click', function (e) {
-      e.preventDefault();
-      startUnroll(i, node.href);
-    });
-  });
-
-  // The wheel drifts slowly counter-clockwise on its own, and freezes whenever
-  // the cursor is on a word or anywhere inside the ring.
-  function classify() {
-    if (reduce) return 'rest';
-    if (!pointerInside) return 'spin';
-    var sr = stage.getBoundingClientRect();
-    var cx = sr.left + sr.width / 2, cy = sr.top + sr.height / 2;
-    var d = Math.hypot(mx - cx, my - cy);
-    return (d <= radiusPx + HIT) ? 'stopped' : 'spin';
-  }
-
-  function positionWheel() {
-    var cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
-    for (var i = 0; i < nodes.length; i++) {
-      var a = (i * STEP + rot) * Math.PI / 180;
-      var x = cx + radiusPx * Math.sin(a);
-      var y = cy - radiusPx * Math.cos(a);
-      nodes[i].style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
-    }
-  }
-
-  function setTop(idx) {
-    for (var i = 0; i < nodes.length; i++) nodes[i].classList.toggle('is-top', i === idx);
-  }
-  function highlightUnderMarker() {
-    var best = 0, bestD = 1e9;
-    for (var i = 0; i < nodes.length; i++) {
-      var wa = ((i * STEP + rot) % 360 + 360) % 360;
-      var d = Math.min(wa, 360 - wa);
-      if (d < bestD) { bestD = d; best = i; }
-    }
-    setTop(best);
-  }
-  function highlightNearestToCursor() {
-    var sr = stage.getBoundingClientRect(), best = 0, bestD = 1e9;
-    var cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
-    for (var i = 0; i < nodes.length; i++) {
-      var a = (i * STEP + rot) * Math.PI / 180;
-      var x = sr.left + cx + radiusPx * Math.sin(a);
-      var y = sr.top + cy - radiusPx * Math.cos(a);
-      var d = Math.hypot(mx - x, my - y);
-      if (d < bestD) { bestD = d; best = i; }
-    }
-    setTop(best);
-  }
-
-  function frame() {
-    requestAnimationFrame(frame);
-    if (selecting) return;
-
-    if (focusTarget !== null) {
-      rot += (focusTarget - rot) * 0.18;
-      if (Math.abs(focusTarget - rot) < 0.15) { rot = focusTarget; focusTarget = null; }
-      vel = 0;
-      positionWheel(); lastRot = rot; highlightUnderMarker();
-      return;
-    }
-
-    var mode = classify();
-    if (mode === 'spin') {
-      vel += (SPIN - vel) * 0.04;   // ease up to the slow drift
-      rot += vel;
-    } else {                        // 'stopped' or 'rest'
-      vel = 0;                      // freeze hard so the labels stay clickable
-      if (mode === 'stopped') killHint();
-    }
-
-    stage.classList.toggle('is-parked', mode === 'stopped');
-    if (rot !== lastRot) { positionWheel(); lastRot = rot; }
-    if (mode === 'stopped') highlightNearestToCursor();
-    else highlightUnderMarker();
-  }
-
-  // Arriving from an inner page via the rail's "Home" link: reverse the collapse,
-  // rolling the left rail back out into the wheel.
-  var entering = false;
-  try {
-    entering = sessionStorage.getItem('fromRail') === '1';
-    sessionStorage.removeItem('fromRail');
-  } catch (e) {}
-
-  if (entering && !reduce) {
-    selecting = true;                       // hold the physics loop off during the intro
-    killHint();
-    var sr0 = stage.getBoundingClientRect();
-    var tg = railTargets(sr0);
-    stage.classList.add('intro');
-    nodes.forEach(function (n, i) {
-      n.style.transition = 'none';
-      n.style.transform = xform(tg[i]);
-    });
-    void stage.offsetWidth;                 // lock in the start position
-    nodes.forEach(function (n) {
-      n.style.transition = 'transform ' + (UNROLL_MS / 1000) + 's cubic-bezier(.2,.7,.2,1)';
-    });
-    requestAnimationFrame(function () {
-      void stage.offsetWidth;
-      stage.classList.remove('intro');      // fade the ring outline + hub in
-      positionWheel(); lastRot = rot;       // nodes glide from the rail into the circle
-    });
-    setTimeout(function () {
-      nodes.forEach(function (n) { n.style.transition = ''; });
-      selecting = false;
-    }, UNROLL_MS + 80);
-  } else {
-    positionWheel();
-  }
-  highlightUnderMarker();
-  frame();
-})();
-</script>
-
-<script>
-/* rotating epigraph — fragments of Daniel's verse */
-(function () {
-  var el = document.getElementById('epigraph');
-  if (!el) return;
-  var lines = [
-    'The sting of the morning magnifies our waking.',
-    'We huddle to hide from the cold, yet need it to feel alive.',
-    'Rays of warmth filter through branches, dancing around us.',
-    'We carry heavy bodies into the World, making ourselves lighter.',
-    'Broken in half, twice. Still moving.'
-  ];
-  var i = Math.floor(Math.random() * lines.length);
-  el.textContent = lines[i];
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
-  setInterval(function () {
-    el.classList.add('swap');
-    setTimeout(function () {
-      i = (i + 1) % lines.length;
-      el.textContent = lines[i];
-      el.classList.remove('swap');
-    }, 560);
-  }, 6500);
-})();
-</script>
 
 <script src="fx.js"></script>
 </body>
