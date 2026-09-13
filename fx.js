@@ -5,6 +5,7 @@
   var KEY = 'dw2_ach_v1';
 
   var ACH = {
+    typist:      ['Command Line', 'Typed a command that actually went somewhere.'],
     newgame:     ['New Game', 'You pressed start.'],
     lore:        ['Lore Diver', 'Opened the character sheet.'],
     shopper:     ['Window Shopper', 'Checked the inventory.'],

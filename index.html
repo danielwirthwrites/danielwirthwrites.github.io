@@ -34,6 +34,23 @@
   .title-menu { text-align: left; display: inline-block; }
   .title-menu .box { min-width: 18rem; }
 
+  .or { font-family: var(--display); font-size: 0.65rem; color: var(--dim); margin: 1.75rem 0; }
+
+  .term { text-align: left; width: 100%; max-width: 22rem; cursor: text; }
+  .term-log {
+    max-height: 9rem; overflow-y: auto; margin: 0 0 0.8rem;
+    font-family: var(--body); font-size: 1.25rem; line-height: 1.35; color: var(--ok);
+  }
+  .term-log p { margin: 0 0 0.25rem; word-break: break-word; }
+  .term-log .err { color: var(--danger); }
+  .term-log .go { color: var(--gold); }
+  .term-row { display: flex; align-items: center; gap: 0.5rem; border-top: 1px dashed var(--edge-2); padding-top: 0.7rem; }
+  .term-row .prompt { font-family: var(--body); font-size: 1.35rem; color: var(--ok); }
+  .term-input {
+    flex: 1; background: none; border: 0; outline: 0; color: var(--ok);
+    font-family: var(--body); font-size: 1.35rem; caret-color: var(--gold);
+  }
+
   .copyright { font-family: var(--display); font-size: 0.55rem; color: var(--dim); margin-top: 2.5rem; }
 </style>
 </head>
@@ -56,10 +73,104 @@
     </div>
   </nav>
 
+  <p class="or">— OR —</p>
+
+  <div class="box term" id="term">
+    <div class="term-log" id="termLog" aria-live="polite"></div>
+    <form class="term-row" id="termForm" autocomplete="off">
+      <span class="prompt">&gt;</span>
+      <input type="text" id="termInput" class="term-input" aria-label="Type a command"
+             autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a command...">
+    </form>
+  </div>
+
   <p class="press-start">PRESS START</p>
   <p class="copyright">&copy; 2026 DANIEL WIRTH &middot; <a href="achievements.html">ACHIEVEMENTS</a></p>
 </div>
 
 <script src="fx.js"></script>
+<script>
+(function () {
+  var log = document.getElementById('termLog');
+  var form = document.getElementById('termForm');
+  var input = document.getElementById('termInput');
+  var box = document.getElementById('term');
+  if (!form) return;
+
+  var routes = {
+    status: 'about.html', character: 'about.html', sheet: 'about.html', bio: 'about.html',
+    about: 'about.html', stats: 'about.html', skills: 'about.html', newgame: 'about.html',
+    inventory: 'books.html', books: 'books.html', book: 'books.html', shop: 'books.html',
+    items: 'books.html', item: 'books.html', buy: 'books.html', continue: 'books.html',
+    quest: 'notebook.html', quests: 'notebook.html', log: 'notebook.html', notebook: 'notebook.html',
+    wip: 'notebook.html', progress: 'notebook.html',
+    talk: 'contact.html', contact: 'contact.html', npc: 'contact.html', email: 'contact.html',
+    options: 'contact.html', settings: 'contact.html',
+    achievements: 'achievements.html', achievement: 'achievements.html',
+    trophies: 'achievements.html', unlocks: 'achievements.html'
+  };
+
+  function print(text, cls) {
+    var p = document.createElement('p');
+    if (cls) p.className = cls;
+    p.textContent = text;
+    log.appendChild(p);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function boot() {
+    var lines = ['SYSTEM BOOT ... OK', 'LOADING DANIEL_WIRTH.EXE ... OK', 'TYPE A COMMAND. TRY "HELP".'];
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { lines.forEach(function (l) { print(l); }); return; }
+    var i = 0;
+    (function next() {
+      if (i >= lines.length) return;
+      print(lines[i++]);
+      setTimeout(next, 320);
+    })();
+  }
+  boot();
+
+  function run(raw) {
+    var cmd = raw.trim().toLowerCase().replace(/[^a-z0-9 ]/g, '');
+    print('> ' + raw);
+    if (!cmd) return;
+
+    if (cmd === 'help' || cmd === 'commands' || cmd === '?') {
+      print('TRY: STATUS / INVENTORY / QUESTS / TALK / ACHIEVEMENTS', 'go');
+      return;
+    }
+    if (cmd === 'look' || cmd === 'look around') {
+      print('A TITLE SCREEN. A MENU. A CURSOR, BLINKING, WAITING ON YOU.', 'go');
+      return;
+    }
+    if (/^(hi|hello|hey)\b/.test(cmd)) {
+      print('HELLO. THIS IS A WEBSITE, NOT A CHATBOT. TRY "HELP".', 'go');
+      return;
+    }
+
+    var dest = routes[cmd];
+    if (!dest) {
+      var words = cmd.split(/\s+/);
+      for (var i = 0; i < words.length && !dest; i++) dest = routes[words[i]];
+    }
+    if (dest) {
+      print('LOADING ' + dest.replace('.html', '').toUpperCase() + ' ...', 'go');
+      window.FX && FX.unlock('typist');
+      setTimeout(function () { window.location.href = dest; }, 480);
+    } else {
+      print('COMMAND NOT RECOGNIZED. TYPE "HELP".', 'err');
+    }
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = input.value;
+    input.value = '';
+    run(v);
+  });
+  box.addEventListener('click', function () { input.focus(); });
+})();
+</script>
 </body>
 </html>
