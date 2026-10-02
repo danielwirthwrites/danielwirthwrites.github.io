@@ -65,8 +65,6 @@ used for achievements.
 - Deploy the Apps Script backend (`quest/apps-script/README.md`) and drop the
   resulting URL into `quest.js`'s `QUEST_ENDPOINT` — comments are disabled
   with a clear message until then.
-- Replace `quest/disposal-unit/chapter-01.html`'s placeholder text with the
-  real chapter (send it over, same as the books/poems).
 - Add chapter 2+ as they're written: copy `chapter-01.html`, update its
   `data-chapter-id`/`data-chapter-title`, link it from `index.html`'s chapter
   list and from chapter 1's "next chapter" nav.
