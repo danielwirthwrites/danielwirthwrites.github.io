@@ -84,6 +84,7 @@ h2 {
 h3 { font-family: var(--display); font-size: 0.8rem; margin: 1.2rem 0 0.6rem; color: var(--cyan); }
 p { margin: 0 0 1rem; }
 .lede { font-size: 1.55rem; color: var(--muted); }
+.subtle { color: var(--muted); }
 .label {
   font-family: var(--display); font-size: 0.6rem; letter-spacing: 0.05em;
   color: var(--muted); display: block; margin: 0 0 0.6rem;

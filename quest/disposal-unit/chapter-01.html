@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05060f">
+<title>Chapter 1: Wake Cycle — Disposal Unit — Daniel Wirth</title>
+<meta name="description" content="Chapter 1 of Disposal Unit, Daniel Wirth's in-progress military sci-fi horror novel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  .chapter-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 1.5rem; flex-wrap: wrap; }
+  .chapter-nav a, .chapter-nav span { font-family: var(--display); font-size: 0.62rem; }
+  .chapter-nav span { color: var(--dim); }
+  .prose { font-family: var(--body); font-size: 1.5rem; line-height: 1.6; }
+  .prose p { margin: 0 0 1.2rem; }
+  .placeholder-note {
+    font-family: var(--display); font-size: 0.6rem; color: var(--dim);
+    border: 2px dashed var(--edge-2); padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.9;
+  }
+  .cform { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0 0; }
+  .cform label { font-family: var(--display); font-size: 0.6rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.4rem; }
+  .cform input, .cform textarea {
+    font: 1.3rem var(--body); color: var(--text); background: var(--bg);
+    border: 2px solid var(--edge-2); box-shadow: 0 0 0 2px var(--edge); padding: 0.6rem 0.7rem;
+  }
+  .cform textarea { min-height: 7rem; resize: vertical; }
+  .form-status { font-family: var(--body); font-size: 1.2rem; color: var(--muted); min-height: 1.4em; margin: 0; }
+  .form-status.ok { color: var(--ok); }
+  .form-status.err { color: var(--danger); }
+</style>
+</head>
+<body data-bg="sheet" data-book="disposal-unit" data-chapter-id="chapter-01" data-chapter-title="Chapter 1: Wake Cycle">
+
+<nav class="topline" aria-label="Sections">
+  <a href="../../index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="../../about.html">STATUS</a> &middot;
+    <a href="../../books.html">INVENTORY</a> &middot;
+    <a href="../../notebook.html" aria-current="page">QUESTS</a> &middot;
+    <a href="../../contact.html">TALK</a>
+  </span>
+</nav>
+
+<main class="screen">
+  <p class="label" style="margin-bottom:0.3rem;"><a href="index.html" style="color:var(--muted); text-decoration:none;">&larr; DISPOSAL UNIT &middot; SELECT CHAPTER</a></p>
+  <h1>CH. 1 — WAKE CYCLE</h1>
+
+  <div class="placeholder-note">
+    [ PLACEHOLDER CHAPTER — sample text standing in until the real Chapter 1 is sent over. ]
+  </div>
+
+  <div class="box prose">
+    <p>The pod told Reyes she&rsquo;d been under for six years before it told her anything
+      useful, like where they were, or why the count on the wall read five sleepers instead
+      of six.</p>
+    <p>Frost still clung to the inside of the glass. She watched it melt in patches shaped
+      like nothing, and tried to remember whose bunk was closest to hers. The lights came up
+      amber, which meant low power, which meant the ship had been making its own decisions
+      for a while.</p>
+    <p>Somewhere aft, something that was not the recycler cycled on.</p>
+  </div>
+
+  <div class="chapter-nav">
+    <span>&larr; NO PREVIOUS CHAPTER</span>
+    <span>CHAPTER 2 &mdash; COMING SOON</span>
+  </div>
+
+  <div class="box">
+    <span class="label">LEAVE A COMMENT</span>
+    <p class="subtle" style="margin-bottom:1rem;">Goes straight to Daniel &mdash; nothing posts publicly.</p>
+    <form id="chapterComments" class="cform">
+      <label>Name (optional)<input type="text" name="name" autocomplete="name" placeholder="Anonymous"></label>
+      <label>Comment<textarea name="comment" required placeholder="What got to you? What didn't?"></textarea></label>
+      <button type="submit" id="commentSend" class="btn">SUBMIT</button>
+      <p class="form-status" id="commentStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</main>
+
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="../../contact.html">TALK</a></span>
+</footer>
+
+<script src="../../fx.js"></script>
+<script src="../../quest.js"></script>
+</body>
+</html>

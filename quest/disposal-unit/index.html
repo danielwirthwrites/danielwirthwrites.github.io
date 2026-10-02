@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#05060f">
+<title>Disposal Unit — Select Chapter — Daniel Wirth</title>
+<meta name="description" content="Chapter select for Disposal Unit, Daniel Wirth's in-progress military sci-fi horror novel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  #questContinue { margin: 0 0 1.5rem; }
+  #questContinue .btn { display: block; text-align: center; }
+
+  .slot {
+    display: block; text-decoration: none; color: inherit;
+    padding: 1.1rem 1.2rem; margin-bottom: 1px;
+    background: var(--panel); border: 3px solid var(--edge-2); box-shadow: 0 0 0 3px var(--edge);
+  }
+  .slot + .slot { margin-top: 1rem; }
+  .slot-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .slot-num { font-family: var(--display); font-size: 0.62rem; color: var(--muted); }
+  .slot-badge {
+    font-family: var(--display); font-size: 0.55rem; color: var(--bg); background: var(--ok);
+    padding: 0.2rem 0.5rem; display: none;
+  }
+  .slot.is-last-read .slot-badge { display: inline-block; }
+  .slot h2 { margin: 0.5rem 0 0.4rem; font-size: 0.95rem; color: var(--text); }
+  .slot:hover h2 { color: var(--gold); }
+  .slot p { margin: 0; color: var(--muted); font-size: 1.25rem; }
+
+  .locked {
+    padding: 1.1rem 1.2rem; margin-top: 1rem;
+    background: repeating-linear-gradient(45deg, var(--panel), var(--panel) 10px, var(--bg) 10px, var(--bg) 20px);
+    border: 3px dashed var(--edge-2); color: var(--dim); font-family: var(--display); font-size: 0.65rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body data-bg="sheet" data-book="disposal-unit">
+
+<nav class="topline" aria-label="Sections">
+  <a href="../../index.html">&larr; TITLE SCREEN</a>
+  <span>
+    <a href="../../about.html">STATUS</a> &middot;
+    <a href="../../books.html">INVENTORY</a> &middot;
+    <a href="../../notebook.html" aria-current="page">QUESTS</a> &middot;
+    <a href="../../contact.html">TALK</a>
+  </span>
+</nav>
+
+<main class="screen">
+  <p class="label" style="margin-bottom:0.3rem;"><a href="../../notebook.html" style="color:var(--muted); text-decoration:none;">&larr; QUEST LOG</a></p>
+  <h1>DISPOSAL UNIT</h1>
+  <p class="lede">Select a chapter.</p>
+
+  <div id="questContinue" hidden></div>
+
+  <nav aria-label="Chapters">
+    <a class="slot" href="chapter-01.html">
+      <div class="slot-top">
+        <span class="slot-num">CHAPTER 1</span>
+        <span class="slot-badge">LAST READ</span>
+      </div>
+      <h2>Wake Cycle</h2>
+      <p>~4 min read &middot; the crew comes out of cryo one short.</p>
+    </a>
+  </nav>
+
+  <div class="locked">MORE CHAPTERS LOADING AS THEY&rsquo;RE WRITTEN</div>
+</main>
+
+<footer class="foot">
+  <span>&copy; 2026 DANIEL WIRTH</span>
+  <span><a href="../../contact.html">TALK</a></span>
+</footer>
+
+<script src="../../fx.js"></script>
+<script src="../../quest.js"></script>
+<script>
+  (function () {
+    var save = window.QUEST && QUEST.load();
+    if (!save || save.book !== 'disposal-unit') return;
+    document.querySelectorAll('.slot').forEach(function (a) {
+      if (a.getAttribute('href') === save.href.split('/').pop()) a.classList.add('is-last-read');
+    });
+  })();
+</script>
+</body>
+</html>

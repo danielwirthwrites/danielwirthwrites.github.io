@@ -10,6 +10,8 @@
     lore:        ['Lore Diver', 'Opened the character sheet.'],
     shopper:     ['Window Shopper', 'Checked the inventory.'],
     talker:      ['Small Talk', 'Opened a dialogue on the Talk screen.'],
+    bookworm:    ['Bookworm', 'Opened a chapter of the ongoing quest.'],
+    commenter:   ['Signed the Guestbook', 'Left a comment on a chapter.'],
     completion:  ['100% Save File', 'Visited every screen.'],
     nightowl:    ['Night Owl', 'Playing after midnight, Mountain Time.'],
     patient:     ['Grinding', 'Two minutes on one screen. Respect.']
@@ -50,6 +52,18 @@
   }
 
   window.FX = { unlock: unlock, ACH: ACH, read: read };
+
+  /* ---------- quest save-progress ("Continue from where you left off") ----------
+     A tiny save-file, local to this browser only: which book + chapter the
+     reader last opened. No account, no server round-trip. */
+  var QUEST_KEY = 'dw2_quest_progress';
+  function questSave(obj) {
+    try { obj.at = Date.now(); localStorage.setItem(QUEST_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+  function questLoad() {
+    try { return JSON.parse(localStorage.getItem(QUEST_KEY) || 'null'); } catch (e) { return null; }
+  }
+  window.QUEST = { save: questSave, load: questLoad };
 
   /* session tracking */
   try {

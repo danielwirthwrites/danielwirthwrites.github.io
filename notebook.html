@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#05060f">
 <title>Quest Log — Daniel Wirth</title>
-<meta name="description" content="Daniel Wirth's work in progress, presented as an RPG quest log.">
+<meta name="description" content="Daniel Wirth's work in progress, presented as an RPG quest log — read chapters of the ongoing novel as they're written.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="styles.css">
@@ -14,6 +14,8 @@
   .quest h3 { margin-top: 0; }
   .quest .tag { font-family: var(--display); font-size: 0.58rem; color: var(--muted); display: block; margin-bottom: 0.5rem; }
   .quest .tag.active { color: var(--ok); }
+  #questContinue { margin: 0 0 1.1rem; }
+  #questContinue .btn { display: block; text-align: center; }
 </style>
 </head>
 <body data-bg="sheet">
@@ -30,17 +32,20 @@
 
 <main class="screen">
   <h1>QUEST LOG</h1>
-  <p class="lede">Under construction &mdash; check back soon.</p>
+  <p class="lede">One main quest, in progress. Read it chapter by chapter.</p>
+
+  <div id="questContinue" hidden></div>
 
   <div class="box quest">
-    <span class="tag active">ACTIVE QUEST</span>
-    <h3>Rebuild the Quest Log itself</h3>
-    <p style="margin-bottom:0;">This screen is being rebuilt from scratch along with the rest
-      of the site. Soon it&rsquo;ll hold characters, worldbuilding, and cut fragments for
-      whatever Daniel is drafting &mdash; readable like a save file, one entry at a time.</p>
+    <span class="tag active">ACTIVE QUEST &middot; MAIN STORY</span>
+    <h3>Disposal Unit</h3>
+    <p>Military sci-fi horror. New chapters go up as they&rsquo;re finished &mdash; read what
+      exists so far, and leave a comment on anything that got to you. Comments don&rsquo;t
+      post publicly; they go straight to Daniel, who reads every one.</p>
+    <p style="margin-bottom:0;"><a class="btn" href="quest/disposal-unit/index.html">VIEW CHAPTERS &rarr;</a></p>
   </div>
 
-  <p style="text-align:center;"><a class="btn" href="contact.html">SUGGEST A QUEST &rarr;</a></p>
+  <p style="text-align:center;"><a class="btn magenta" href="contact.html">SUGGEST A QUEST &rarr;</a></p>
 </main>
 
 <footer class="foot">
@@ -49,5 +54,6 @@
 </footer>
 
 <script src="fx.js"></script>
+<script src="quest.js"></script>
 </body>
 </html>
