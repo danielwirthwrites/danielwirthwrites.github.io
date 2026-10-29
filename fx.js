@@ -122,7 +122,7 @@
         for (var i = 0; i < stars.length; i++) {
           var st = stars[i];
           var a = 0.4 + 0.6 * Math.sin(t / 900 * st.s + st.p);
-          g.fillStyle = 'rgba(238,241,255,' + (a * 0.8).toFixed(2) + ')';
+          g.fillStyle = 'rgba(227,255,233,' + (a * 0.8).toFixed(2) + ')';
           g.fillRect(st.x * c.width, st.y * c.height, st.r, st.r);
         }
       })(0);

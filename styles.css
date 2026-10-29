@@ -8,19 +8,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 :root {
-  --bg:      #05060f;
-  --panel:   #131a3d;
-  --panel-2: #1b2350;
-  --edge:    #cfd8ff;   /* outer pixel border */
-  --edge-2:  #4653a0;   /* inner pixel border */
-  --text:    #eef1ff;
-  --muted:   #8891c9;
-  --dim:     #545e94;
-  --gold:    #ffd45e;
-  --cyan:    #5ad1ff;
+  /* The Matrix green, kept company by the pink and a dash of yellow. */
+  --bg:      #030907;
+  --panel:   #081c10;
+  --panel-2: #0d2716;
+  --edge:    #baffc9;   /* outer pixel border — phosphor glow */
+  --edge-2:  #1f8a44;   /* inner pixel border — matrix green */
+  --text:    #e3ffe9;
+  --muted:   #74a886;
+  --dim:     #2e5c3c;
+  --gold:    #ffe34f;
+  --cyan:    #39ff66;   /* repurposed as the core matrix green */
   --magenta: #ff6ad1;
   --danger:  #ff5468;
-  --ok:      #5bffa8;
+  --ok:      #c6ff4a;   /* lime-yellow-green: where green meets the yellow extras */
 
   --display: 'Press Start 2P', 'Courier New', monospace;
   --body: 'VT323', 'Courier New', monospace;
@@ -95,13 +96,13 @@ p { margin: 0 0 1rem; }
   display: inline-block; font-family: var(--display); font-size: 0.7rem;
   color: var(--bg); background: var(--gold); text-decoration: none;
   padding: 0.75rem 1.2rem; border: 0;
-  box-shadow: 0 4px 0 0 #a37c1f, 0 4px 0 3px #05060f;
+  box-shadow: 0 4px 0 0 #a3821f, 0 4px 0 3px #030907;
   cursor: pointer; transition: transform .05s;
 }
 .btn:hover { filter: brightness(1.08); }
-.btn:active, .btn.pressed { transform: translateY(4px); box-shadow: 0 0 0 0 #a37c1f, 0 0 0 3px #05060f; }
-.btn.cyan { background: var(--cyan); box-shadow: 0 4px 0 0 #1c7fa3, 0 4px 0 3px #05060f; }
-.btn.magenta { background: var(--magenta); box-shadow: 0 4px 0 0 #a3348a, 0 4px 0 3px #05060f; }
+.btn:active, .btn.pressed { transform: translateY(4px); box-shadow: 0 0 0 0 #a3821f, 0 0 0 3px #030907; }
+.btn.cyan { background: var(--cyan); box-shadow: 0 4px 0 0 #166b33, 0 4px 0 3px #030907; }
+.btn.magenta { background: var(--magenta); box-shadow: 0 4px 0 0 #a3348a, 0 4px 0 3px #030907; }
 .btn[disabled] { opacity: .5; cursor: default; }
 
 /* ---------- menu (title screen + nav) ---------- */
@@ -123,7 +124,7 @@ p { margin: 0 0 1rem; }
 /* ---------- stat bars ---------- */
 .stat-row { display: flex; align-items: center; gap: 0.8rem; margin: 0.5rem 0; }
 .stat-row .stat-label { font-family: var(--display); font-size: 0.62rem; width: 8.5rem; flex: none; color: var(--muted); }
-.stat-bar { flex: 1; height: 14px; background: #05060f; border: 2px solid var(--edge-2); position: relative; }
+.stat-bar { flex: 1; height: 14px; background: #030907; border: 2px solid var(--edge-2); position: relative; }
 .stat-bar > span { display: block; height: 100%; }
 .stat-bar.hp > span { background: var(--danger); }
 .stat-bar.mp > span { background: var(--cyan); }
