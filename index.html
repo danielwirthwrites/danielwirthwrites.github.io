@@ -25,9 +25,10 @@
   }
   .tagline { font-family: var(--body); font-size: 1.6rem; color: var(--muted); margin: 0 0 3rem; }
   .press-start {
-    font-family: var(--display); font-size: 0.85rem; color: var(--text);
-    margin: 2.5rem 0 0; animation: blink 1.1s steps(1) infinite;
+    display: inline-block; font-family: var(--display); font-size: 0.85rem; color: var(--text);
+    text-decoration: none; margin: 2.5rem 0 0; animation: blink 1.1s steps(1) infinite;
   }
+  .press-start:hover, .press-start:focus-visible { color: var(--gold); }
   @media (prefers-reduced-motion: reduce) { .press-start { animation: none; } }
   @keyframes blink { 50% { opacity: 0; } }
 
@@ -84,7 +85,7 @@
     </form>
   </div>
 
-  <p class="press-start">PRESS START</p>
+  <a class="press-start" href="about.html">PRESS START</a>
   <p class="copyright">&copy; 2026 DANIEL WIRTH &middot; <a href="achievements.html">ACHIEVEMENTS</a></p>
 </div>
 
